@@ -1,0 +1,12 @@
+import { Module } from '@nestjs/common';
+
+import { AuthController } from './auth.controller.js';
+import { PasswordService } from './password.service.js';
+import { TokenService } from './token.service.js';
+
+@Module({
+  controllers: [AuthController],
+  providers: [PasswordService, TokenService],
+  exports: [PasswordService, TokenService],
+})
+export class AuthModule {}

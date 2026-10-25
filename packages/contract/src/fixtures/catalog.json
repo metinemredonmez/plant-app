@@ -1,0 +1,51 @@
+{
+  "categories": [
+    {"id": 1, "name": "Salon Bitkileri", "image": "/images/monstera.jpg"},
+    {"id": 2, "name": "Kolay Bakım", "image": "/images/pothos.jpg"},
+    {"id": 3, "name": "Sukulent ve Kaktüs", "image": "/images/sukulent.jpg"},
+    {"id": 4, "name": "Evcil Dostu", "image": "/images/aglaonema.jpg"},
+    {"id": 5, "name": "Büyük Bitkiler", "image": "/images/dracaena.jpg"}
+  ],
+  "colors": [
+    {"id": 1, "name": "Beyaz", "code": "#F5F5F2"},
+    {"id": 2, "name": "Siyah", "code": "#2B2B2B"},
+    {"id": 3, "name": "Terrakota", "code": "#C8693F"},
+    {"id": 4, "name": "Gri", "code": "#A3A9AF"},
+    {"id": 5, "name": "Adaçayı Yeşili", "code": "#9CAF88"}
+  ],
+  "potTypes": [
+    {"id": 1, "name": "Plastik"},
+    {"id": 2, "name": "Seramik"},
+    {"id": 3, "name": "Terrakota"},
+    {"id": 4, "name": "Hasır Sepet"}
+  ],
+  "plantTypes": [
+    {"id": 1, "name": "Yapraklı"},
+    {"id": 2, "name": "Sukulent"},
+    {"id": 3, "name": "Kaktüs"},
+    {"id": 4, "name": "Sarmaşık"},
+    {"id": 5, "name": "Çiçekli"}
+  ],
+  "slides": [
+    {"id": 1, "image": "/images/monstera.jpg", "promotion": "kis-firsatlari", "title_line_1": "Kış fırsatları", "title_line_2": "%20'ye varan indirim"},
+    {"id": 2, "image": "/images/pothos.jpg", "promotion": "yeni-sezon", "title_line_1": "Yeni sezon", "title_line_2": "Bakımı kolay yeşillikler"},
+    {"id": 3, "image": "/images/sukulent.jpg", "promotion": "hediye", "title_line_1": "Hediyelik", "title_line_2": "Küçük bitki, büyük mutluluk"}
+  ],
+  "banners": [
+    {
+      "id": 1,
+      "title": "Kış Fırsatları",
+      "title1": "Kış",
+      "title2": "Fırsatları",
+      "image": "/images/aglaonema.jpg",
+      "btnText": "Alışverişe başla",
+      "promotion": "kis-firsatlari",
+      "description1": "Seçili bitkilerde",
+      "description2": "%20'ye varan indirim"
+    }
+  ],
+  "promocodes": [
+    {"id": 1, "code": "HOSGELDIN10", "userId": null, "discount": 10, "expires_at": "31.12.2026"},
+    {"id": 2, "code": "BITKI20", "userId": null, "discount": 20, "expires_at": "31.01.2027"}
+  ]
+}

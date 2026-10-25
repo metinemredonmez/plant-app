@@ -1,0 +1,25 @@
+node_modules/
+dist/
+coverage/
+.env
+.env*.local
+*.tsbuildinfo
+.DS_Store
+
+# Prisma 7 generated client
+apps/api/src/generated/
+
+# iOS: build output, CocoaPods (restored by `pod install`) and the local
+# Node path Xcode uses
+apps/mobile/ios/build/
+apps/mobile/ios/Pods/
+apps/mobile/ios/.xcode.env.local
+
+# Kept on disk, not in git:
+# - the purchased template's Figma file, PDF and video (licensed assets;
+#   the video is also above GitHub's 100 MB limit)
+# - the unused Laravel Orchid library (owner's decision: no PHP backend)
+# - the template author's original git history (apps/mobile/.git, moved)
+docs/template/
+platform-master/
+.backup/

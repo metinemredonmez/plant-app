@@ -1,0 +1,24 @@
+{
+  "name": "@everbloom/contract",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Expo uygulamasının beklediği API sözleşmesi, fikstürler ve mock sunucu",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "mock": "tsx mock/server.ts",
+    "mock:watch": "tsx watch mock/server.ts",
+    "test": "tsx --test test/fixtures.test.ts test/mock.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Ayse Yilmaz",
+      "email": "demo@everbloom.test",
+      "location": "Kadıköy, İstanbul",
+      "phoneNumber": "+905551112233",
+      "phoneVerified": true,
+      "emailVerified": true
+    }
+  ],
+  "orders": {
+    "1": [
+      {
+        "id": 1002,
+        "total": 449,
+        "delivery": 0,
+        "orderStatus": "shipping",
+        "createdAt": "21.10.2026",
+        "products": [{"id": 8, "name": "Sukulent Seti (5'li)", "price": 449, "quantity": 1, "color": "Terrakota"}]
+      },
+      {
+        "id": 1001,
+        "total": 1038,
+        "delivery": 0,
+        "orderStatus": "delivered",
+        "createdAt": "12.10.2026",
+        "products": [
+          {"id": 1, "name": "Monstera Deliciosa 40-50 cm", "price": 749, "quantity": 1, "color": "Beyaz"},
+          {"id": 3, "name": "Pothos (Epipremnum) 25-30 cm", "price": 289, "quantity": 1, "color": "Gri"}
+        ]
+      }
+    ]
+  },
+  "reviews": {
+    "1": [
+      {"id": 1, "name": "Zeynep K.", "rating": 5, "comment": "Fotoğraftaki boyda geldi, paketleme çok özenliydi.", "createdAt": "14.10.2026"},
+      {"id": 2, "name": "Mert A.", "rating": 4, "comment": "Sağlıklı geldi, sadece bir yaprağın ucu kırılmıştı.", "createdAt": "02.10.2026"}
+    ],
+    "3": [
+      {"id": 3, "name": "Elif D.", "rating": 5, "comment": "Bakımı gerçekten kolay, iki haftada yeni yaprak çıkardı.", "createdAt": "09.10.2026"}
+    ],
+    "8": [
+      {"id": 4, "name": "Can T.", "rating": 4, "comment": "Beşi de canlı geldi, saksılar biraz küçük.", "createdAt": "19.10.2026"}
+    ]
+  }
+}

@@ -1,0 +1,357 @@
+// Schema v1 (week 2). Based on the MVP report's draft, see docs/adr/0006.
+// Conventions: tables and multi-word columns are snake_case in PostgreSQL;
+// money is stored in kuruş (Int) and mapped to TL numbers in the API;
+// image fields hold object keys, the API turns them into URLs.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+// Values are the exact strings the app reads.
+enum OrderStatus {
+  pending
+  processing
+  shipping
+  delivered
+  canceled
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum OtpPurpose {
+  EMAIL_VERIFY
+  PHONE_VERIFY
+  PASSWORD_RESET
+}
+
+enum LightLevel {
+  LOW
+  PARTIAL
+  BRIGHT_INDIRECT
+  DIRECT
+}
+
+enum Difficulty {
+  NO_FUSS
+  EASY
+  MODERATE
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  passwordHash  String         @map("password_hash") // Argon2id
+  phoneNumber   String?        @unique @map("phone_number")
+  location      String?
+  emailVerified Boolean        @default(false) @map("email_verified")
+  phoneVerified Boolean        @default(false) @map("phone_verified")
+  role          Role           @default(CUSTOMER)
+  createdAt     DateTime       @default(now()) @map("created_at")
+  // Account deletion blanks personal fields; invoiced orders are kept.
+  anonymizedAt  DateTime?      @map("anonymized_at")
+  orders        Order[]
+  reviews       Review[]
+  refreshTokens RefreshToken[]
+  otpCodes      OtpCode[]
+  consents      Consent[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @map("user_id")
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique @map("token_hash") // SHA-256, never the raw token
+  familyId  String    @map("family_id") // reuse revokes the whole family
+  expiresAt DateTime  @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+model OtpCode {
+  id         Int        @id @default(autoincrement())
+  userId     Int?       @map("user_id")
+  user       User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  target     String // e-mail or +90...
+  purpose    OtpPurpose
+  codeHash   String     @map("code_hash")
+  attempts   Int        @default(0) // at most 5
+  expiresAt  DateTime   @map("expires_at") // 10 minutes
+  consumedAt DateTime?  @map("consumed_at")
+  createdAt  DateTime   @default(now()) @map("created_at")
+
+  @@index([target, purpose])
+  @@map("otp_codes")
+}
+
+model Supplier {
+  id            Int     @id @default(autoincrement())
+  name          String  @unique
+  city          String?
+  producerRegNo String? @map("producer_reg_no") // producer registration number
+  plants        Plant[]
+
+  @@map("suppliers")
+}
+
+model Plant {
+  id            Int          @id @default(autoincrement())
+  // Every size is its own record: "Monstera Deliciosa 40-50 cm".
+  slug          String       @unique
+  name          String
+  latinName     String?      @map("latin_name")
+  description   String
+  priceKurus    Int          @map("price_kurus")
+  oldPriceKurus Int?         @map("old_price_kurus")
+  stock         Int          @default(0)
+  heightMinCm   Int?         @map("height_min_cm")
+  heightMaxCm   Int?         @map("height_max_cm")
+  light         LightLevel?
+  difficulty    Difficulty?
+  petSafe       Boolean?     @map("pet_safe")
+  airPurifying  Boolean?     @map("air_purifying")
+  wateringNote  String?      @map("watering_note") // Turkish care card
+  istanbulOnly  Boolean      @default(false) @map("istanbul_only")
+  isBestSeller  Boolean      @default(false) @map("is_best_seller")
+  isFeatured    Boolean      @default(false) @map("is_featured")
+  isNew         Boolean      @default(false) @map("is_new")
+  isTop         Boolean      @default(false) @map("is_top")
+  // Legacy match key against Slide/Banner.promotion.
+  promotion     String?
+  ratingAvg     Float        @default(0) @map("rating_avg") // "rating" on the wire
+  ratingCount   Int          @default(0) @map("rating_count")
+  active        Boolean      @default(true)
+  passportNo    String?      @map("passport_no") // plant passport, if in scope
+  supplierId    Int?         @map("supplier_id")
+  supplier      Supplier?    @relation(fields: [supplierId], references: [id])
+  images        PlantImage[]
+  categories    Category[]
+  colors        Color[]
+  potTypes      PotType[]
+  plantTypes    PlantType[]
+  reviews       Review[]
+  orderItems    OrderItem[]
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  @@index([active, stock])
+  @@map("plants")
+}
+
+model PlantImage {
+  id      Int    @id @default(autoincrement())
+  plantId Int    @map("plant_id")
+  plant   Plant  @relation(fields: [plantId], references: [id], onDelete: Cascade)
+  key     String // object key; the API builds the URL
+  sort    Int    @default(0)
+
+  @@index([plantId, sort])
+  @@map("plant_images")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  image     String? // object key
+  sort      Int      @default(0)
+  plants    Plant[]
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("categories")
+}
+
+model Color {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  code   String // hex; the app uses it as backgroundColor
+  plants Plant[]
+
+  @@map("colors")
+}
+
+model PotType {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  plants Plant[]
+
+  @@map("pot_types")
+}
+
+model PlantType {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  plants Plant[]
+
+  @@map("plant_types")
+}
+
+model Slide {
+  id         Int     @id @default(autoincrement())
+  image      String // object key
+  promotion  String?
+  titleLine1 String  @map("title_line_1")
+  titleLine2 String  @map("title_line_2")
+  sort       Int     @default(0)
+  active     Boolean @default(true)
+
+  @@map("slides")
+}
+
+model Banner {
+  id           Int     @id @default(autoincrement())
+  title        String
+  title1       String?
+  title2       String?
+  image        String // object key
+  btnText      String? @map("btn_text")
+  promotion    String?
+  description1 String?
+  description2 String?
+  sort         Int     @default(0)
+  active       Boolean @default(true)
+
+  @@map("banners")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  plantId   Int      @map("plant_id")
+  plant     Plant    @relation(fields: [plantId], references: [id])
+  rating    Int // 1-5
+  comment   String
+  hidden    Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // One review per plant, buyers only.
+  @@unique([userId, plantId])
+  @@index([plantId, hidden])
+  @@map("reviews")
+}
+
+model Promocode {
+  id              Int      @id @default(autoincrement())
+  code            String   @unique
+  discountPercent Int      @map("discount_percent")
+  expiresAt       DateTime @map("expires_at") // expires_at on the wire
+  userId          Int?     @map("user_id") // null = public
+  usageLimit      Int?     @map("usage_limit")
+  usedCount       Int      @default(0) @map("used_count")
+  active          Boolean  @default(true)
+  orders          Order[]
+
+  @@map("promocodes")
+}
+
+model Order {
+  id              Int                  @id @default(autoincrement())
+  userId          Int                  @map("user_id")
+  user            User                 @relation(fields: [userId], references: [id])
+  status          OrderStatus          @default(pending)
+  paymentStatus   PaymentStatus        @default(PENDING) @map("payment_status")
+  recipientName   String               @map("recipient_name")
+  address         String
+  phoneNumber     String               @map("phone_number")
+  email           String
+  giftNote        String?              @map("gift_note")
+  // All money is computed on the server.
+  subtotalKurus   Int                  @map("subtotal_kurus")
+  discountPercent Int                  @default(0) @map("discount_percent")
+  deliveryKurus   Int                  @default(0) @map("delivery_kurus")
+  totalKurus      Int                  @map("total_kurus")
+  promocodeId     Int?                 @map("promocode_id")
+  promocode       Promocode?           @relation(fields: [promocodeId], references: [id])
+  holdUntil       DateTime?            @map("hold_until") // frost/heat shipping hold
+  carrier         String?
+  trackingNumber  String?              @map("tracking_number")
+  invoiceNo       String?              @map("invoice_no") // e-Arşiv number / ETTN
+  invoiceUrl      String?              @map("invoice_url")
+  createdAt       DateTime             @default(now()) @map("created_at")
+  updatedAt       DateTime             @updatedAt @map("updated_at")
+  items           OrderItem[]
+  payments        Payment[]
+  acceptances     ContractAcceptance[]
+
+  @@index([userId, createdAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id             Int     @id @default(autoincrement())
+  orderId        Int     @map("order_id")
+  order          Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  plantId        Int     @map("plant_id") // serialized as the line "id"
+  plant          Plant   @relation(fields: [plantId], references: [id])
+  nameSnapshot   String  @map("name_snapshot")
+  unitPriceKurus Int     @map("unit_price_kurus")
+  quantity       Int
+  color          String?
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Payment {
+  id          Int           @id @default(autoincrement())
+  orderId     Int           @map("order_id")
+  order       Order         @relation(fields: [orderId], references: [id])
+  provider    String // "iyzico" | "paytr"
+  providerRef String        @map("provider_ref") // checkout token / paymentId / merchant_oid
+  status      PaymentStatus
+  amountKurus Int           @map("amount_kurus")
+  installment Int?
+  rawPayload  Json?         @map("raw_payload")
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  // Webhook idempotency.
+  @@unique([provider, providerRef])
+  @@map("payments")
+}
+
+model ContractAcceptance {
+  id         Int      @id @default(autoincrement())
+  orderId    Int      @map("order_id")
+  order      Order    @relation(fields: [orderId], references: [id])
+  docType    String   @map("doc_type") // ON_BILGILENDIRME | MESAFELI_SATIS
+  docVersion String   @map("doc_version")
+  docHash    String   @map("doc_hash") // SHA-256 of the text shown
+  ip         String?
+  deviceId   String?  @map("device_id")
+  acceptedAt DateTime @default(now()) @map("accepted_at")
+
+  @@map("contract_acceptances")
+}
+
+model Consent {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @map("user_id")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind        String // KVKK_AYDINLATMA | PAZARLAMA
+  granted     Boolean
+  textVersion String    @map("text_version")
+  iysSyncedAt DateTime? @map("iys_synced_at") // marketing consent to İYS
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@map("consents")
+}

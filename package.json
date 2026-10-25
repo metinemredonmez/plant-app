@@ -1,0 +1,18 @@
+{
+  "name": "everbloom",
+  "private": true,
+  "description": "EverBloom bitki mağazası: mobil uygulama, API ve admin paneli",
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "mock": "pnpm --filter @everbloom/contract mock",
+    "mock:api": "MOCK_UPSTREAM=http://localhost:4100 pnpm --filter @everbloom/contract mock",
+    "contract:test": "pnpm --filter @everbloom/contract test",
+    "api:dev": "pnpm --filter @everbloom/api start:dev",
+    "api:test": "pnpm --filter @everbloom/api test",
+    "mobile": "cd apps/mobile && yarn start",
+    "test": "pnpm -r test"
+  }
+}

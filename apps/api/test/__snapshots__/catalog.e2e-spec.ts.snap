@@ -1,0 +1,95 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`catalog contract (e2e) > /api/banners > keeps its field layout 1`] = `
+{
+  "btnText": "string",
+  "description1": "string",
+  "description2": "string",
+  "id": "number",
+  "image": "string",
+  "promotion": "string",
+  "title": "string",
+  "title1": "string",
+  "title2": "string",
+}
+`;
+
+exports[`catalog contract (e2e) > /api/categories > keeps its field layout 1`] = `
+{
+  "id": "number",
+  "image": "string",
+  "name": "string",
+}
+`;
+
+exports[`catalog contract (e2e) > /api/colors > keeps its field layout 1`] = `
+{
+  "code": "string",
+  "id": "number",
+  "name": "string",
+}
+`;
+
+exports[`catalog contract (e2e) > /api/plant/types > keeps its field layout 1`] = `
+{
+  "id": "number",
+  "name": "string",
+}
+`;
+
+exports[`catalog contract (e2e) > /api/plants > keeps its field layout 1`] = `
+{
+  "careLevel": "string",
+  "categories": "array",
+  "colors": "array",
+  "description": "string",
+  "heightCm": "string",
+  "id": "number",
+  "image": "string",
+  "images": "array",
+  "isBestSeller": "boolean",
+  "isFeatured": "boolean",
+  "isNew": "boolean",
+  "isTop": "boolean",
+  "istanbulOnly": "boolean",
+  "latinName": "null | string",
+  "light": "string",
+  "name": "string",
+  "oldPrice": "missing | number",
+  "petSafe": "boolean",
+  "plantTypes": "array",
+  "potTypes": "array",
+  "price": "number",
+  "promotion": "string",
+  "rating": "number",
+  "stock": "number",
+  "watering": "string",
+}
+`;
+
+exports[`catalog contract (e2e) > /api/pot/types > keeps its field layout 1`] = `
+{
+  "id": "number",
+  "name": "string",
+}
+`;
+
+exports[`catalog contract (e2e) > /api/promocodes > keeps its field layout 1`] = `
+{
+  "code": "string",
+  "discount": "number",
+  "expires_at": "string",
+  "id": "number",
+  "userId": "null",
+}
+`;
+
+exports[`catalog contract (e2e) > /api/slides > keeps its field layout 1`] = `
+{
+  "id": "number",
+  "image": "string",
+  "promotion": "string",
+  "title_line_1": "string",
+  "title_line_2": "string",
+}
+`;

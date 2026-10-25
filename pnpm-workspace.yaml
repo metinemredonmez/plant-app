@@ -1,0 +1,5 @@
+# apps/mobile bilinçli olarak workspace dışında: Expo 50 kendi yarn.lock ve
+# node_modules klasörüyle çalışıyor (bkz. docs/adr/0001-monorepo-yapisi.md).
+packages:
+  - apps/api
+  - packages/*
