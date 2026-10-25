@@ -24,6 +24,31 @@ Tamamlanan:
   - Demo hesap için 3 bitkilik bahçe
 - Testler: API birim 24, API e2e 75 (13'ü yeni bakım, tarama, asistan, abonelik ve silme testi), sözleşme ve mock 49.
 
+- Yeni mobil uygulama (planın 2. haftası öne çekildi):
+  - Picaso şablonu (Expo 54, NativeWind, expo-router) temel alındı; EverBloom paleti kullanılıyor; arayüz Türkçe.
+  - Giriş ve kayıt API'ye bağlı. Token'lar Keychain'de, oturum yenileme tek seferlik.
+  - Sekmeler: Bitkilerim (bugün su bekleyenler, "Suladım"), Ansiklopedi (bakım kartları), tarama, Asistan, Profil (plan, kullanım, yapay zekâ onayı, çıkış, hesap silme).
+  - Ekranlar: tanıma ve teşhis (fotoğraf 1024 piksele küçültülüyor, EXIF düşüyor), yapay zekâ onayı, bitki detayı ve bakım günlüğü, bitkiye özel asistan, paywall (satın alma 7. haftada RevenueCat ile).
+  - Şablon lisansı teyit edilene kadar kod `apps/app` altında, yalnızca yerel bir git deposunda; herkese açık repoya girmiyor.
+
+Simülatörde doğrulanan (sahte sürücülerle):
+- Demo hesapla giriş; bahçedeki üç bitki ve geciken sulama.
+- "Suladım" ile sonraki sulama tarihinin güncellenmesi.
+- Galeriden Monstera fotoğrafıyla tanıma (%94, Türkçe bakım kartı) ve bitkiyi ekleme. Ekim olduğu için kış aralığı (14 gün) seçildi.
+- Bitkiye özel asistan; sunucu bitki bilgisini ekliyor.
+- Teşhis: kimyasal içermeyen adımlar, ziraat mühendisi uyarısı, 7 gün sonrası için hatırlatma.
+- İkinci teşhiste 402, paywall uyarısı ve paywall ekranı.
+
+Bulunan ve düzeltilen: NativeWind ile denetimli `TextInput` yeni mimaride hızlı yazımda karakter kaçırıyordu; alanlar denetimsiz yapıldı.
+
+Doğrulanmayan:
+- Kamera (simülatörde yok).
+- Onay ekranı: demo hesaba duman testinde onay verilmişti, ekran açılmadı.
+- Profil sekmesi, yeni hesapla kayıt, hatırlatma bildiriminin gelmesi.
+- Android derlemesi.
+
+Şablondan kalan, kullanılmayan üç bileşen (`Calendar`, `ConfirmationModal`, `forms/Slider`) `tsc` hatası veriyor. SDK yükseltmesinde (2. hafta) temizlenecek.
+
 Bekleyen (1. hafta):
 - Sahibin dış işleri: limited şirket, D-U-N-S, kurumsal mağaza hesapları, KVKK standart sözleşme talepleri, avukat, ziraat mühendisi.
 - Pl@ntNet ve Kindwise'ın 50 fotoğraflık Türkiye denemesi (anahtar ve deneme kredisi gerekiyor).
