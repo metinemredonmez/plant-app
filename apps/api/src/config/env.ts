@@ -39,9 +39,15 @@ const fields = z.object({
   KINDWISE_API_KEY: z.string().min(1).optional(),
   ASSISTANT_DRIVER: z.enum(['fake', 'anthropic']).default('fake'),
   ANTHROPIC_API_KEY: z.string().min(1).optional(),
-  ASSISTANT_MODEL: z.string().min(1).default('claude-haiku-5-5'),
-  // Scan photos (personal data). Local folder in development; R2 later.
+  ASSISTANT_MODEL: z.string().min(1).default('claude-opus-5-5'),
+  // Scan photos (personal data): a local folder in development, a private
+  // Cloudflare R2 bucket in production.
+  STORAGE_DRIVER: z.enum(['local', 'r2']).default('local'),
   UPLOAD_DIR: z.string().min(1).default('./uploads'),
+  R2_ACCOUNT_ID: z.string().min(1).optional(),
+  R2_ACCESS_KEY_ID: z.string().min(1).optional(),
+  R2_SECRET_ACCESS_KEY: z.string().min(1).optional(),
+  R2_BUCKET: z.string().min(1).optional(),
   // Free plan (docs/kapsam.md): identification per rolling week, one trial
   // diagnosis, assistant messages per Istanbul calendar month, plants.
   FREE_IDENTIFY_PER_WEEK: z.coerce.number().int().nonnegative().default(3),
@@ -80,6 +86,16 @@ export const envSchema = fields.superRefine((env, ctx) => {
   if (env.ASSISTANT_DRIVER === 'anthropic') {
     require('ANTHROPIC_API_KEY', 'ASSISTANT_DRIVER=anthropic');
   }
+  if (env.STORAGE_DRIVER === 'r2') {
+    for (const key of [
+      'R2_ACCOUNT_ID',
+      'R2_ACCESS_KEY_ID',
+      'R2_SECRET_ACCESS_KEY',
+      'R2_BUCKET',
+    ] as const) {
+      require(key, 'STORAGE_DRIVER=r2');
+    }
+  }
   // A production server must never "send" codes to its own log, nor answer
   // scans and questions from fixtures.
   if (env.NODE_ENV === 'production') {
@@ -100,6 +116,14 @@ export const envSchema = fields.superRefine((env, ctx) => {
           message: 'fake driver is not allowed in production',
         });
       }
+    }
+    // A server's disk is not durable (Railway redeploys wipe it).
+    if (env.STORAGE_DRIVER === 'local') {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['STORAGE_DRIVER'],
+        message: 'local storage is not allowed in production',
+      });
     }
     require('REVENUECAT_WEBHOOK_SECRET', 'NODE_ENV=production');
   }

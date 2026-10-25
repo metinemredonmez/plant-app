@@ -34,12 +34,14 @@ Uygulama açılışta hepsini doğrular ([src/config/env.ts](src/config/env.ts))
 | `EMAIL_DRIVER` | hayır | `log` (varsayılan) ya da `smtp`; üretimde `log` yasak |
 | `SMTP_URL` | `smtp` ise | Örnek: `smtps://kullanici:parola@smtp.saglayici.com:465` |
 | `EMAIL_FROM` | hayır | Gönderen adresi |
-| `VISION_DRIVER` | hayır | `fake` (varsayılan; sabit bir Monstera sonucu) ya da `kindwise`; üretimde `fake` yasak |
+| `VISION_DRIVER` | hayır | `fake` (varsayılan; yeşil içeren her fotoğraf Monstera, yeşilsiz fotoğraf "bitki değil") ya da `kindwise`; üretimde `fake` yasak |
 | `KINDWISE_API_KEY` | `kindwise` ise | plant.id / plant.health anahtarı |
 | `ASSISTANT_DRIVER` | hayır | `fake` (varsayılan) ya da `anthropic`; üretimde `fake` yasak |
 | `ANTHROPIC_API_KEY` | `anthropic` ise | Claude API anahtarı; yalnızca sunucuda |
 | `ASSISTANT_MODEL` | hayır | Varsayılan `claude-opus-5-5`; daha ucuz seçenek `claude-haiku-5-5` |
-| `UPLOAD_DIR` | hayır | Tarama fotoğrafları (kişisel veri), varsayılan `./uploads` (git dışında) |
+| `STORAGE_DRIVER` | hayır | Tarama fotoğrafları (kişisel veri): `local` (varsayılan) ya da `r2`; üretimde `local` yasak |
+| `UPLOAD_DIR` | hayır | `local` için klasör, varsayılan `./uploads` (git dışında) |
+| `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET` | `r2` ile evet | Gizli Cloudflare R2 kovası; herkese açık bağlantı yok |
 | `FREE_IDENTIFY_PER_WEEK`, `FREE_DIAGNOSES`, `FREE_MESSAGES_PER_MONTH`, `FREE_PLANTS` | hayır | Ücretsiz plan: 3, 1, 10, 5 |
 | `PREMIUM_SCANS_PER_DAY`, `PREMIUM_MESSAGES_PER_MONTH` | hayır | Premium adil kullanım: 50, 300 |
 | `REVENUECAT_WEBHOOK_SECRET` | üretimde evet | RevenueCat'te webhook yetki başlığına `Bearer <sır>` olarak girilir |
@@ -81,7 +83,7 @@ Ayrıntı ve tasarım kararları [ADR 0009](../../docs/adr/0009-yapay-zekali-bak
 | `POST /api/v1/my/plants/:id/care` | oturum | Bakım kaydı; sulama sonraki sulama gününü günceller |
 | `GET /api/v1/my/today` | oturum | Sulanacaklar ve yaklaşanlar |
 | `GET /api/v1/my/consents/ai`, `POST /api/v1/my/consents` | oturum | Yapay zekâ işleme onayı |
-| `POST /api/v1/scans/identify`, `/api/v1/scans/diagnose` | oturum, onay, kota | Çok parçalı `image`; teşhis ilaç önermez |
+| `POST /api/v1/scans/identify`, `/api/v1/scans/diagnose` | oturum, onay, kota | Çok parçalı `image` (JPEG, PNG, WebP; 8 MB). Sunucu EXIF'i siler, 1280 piksele küçültür; aynı fotoğraf önceki sonucu döndürür. Tanımada `outcome`: `identified`, `possible` ya da `not_recognized`. Teşhis ilaç önermez |
 | `GET /api/v1/scans`, `/api/v1/scans/:id` | oturum | Tarama geçmişi |
 | `GET`, `POST /api/v1/assistant/messages` | oturum, onay, kota | Bitkiyi bilen bakım asistanı |
 | `GET /api/v1/me` | oturum | Profil, `publicId`, plan, limitler, kullanım |

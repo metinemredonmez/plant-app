@@ -10,7 +10,8 @@ import { EntitlementsService } from './entitlements.service.js';
 
 /**
  * Limits on the paid-for work. 402 with `code: quota_exceeded` tells the app
- * to show the paywall. Failed scans and unanswered questions never count.
+ * to show the paywall. Failed scans, photos without a recognized plant and
+ * unanswered questions never use the free quota.
  */
 @Injectable()
 export class UsageService {
@@ -21,16 +22,18 @@ export class UsageService {
 
   async used(userId: number) {
     const done = { userId, status: 'DONE' as const };
+    // Photos without a recognized plant count only toward the daily limit.
+    const charged = { ...done, chargeable: true };
     const [identifyWeek, diagnosesTotal, scansToday, messagesMonth, plants] =
       await Promise.all([
         this.prisma.scan.count({
           where: {
-            ...done,
+            ...charged,
             kind: 'IDENTIFY',
             createdAt: { gte: new Date(Date.now() - 7 * DAY_MS) },
           },
         }),
-        this.prisma.scan.count({ where: { ...done, kind: 'DIAGNOSE' } }),
+        this.prisma.scan.count({ where: { ...charged, kind: 'DIAGNOSE' } }),
         this.prisma.scan.count({
           where: { ...done, createdAt: { gte: istanbulDayStart() } },
         }),

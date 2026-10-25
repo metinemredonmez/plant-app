@@ -8,6 +8,7 @@
 |---|---|---|
 | 1 | 26 Eki–1 Kas | Teknik işler başladı (aşağıda); dış işler sahipte |
 | 2 | 2–8 Kas | Öne çekildi: şablon temizliği, Expo 57, iOS ve Android derlemesi tamam; staging, Sentry ve EAS hesap bekliyor |
+| 3 | 9–15 Kas | Öne çekildi: fotoğraf temizleme, tekrar önleme, güven eşikleri, R2 sürücüsü ve Wikidata adları tamam; R2 hesabı ve sağlayıcı anahtarları bekliyor |
 
 ### 1. hafta (yeni plan)
 
@@ -91,6 +92,55 @@ Doğrulanmayan:
 - Kamera, hatırlatma bildiriminin gelmesi, yeni hesapla kayıt; teşhis akışı SDK 57'de tekrar denenmedi.
 
 Bekleyen (2. hafta, sahipte): Railway + Neon staging, Sentry ve EAS hesapları. Staging `/health` ve staging'de giriş, yenileme ve çıkış bunlara bağlı.
+
+### 3. hafta (yeni plan)
+
+Tamamlanan ([ADR 0010](adr/0010-fotograf-hatti-ve-turkce-adlar.md)):
+- Fotoğraf sunucuda temizleniyor: yön piksellere uygulanıyor, en uzun kenar en fazla 1280 piksel, EXIF ve GPS'siz JPEG. HEIC artık kabul edilmiyor (uygulama JPEG gönderiyor).
+- Tekrar önleme: aynı fotoğraf önceki sonucu döndürüyor. Sağlayıcı çağrılmıyor, yeni kayıt açılmıyor, kota düşmüyor.
+- Üç kademeli güven:
+  - 0,6 ve üstü: tek tür.
+  - 0,2–0,6: olası türler.
+  - 0,2'nin altı ya da bitki değil: "Bitki tanınamadı" ve çekim ipuçları. Tanınmayan fotoğraf ücretsiz kotadan düşmüyor.
+- R2 sürücüsü (S3 API, gizli kova). Üretimde yerel depolama yasak.
+- Türkçe ad sözlüğü: 642 bilimsel ad için Wikidata'dan Türkçe ad ve Wikidata, GBIF ve POWO kimlikleri alındı; Türkçe adı olan 260 tür seed'de.
+  - Tanıma sonucunda ad sırası: bakım kartı → Wikidata → sağlayıcı → bilimsel ad.
+- Uygulama: "Olası türler" ve "Bitki tanınamadı" ekranları, tekrar notu.
+- Sahte sağlayıcı, yeşil içermeyen fotoğrafa "bitki değil" diyor.
+- `ASSISTANT_MODEL`'in kodda varsayılanı Haiku'ydu; ADR 0009, README ve `.env.example` Opus 5.5 diyordu. Kod belgelere uyduruldu (`claude-opus-5-5`). Asistan sahte sürücüyle çalıştığı için maliyet etkisi yok; model kararı sahipte.
+- Testler: API birim 31, API e2e 80. Yeni e2e testleri: tekrar, tanınamadı, olası türler, EXIF ve Wikidata adı. Lint ve tip kontrolü temiz.
+
+Kabul kriterleri:
+- Cihazda çekilen fotoğraf Türkçe ad ve bakım kartıyla dönüyor: emülatörde galeriden ✔. Sahte sürücüyle; kamera ve canlı sağlayıcı yok.
+- R2'deki nesnede EXIF GPS yok: depoya giden dosyada EXIF yok ✔. e2e testinde GPS'li fotoğrafla ve emülatörden gelen dosyada kontrol edildi. Canlı R2 kovasında doğrulanmadı.
+- Aynı fotoğraf ikinci kez yüklendiğinde sağlayıcı çağrılmıyor, tek kayıt var ✔ (e2e ve emülatör).
+- Bitki olmayan fotoğrafta "Bitki tanınamadı" ve çekim ipuçları çıkıyor ✔ (e2e ve emülatör).
+- Onay verilmeden tarama başlamıyor ✔. e2e'de test edildi; emülatörde yeni hesabın ilk taramasında onay ekranı açıldı ve sunucuya tarama isteği gitmedi.
+
+Android emülatörde doğrulanan:
+- Yeni hesapla kayıt (2. haftadan kalan) ve onay ekranı.
+- Galeriden tanıma.
+- Aynı fotoğrafta tekrar notu ve tek kayıt.
+- Gri fotoğrafta "Bitki tanınamadı".
+
+iOS simülatörde doğrulanan: "Konum dahil" seçilen fotoğraf sunucuda çözülüp temizleniyor. Demo hesabın haftalık sınırı dolu olduğu için yanıt 402.
+
+Bulgu: Wikidata'da Türkçe ad kapsamı %40, ev bitkilerinde %11. Bu, planın %70 eşiğinin altında. Önlem: uzman onaylı ilk 300 tür ve küratörlük ([ADR 0010](adr/0010-fotograf-hatti-ve-turkce-adlar.md)).
+
+Plandan sapmalar ([ADR 0010](adr/0010-fotograf-hatti-ve-turkce-adlar.md)):
+- İmzalı yükleme yerine fotoğraf API üzerinden yükleniyor; EXIF'siz nesneyi böylece sunucu garanti ediyor.
+- Kuyruk işi ertelendi.
+- Ayrı `Identification` ve `UsageEvent` tabloları yerine `scans` tablosu kullanılıyor.
+
+Doğrulanmayan:
+- Canlı R2 kovası ve canlı sağlayıcı (Kindwise, Pl@ntNet).
+- "Olası türler" ekranı cihazda: sahte sağlayıcı bu skoru üretmiyor; e2e'de test edildi.
+- Kamera ve iOS'ta yeni ekranlar.
+
+Bekleyen (sahipte):
+- R2 hesabı ve kova.
+- Sağlayıcı anahtarları: Kindwise deneme kredisi, Pl@ntNet.
+- Ev bitkilerinin Türkçe adları için ziraat mühendisi.
 
 ## Bitki mağazası dönemi (1–4. haftalar)
 

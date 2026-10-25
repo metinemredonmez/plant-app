@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 import type { PlantSpecies, Prisma } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { scientificKey } from './scientific-name.js';
 
 /** The public card. Internal fields (source flags) stay on the server. */
 export const toCard = (species: PlantSpecies) => ({
@@ -29,13 +30,6 @@ export const toCard = (species: PlantSpecies) => ({
 });
 
 export type CareCard = ReturnType<typeof toCard>;
-
-const normalize = (name: string) =>
-  name
-    .replace(/[×x]\s/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toLowerCase();
 
 @Injectable()
 export class SpeciesService {
@@ -72,15 +66,22 @@ export class SpeciesService {
    * synonym, or a genus-level card ("Begonia" for "Begonia rex").
    */
   async match(scientificName: string): Promise<PlantSpecies | null> {
-    const name = normalize(scientificName);
+    const name = scientificKey(scientificName);
     const genus = name.split(' ')[0];
     const all = await this.prisma.plantSpecies.findMany();
     const names = (s: PlantSpecies) =>
-      [s.scientificName, ...s.synonyms].map(normalize);
+      [s.scientificName, ...s.synonyms].map(scientificKey);
     return (
       all.find((s) => names(s).includes(name)) ??
       all.find((s) => names(s).includes(genus)) ??
       null
     );
+  }
+
+  /** Turkish name from Wikidata for a species without a care card. */
+  plantName(scientificName: string) {
+    return this.prisma.plantName.findUnique({
+      where: { nameKey: scientificKey(scientificName) },
+    });
   }
 }

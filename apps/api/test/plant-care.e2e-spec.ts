@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 import type { NestExpressApplication } from '@nestjs/platform-express';
+import sharp from 'sharp';
 import request from 'supertest';
 
 import { CareAssistant } from '../src/assistant/care-assistant.js';
@@ -18,7 +19,17 @@ let app: NestExpressApplication;
 let prisma: PrismaService;
 const http = () => request(app.getHttpServer());
 
-const JPEG = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46]);
+const solid = (r: number, g: number, b: number, width = 64) =>
+  sharp({
+    create: { width, height: 48, channels: 3, background: { r, g, b } },
+  })
+    .jpeg()
+    .toBuffer();
+
+// Green photos of different sizes: the same photo twice would be a duplicate.
+let photos: Buffer[] = [];
+let used = 0;
+const photo = () => photos[used++ % photos.length];
 const SECRET = 'Bearer e2e-revenuecat-webhook-secret';
 
 async function consent(session: Session) {
@@ -29,14 +40,17 @@ async function consent(session: Session) {
     .expect(201);
 }
 
-const identify = (session: Session) =>
+const identify = (session: Session, image = photo()) =>
   http()
     .post('/api/v1/scans/identify')
     .set(bearer(session.token))
-    .attach('image', JPEG, {
+    .attach('image', image, {
       filename: 'yaprak.jpg',
       contentType: 'image/jpeg',
     });
+
+const profile = async (session: Session) =>
+  (await http().get('/api/v1/me').set(bearer(session.token)).expect(200)).body;
 
 async function speciesId(scientificName: string) {
   return (
@@ -47,6 +61,9 @@ async function speciesId(scientificName: string) {
 beforeAll(async () => {
   app = await createTestApp();
   prisma = app.get(PrismaService);
+  photos = await Promise.all(
+    Array.from({ length: 60 }, (_, i) => solid(30, 140, 50, 64 + i)),
+  );
 });
 
 afterAll(async () => {
@@ -232,6 +249,15 @@ describe('scans', () => {
         contentType: 'text/plain',
       })
       .expect(422);
+    const broken = await http()
+      .post('/api/v1/scans/identify')
+      .set(bearer(user.token))
+      .attach('image', Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00]), {
+        filename: 'bozuk.jpg',
+        contentType: 'image/jpeg',
+      })
+      .expect(422);
+    expect(broken.body.message).toContain('okunamadı');
 
     const spy = vi
       .spyOn(app.get(VisionProvider), 'identify')
@@ -243,6 +269,161 @@ describe('scans', () => {
       .set(bearer(user.token))
       .expect(200);
     expect(me.body.used.identifyWeek).toBe(0);
+  });
+
+  it('answers the same photo again without the provider or the quota', async () => {
+    const user = await signUp(app);
+    await consent(user);
+    const image = photo();
+    const spy = vi.spyOn(app.get(VisionProvider), 'identify');
+    const first = await identify(user, image).expect(201);
+    const again = await identify(user, image).expect(201);
+    expect(spy).toHaveBeenCalledTimes(1);
+    spy.mockRestore();
+
+    expect(first.body.duplicate).toBe(false);
+    expect(again.body).toMatchObject({
+      duplicate: true,
+      scanId: first.body.scanId,
+      outcome: 'identified',
+      card: { name: 'Deve tabanı' },
+    });
+    expect(await prisma.scan.count({ where: { userId: user.user.id } })).toBe(
+      1,
+    );
+    expect((await profile(user)).used.identifyWeek).toBe(1);
+  });
+
+  it('says "not recognized" with photo tips and does not use the quota', async () => {
+    const user = await signUp(app);
+    await consent(user);
+    const res = await identify(user, await solid(128, 128, 128)).expect(201);
+    expect(res.body).toMatchObject({
+      outcome: 'not_recognized',
+      isPlant: false,
+      confident: false,
+      suggestions: [],
+      hint: 'Fotoğrafta bir bitki göremedim.',
+      card: null,
+    });
+    expect(res.body.tips.length).toBeGreaterThan(2);
+    const { used } = await profile(user);
+    expect(used.identifyWeek).toBe(0);
+    expect(used.scansToday).toBe(1);
+  });
+
+  it('lists possible species between the thresholds', async () => {
+    const user = await signUp(app);
+    await consent(user);
+    const spy = vi
+      .spyOn(app.get(VisionProvider), 'identify')
+      .mockResolvedValueOnce({
+        isPlant: true,
+        suggestions: [
+          {
+            scientificName: 'Ficus elastica',
+            commonNames: [],
+            probability: 0.41,
+          },
+          {
+            scientificName: 'Ficus lyrata',
+            commonNames: [],
+            probability: 0.22,
+          },
+          {
+            scientificName: 'Ficus benjamina',
+            commonNames: [],
+            probability: 0.12,
+          },
+          {
+            scientificName: 'Ficus pumila',
+            commonNames: [],
+            probability: 0.05,
+          },
+        ],
+      });
+    const res = await identify(user).expect(201);
+    spy.mockRestore();
+    expect(res.body).toMatchObject({
+      outcome: 'possible',
+      confident: false,
+      card: null,
+    });
+    expect(res.body.suggestions).toHaveLength(3);
+    expect(res.body.suggestions[0]).toMatchObject({
+      name: 'Kauçuk ağacı',
+      speciesId: expect.any(Number),
+    });
+    expect(res.body.hint).toContain('ikinci bir fotoğraf');
+    expect((await profile(user)).used.identifyWeek).toBe(1);
+  });
+
+  it('names species without a care card from Wikidata, then the provider', async () => {
+    const user = await signUp(app);
+    await consent(user);
+    const spy = vi
+      .spyOn(app.get(VisionProvider), 'identify')
+      .mockResolvedValueOnce({
+        isPlant: true,
+        suggestions: [
+          {
+            scientificName: 'Nerium oleander',
+            commonNames: ['Oleander'],
+            probability: 0.88,
+          },
+          {
+            scientificName: 'Plantus imaginarius',
+            commonNames: ['Hayali bitki'],
+            probability: 0.05,
+          },
+          {
+            scientificName: 'Plantus latinus',
+            commonNames: [],
+            probability: 0.02,
+          },
+        ],
+      });
+    const res = await identify(user).expect(201);
+    spy.mockRestore();
+    expect(res.body).toMatchObject({ outcome: 'identified', card: null });
+    expect(res.body.suggestions.map((s: { name: string }) => s.name)).toEqual([
+      'Zakkum',
+      'Hayali bitki',
+      'Plantus latinus',
+    ]);
+    expect(res.body.suggestions[0].speciesId).toBeNull();
+  });
+
+  it('stores the photo without EXIF or GPS', async () => {
+    const user = await signUp(app);
+    await consent(user);
+    const withGps = await sharp({
+      create: {
+        width: 800,
+        height: 600,
+        channels: 3,
+        background: { r: 30, g: 160, b: 40 },
+      },
+    })
+      .withExif({
+        IFD3: {
+          GPSLatitudeRef: 'N',
+          GPSLatitude: '41/1 0/1 54/1',
+          GPSLongitudeRef: 'E',
+          GPSLongitude: '28/1 58/1 34/1',
+        },
+      })
+      .jpeg()
+      .toBuffer();
+    const res = await identify(user, withGps).expect(201);
+    const scan = await prisma.scan.findUniqueOrThrow({
+      where: { id: res.body.scanId },
+    });
+    const stored = await sharp(
+      join(process.env.UPLOAD_DIR!, scan.imageKey),
+    ).metadata();
+    expect(stored.exif).toBeUndefined();
+    expect(stored.format).toBe('jpeg');
   });
 
   it('diagnoses without chemical advice and only for my own plant', async () => {
@@ -263,14 +444,20 @@ describe('scans', () => {
       .post('/api/v1/scans/diagnose')
       .set(bearer(stranger.token))
       .field('userPlantId', String(plant.body.id))
-      .attach('image', JPEG, { filename: 'y.jpg', contentType: 'image/jpeg' })
+      .attach('image', photo(), {
+        filename: 'y.jpg',
+        contentType: 'image/jpeg',
+      })
       .expect(404);
 
     const res = await http()
       .post('/api/v1/scans/diagnose')
       .set(bearer(owner.token))
       .field('userPlantId', String(plant.body.id))
-      .attach('image', JPEG, { filename: 'y.jpg', contentType: 'image/jpeg' })
+      .attach('image', photo(), {
+        filename: 'y.jpg',
+        contentType: 'image/jpeg',
+      })
       .expect(201);
     expect(res.body.isHealthy).toBe(false);
     expect(res.body.issues[0]).toMatchObject({ localName: 'Aşırı sulama' });
@@ -288,7 +475,10 @@ describe('scans', () => {
     const again = await http()
       .post('/api/v1/scans/diagnose')
       .set(bearer(owner.token))
-      .attach('image', JPEG, { filename: 'y.jpg', contentType: 'image/jpeg' })
+      .attach('image', photo(), {
+        filename: 'y.jpg',
+        contentType: 'image/jpeg',
+      })
       .expect(402);
     expect(again.body.code).toBe('quota_exceeded');
   });

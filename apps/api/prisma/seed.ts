@@ -3,13 +3,17 @@
 // account are upserted by their natural keys, so it can run against an
 // existing database any time. Run with `pnpm db:seed`.
 
+import { readFile } from 'node:fs/promises';
+
 import { hash } from '@node-rs/argon2';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { config } from 'dotenv';
 
 import { PrismaClient, type User } from '../src/generated/prisma/client.js';
+import { scientificKey } from '../src/care/scientific-name.js';
 import * as data from './seed-data.js';
 import { species, SPECIES_SOURCE } from './species-data.js';
+import type { NameEntry } from './wikidata/fetch-tr-names.js';
 
 config({ quiet: true });
 
@@ -165,13 +169,26 @@ async function seedDemoGarden(user: User) {
 }
 
 /** Care cards; `reviewed` is never reset once an expert has set it. */
-async function seedSpecies() {
+/** Wikidata names and ids (CC0), refreshed with `pnpm species:names`. */
+async function wikidataNames() {
+  const file = new URL('./wikidata/tr-names.json', import.meta.url);
+  const { species: entries } = JSON.parse(await readFile(file, 'utf8')) as {
+    species: NameEntry[];
+  };
+  return new Map(entries.map((e) => [scientificKey(e.scientificName), e]));
+}
+
+async function seedSpecies(names: Map<string, NameEntry>) {
   for (const { synonyms = [], toxicityNote, ...card } of species) {
+    const ids = names.get(scientificKey(card.scientificName));
     const fields = {
       ...card,
       synonyms,
       toxicityNote: toxicityNote ?? null,
       source: SPECIES_SOURCE,
+      wikidataId: ids?.wikidataId ?? null,
+      gbifId: ids?.gbifId ?? null,
+      powoId: ids?.powoId ?? null,
     };
     await prisma.plantSpecies.upsert({
       where: { scientificName: card.scientificName },
@@ -181,8 +198,29 @@ async function seedSpecies() {
   }
 }
 
+async function seedPlantNames(names: Map<string, NameEntry>) {
+  for (const [nameKey, entry] of names) {
+    if (!entry.turkishName || !entry.wikidataId) continue;
+    const fields = {
+      scientificName: entry.scientificName,
+      turkishName: entry.turkishName,
+      otherNames: entry.otherNames,
+      wikidataId: entry.wikidataId,
+      gbifId: entry.gbifId,
+      powoId: entry.powoId,
+    };
+    await prisma.plantName.upsert({
+      where: { nameKey },
+      create: { nameKey, ...fields },
+      update: fields,
+    });
+  }
+}
+
+const names = await wikidataNames();
 await seedLookups();
-await seedSpecies();
+await seedSpecies(names);
+await seedPlantNames(names);
 await seedMarketing();
 await seedPlants();
 const demoUser = await seedDemoAccount();
@@ -190,12 +228,13 @@ await seedDemoGarden(demoUser);
 // Reviews left with the plant store; nothing rates plants any more.
 await prisma.plant.updateMany({ data: { ratingAvg: 0, ratingCount: 0 } });
 
-const [speciesCount, plants, userPlants] = await Promise.all([
+const [speciesCount, nameCount, plants, userPlants] = await Promise.all([
   prisma.plantSpecies.count(),
+  prisma.plantName.count(),
   prisma.plant.count(),
   prisma.userPlant.count(),
 ]);
 console.log(
-  `Seeded ${speciesCount} care cards, ${plants} catalog plants, ${userPlants} user plants`,
+  `Seeded ${speciesCount} care cards, ${nameCount} Turkish plant names, ${plants} catalog plants, ${userPlants} user plants`,
 );
 await prisma.$disconnect();

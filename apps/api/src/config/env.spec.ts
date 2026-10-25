@@ -42,9 +42,23 @@ describe('validateEnv', () => {
         KINDWISE_API_KEY: 'kw-key',
         ASSISTANT_DRIVER: 'anthropic',
         ANTHROPIC_API_KEY: 'sk-ant-test',
+        STORAGE_DRIVER: 'r2',
+        R2_ACCOUNT_ID: 'hesap',
+        R2_ACCESS_KEY_ID: 'anahtar',
+        R2_SECRET_ACCESS_KEY: 'gizli',
+        R2_BUCKET: 'everbloom-scans',
         REVENUECAT_WEBHOOK_SECRET: 'x'.repeat(24),
       }),
     ).not.toThrow();
+  });
+
+  it('requires R2 credentials and refuses local photos in production', () => {
+    expect(() => validateEnv({ ...base, STORAGE_DRIVER: 'r2' })).toThrow(
+      /R2_ACCOUNT_ID[\s\S]*R2_BUCKET/,
+    );
+    expect(() => validateEnv({ ...base, NODE_ENV: 'production' })).toThrow(
+      /local storage is not allowed in production/,
+    );
   });
 
   it('refuses fake AI drivers in production', () => {

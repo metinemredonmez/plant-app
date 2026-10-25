@@ -1,17 +1,43 @@
+import sharp from 'sharp';
+
 import {
   type DiagnoseResult,
   type IdentifyResult,
+  type ScanImage,
   VisionProvider,
 } from './vision-provider.js';
 
+/** Share of clearly green pixels in a 32×32 thumbnail. */
+async function greenShare(image: ScanImage) {
+  const pixels = await sharp(image.data)
+    .resize(32, 32, { fit: 'fill' })
+    .removeAlpha()
+    .raw()
+    .toBuffer();
+  let green = 0;
+  for (let i = 0; i < pixels.length; i += 3) {
+    const [r, g, b] = [pixels[i], pixels[i + 1], pixels[i + 2]];
+    if (g > r + 15 && g > b + 15) green += 1;
+  }
+  return green / (pixels.length / 3);
+}
+
 /**
- * Development and test stand-in: always the same plausible answer, no
- * network, no cost. env.ts forbids it in production.
+ * Development and test stand-in: no network, no cost. Any photo with some
+ * green in it is a Monstera; a photo without green is "not a plant", so the
+ * app's "Bitki tanınamadı" screen can be tried too. env.ts forbids it in
+ * production.
  */
 export class FakeVisionProvider extends VisionProvider {
   readonly name = 'fake';
 
-  async identify(): Promise<IdentifyResult> {
+  private async isPlant(image: ScanImage) {
+    return (await greenShare(image)) >= 0.05;
+  }
+
+  async identify(image: ScanImage): Promise<IdentifyResult> {
+    if (!(await this.isPlant(image)))
+      return { isPlant: false, suggestions: [] };
     return {
       isPlant: true,
       suggestions: [
@@ -34,7 +60,15 @@ export class FakeVisionProvider extends VisionProvider {
     };
   }
 
-  async diagnose(): Promise<DiagnoseResult> {
+  async diagnose(image: ScanImage): Promise<DiagnoseResult> {
+    if (!(await this.isPlant(image))) {
+      return {
+        isPlant: false,
+        isHealthy: false,
+        healthyProbability: 0,
+        issues: [],
+      };
+    }
     return {
       isPlant: true,
       isHealthy: false,

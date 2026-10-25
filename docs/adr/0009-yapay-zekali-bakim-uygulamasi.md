@@ -44,7 +44,7 @@ Yeni uçlarda hata gövdesi `{message, code?}`. `code` değerleri:
 - **Bakım kartları sunucuda ve Türkçe.**
   - İlk 24 tür taslak olarak seed'de; kartların hepsi `reviewed: false`, ziraat mühendisi kontrol edecek. Evcil hayvan toksisitesi ASPCA listelerine göre yazıldı, yeniden kontrol edilmeli.
   - Tanıma sonucu karta şu sırayla eşleniyor: bilimsel ad, eş anlamlılar, cins.
-  - 0,5'in altındaki güvende uygulama ad vermiyor, daha iyi fotoğraf istiyor.
+  - Güven eşikleri 3. haftada üç kademeye çıktı ([ADR 0010](0010-fotograf-hatti-ve-turkce-adlar.md)).
 - **Teşhis ilaç önermiyor.** Sağlayıcının kimyasal tedavi önerileri sunucuda atılıyor; yalnızca biyolojik ve önleyici adımlar dönüyor. Her teşhiste ziraat mühendisi uyarısı ve 7 gün sonrası için takip tarihi var. Dayanak: bitki koruma ürünleri yönetmelikleri, 13 Aralık 2025, RG 33106.
 - **Asistan.**
   - Kendi sağlayıcı arayüzünün arkasında; sürücüler `fake` ve `anthropic`. Resmî `@anthropic-ai/sdk` kullanılıyor, anahtar yalnızca sunucuda.
@@ -61,13 +61,13 @@ Yeni uçlarda hata gövdesi `{message, code?}`. `code` değerleri:
   - Her olay olay kimliğiyle bir kez saklanıyor (`billing_events`), ne yapıldığıyla birlikte: uygulandı, eski, bilinmeyen kullanıcı ya da atlandı.
   - Sırası karışık gelen eski olaylar yok sayılıyor. Aktarım (TRANSFER) erişimi taşıyor. Sandbox olayları işaretleniyor.
   - Uygulama RevenueCat'e kullanıcıyı satır id'siyle değil, rastgele `publicId` UUID'siyle tanıtıyor.
-- **Fotoğraflar kişisel veri.** Geliştirmede yerel klasörde (`UPLOAD_DIR`, git dışında) duruyorlar ve geri sunulmuyorlar. R2, imzalı yükleme ve EXIF silme planın 3. haftasında.
+- **Fotoğraflar kişisel veri.** Geliştirmede yerel klasörde (`UPLOAD_DIR`, git dışında) duruyorlar ve geri sunulmuyorlar. EXIF silme, tekrar önleme ve R2 sürücüsü 3. haftada eklendi ([ADR 0010](0010-fotograf-hatti-ve-turkce-adlar.md)).
 - **Üretimde sahte sürücü yasak.** `env.ts`, `VISION_DRIVER` ya da `ASSISTANT_DRIVER` `fake` ise veya `REVENUECAT_WEBHOOK_SECRET` yoksa uygulamayı açmıyor.
 
 ## Açık kalanlar
 
 - Kindwise ve Pl@ntNet'in canlı denemesi; Türkçe ad oranı (plan: 1. hafta).
-- Fotoğraf hattı: R2, EXIF silme, aynı fotoğrafın tekrarını önleme (3. hafta).
+- ~~Fotoğraf hattı: R2, EXIF silme, aynı fotoğrafın tekrarını önleme (3. hafta).~~ Yapıldı ([ADR 0010](0010-fotograf-hatti-ve-turkce-adlar.md)); canlı R2 kovası hesap bekliyor.
 - Hatırlatıcılar ve günde tek toplu bildirim mobilde (4. hafta). Sunucu `GET /v1/my/today` ile hazır.
 - Kotaların RevenueCat'ten uzaktan ayarlanması; şimdilik ortam değişkenleri.
 - Her yapay zekâ sağlayıcısıyla KVKK standart sözleşmesi (sahibin dış işi; 6. haftada karar kapısı).

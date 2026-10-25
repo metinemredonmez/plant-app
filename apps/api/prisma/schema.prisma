@@ -306,11 +306,31 @@ model PlantSpecies {
   spots           PlantSpot[] // where it does well
   source          String // where the facts come from
   reviewed        Boolean     @default(false) // checked by an expert
+  // Identifiers in the reference databases, from Wikidata.
+  wikidataId      String?     @map("wikidata_id")
+  gbifId          String?     @map("gbif_id")
+  powoId          String?     @map("powo_id")
   userPlants      UserPlant[]
   createdAt       DateTime    @default(now()) @map("created_at")
   updatedAt       DateTime    @updatedAt @map("updated_at")
 
   @@map("plant_species")
+}
+
+/// Turkish names for identification results that have no care card yet,
+/// from Wikidata labels (CC0, prisma/wikidata). Not reviewed by an expert.
+model PlantName {
+  id             Int      @id @default(autoincrement())
+  scientificName String   @map("scientific_name")
+  /// scientificKey(): lower case, no hybrid sign; what results are matched on.
+  nameKey        String   @unique @map("name_key")
+  turkishName    String   @map("turkish_name")
+  otherNames     String[] @default([]) @map("other_names")
+  wikidataId     String   @map("wikidata_id")
+  gbifId         String?  @map("gbif_id")
+  powoId         String?  @map("powo_id")
+
+  @@map("plant_names")
 }
 
 model UserPlant {
@@ -358,12 +378,19 @@ model Scan {
   kind        ScanKind
   status      ScanStatus
   imageKey    String     @map("image_key")
+  // SHA-256 of the cleaned photo: the same photo sent again gets the earlier
+  // result without a provider call.
+  imageHash   String?    @map("image_hash")
   provider    String // "fake" | "kindwise"
   // Normalized result shown to the user (never chemical treatments).
   result      Json?
+  // False when no plant was recognized: such scans do not use the free
+  // weekly quota, only the daily fair-use limit.
+  chargeable  Boolean    @default(true)
   createdAt   DateTime   @default(now()) @map("created_at")
 
   @@index([userId, createdAt])
+  @@index([userId, imageHash])
   @@map("scans")
 }
 

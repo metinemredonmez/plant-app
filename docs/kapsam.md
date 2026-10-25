@@ -10,8 +10,8 @@ Uygulama bakım ve bilgi üzerine kurulu. Ürün ya da bitki satışı yok. Geli
 
 | Alan | Ücretsiz | Premium | Durum |
 |---|---|---|---|
-| Fotoğrafla tanıma | Haftada 3 tanıma, ilk üç aday ve güven skoru | Adil kullanım (günde 50 tarama) | API hazır (sahte sürücüyle); sağlayıcı denemesi 1. hafta |
-| Türkçe bakım bilgisi | Bütün bakım kartları: ışık, sulama, zorluk, evcil hayvan, balkon notu | Aynı | 24 tür taslak (uzman kontrolü bekliyor); hedef ~500 tür |
+| Fotoğrafla tanıma | Haftada 3 tanıma, ilk üç aday ve güven skoru; tanınmayan ve tekrar gönderilen fotoğraf sayılmaz | Adil kullanım (günde 50 tarama) | API ve uygulama hazır (sahte sürücüyle): EXIF silme, tekrar önleme, üç kademeli güven ([ADR 0010](adr/0010-fotograf-hatti-ve-turkce-adlar.md)); sağlayıcı denemesi bekliyor |
+| Türkçe bakım bilgisi | Bütün bakım kartları: ışık, sulama, zorluk, evcil hayvan, balkon notu | Aynı | 24 tür taslak (uzman kontrolü bekliyor); hedef ~500 tür. Kartı olmayan 260 türün Türkçe adı Wikidata'dan; ev bitkilerinde kapsam %11 |
 | Bitkilerim ve hatırlatıcılar | 5 bitkiye kadar, günlük toplu hatırlatma | Sınırsız bitki, bakım günlüğü | API hazır; mobil bildirimler 4. hafta |
 | Hastalık ve zararlı teşhisi | 1 deneme teşhisi | Teşhis ve 5–7 günlük iyileşme takibi | API hazır; ilaç adı ve dozu yok |
 | Yapay zekâ bakım asistanı | Ayda 10 mesaj | Ayda 300 mesaj (adil kullanım) | API hazır (sahte sürücüyle) |

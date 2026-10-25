@@ -1,0 +1,5364 @@
+{
+  "source": "Wikidata (P225 taxon name, Turkish labels and aliases)",
+  "license": "CC0 1.0",
+  "fetchedAt": "2026-10-25",
+  "total": 642,
+  "onWikidata": 640,
+  "withTurkishName": 260,
+  "species": [
+    {
+      "scientificName": "Monstera deliciosa",
+      "wikidataId": "Q161077",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2868241",
+      "powoId": "urn:lsid:ipni.org:names:87478-1"
+    },
+    {
+      "scientificName": "Monstera adansonii",
+      "wikidataId": "Q500991",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2868136",
+      "powoId": "urn:lsid:ipni.org:names:87464-1"
+    },
+    {
+      "scientificName": "Monstera obliqua",
+      "wikidataId": "Q501028",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2868185",
+      "powoId": "urn:lsid:ipni.org:names:87525-1"
+    },
+    {
+      "scientificName": "Epipremnum aureum",
+      "wikidataId": "Q161809",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2868323",
+      "powoId": "urn:lsid:ipni.org:names:87014-1"
+    },
+    {
+      "scientificName": "Epipremnum pinnatum",
+      "wikidataId": "Q549727",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2868272",
+      "powoId": "urn:lsid:ipni.org:names:87046-1"
+    },
+    {
+      "scientificName": "Scindapsus pictus",
+      "wikidataId": "Q9334559",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2873745",
+      "powoId": "urn:lsid:ipni.org:names:88905-1"
+    },
+    {
+      "scientificName": "Rhaphidophora tetrasperma",
+      "wikidataId": "Q11834848",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5329745",
+      "powoId": "urn:lsid:ipni.org:names:88594-1"
+    },
+    {
+      "scientificName": "Philodendron hederaceum",
+      "wikidataId": "Q4484257",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2871003",
+      "powoId": "urn:lsid:ipni.org:names:87797-1"
+    },
+    {
+      "scientificName": "Philodendron erubescens",
+      "wikidataId": "Q4484253",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2871297",
+      "powoId": "urn:lsid:ipni.org:names:87759-1"
+    },
+    {
+      "scientificName": "Philodendron gloriosum",
+      "wikidataId": "Q11071985",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2870786",
+      "powoId": "urn:lsid:ipni.org:names:87777-1"
+    },
+    {
+      "scientificName": "Philodendron melanochrysum",
+      "wikidataId": "Q2897229",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2871241",
+      "powoId": "urn:lsid:ipni.org:names:87882-1"
+    },
+    {
+      "scientificName": "Philodendron bipinnatifidum",
+      "wikidataId": "Q4353577",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2870781",
+      "powoId": "urn:lsid:ipni.org:names:326131-2"
+    },
+    {
+      "scientificName": "Thaumatophyllum bipinnatifidum",
+      "wikidataId": "Q99929671",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "9689104",
+      "powoId": "urn:lsid:ipni.org:names:77178497-1"
+    },
+    {
+      "scientificName": "Ficus elastica",
+      "wikidataId": "Q160576",
+      "turkishName": "Kauçuk ağacı",
+      "otherNames": [
+        "Kauçukağacı"
+      ],
+      "gbifId": "5361903",
+      "powoId": "urn:lsid:ipni.org:names:60458499-2"
+    },
+    {
+      "scientificName": "Ficus lyrata",
+      "wikidataId": "Q1498748",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5361899",
+      "powoId": "urn:lsid:ipni.org:names:853158-1"
+    },
+    {
+      "scientificName": "Ficus benjamina",
+      "wikidataId": "Q275160",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5361932",
+      "powoId": "urn:lsid:ipni.org:names:852486-1"
+    },
+    {
+      "scientificName": "Ficus microcarpa",
+      "wikidataId": "Q714180",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7467639",
+      "powoId": "urn:lsid:ipni.org:names:853217-1"
+    },
+    {
+      "scientificName": "Ficus pumila",
+      "wikidataId": "Q2360517",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5361930",
+      "powoId": "urn:lsid:ipni.org:names:853513-1"
+    },
+    {
+      "scientificName": "Ficus binnendijkii",
+      "wikidataId": null,
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": null,
+      "powoId": null
+    },
+    {
+      "scientificName": "Dracaena trifasciata",
+      "wikidataId": "Q65936984",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "11041822",
+      "powoId": "urn:lsid:ipni.org:names:77164235-1"
+    },
+    {
+      "scientificName": "Sansevieria trifasciata",
+      "wikidataId": "Q5859273",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2770610",
+      "powoId": "urn:lsid:ipni.org:names:540541-1"
+    },
+    {
+      "scientificName": "Dracaena angolensis",
+      "wikidataId": "Q80686286",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "10961470",
+      "powoId": "urn:lsid:ipni.org:names:77182375-1"
+    },
+    {
+      "scientificName": "Sansevieria cylindrica",
+      "wikidataId": "Q149735",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2770617",
+      "powoId": "urn:lsid:ipni.org:names:429843-1"
+    },
+    {
+      "scientificName": "Dracaena fragrans",
+      "wikidataId": "Q133690",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5304583",
+      "powoId": "urn:lsid:ipni.org:names:534207-1"
+    },
+    {
+      "scientificName": "Dracaena marginata",
+      "wikidataId": "Q13539275",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5304439",
+      "powoId": "urn:lsid:ipni.org:names:534283-1"
+    },
+    {
+      "scientificName": "Dracaena reflexa",
+      "wikidataId": "Q135016",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5304436",
+      "powoId": "urn:lsid:ipni.org:names:534338-1"
+    },
+    {
+      "scientificName": "Dracaena sanderiana",
+      "wikidataId": "Q27686509",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7431653",
+      "powoId": "urn:lsid:ipni.org:names:60471006-2"
+    },
+    {
+      "scientificName": "Dracaena draco",
+      "wikidataId": "Q157952",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5304469",
+      "powoId": "urn:lsid:ipni.org:names:534171-1"
+    },
+    {
+      "scientificName": "Dracaena surculosa",
+      "wikidataId": "Q5814069",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5304547",
+      "powoId": "urn:lsid:ipni.org:names:534384-1"
+    },
+    {
+      "scientificName": "Zamioculcas zamiifolia",
+      "wikidataId": "Q15312475",
+      "turkishName": "Zz bitkisi",
+      "otherNames": [],
+      "gbifId": "2869014",
+      "powoId": "urn:lsid:ipni.org:names:89402-1"
+    },
+    {
+      "scientificName": "Spathiphyllum wallisii",
+      "wikidataId": "Q761494",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2869680",
+      "powoId": "urn:lsid:ipni.org:names:89011-1"
+    },
+    {
+      "scientificName": "Anthurium andraeanum",
+      "wikidataId": "Q2452846",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2872695",
+      "powoId": "urn:lsid:ipni.org:names:84549-1"
+    },
+    {
+      "scientificName": "Anthurium scherzerianum",
+      "wikidataId": "Q1746442",
+      "turkishName": "Flamingo çiçeği",
+      "otherNames": [],
+      "gbifId": "2873525",
+      "powoId": "urn:lsid:ipni.org:names:85334-1"
+    },
+    {
+      "scientificName": "Anthurium clarinervium",
+      "wikidataId": "Q15318639",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2872501",
+      "powoId": "urn:lsid:ipni.org:names:15185-2"
+    },
+    {
+      "scientificName": "Anthurium crystallinum",
+      "wikidataId": "Q4067647",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2872232",
+      "powoId": "urn:lsid:ipni.org:names:84713-1"
+    },
+    {
+      "scientificName": "Aglaonema commutatum",
+      "wikidataId": "Q11684614",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2866467",
+      "powoId": "urn:lsid:ipni.org:names:84050-1"
+    },
+    {
+      "scientificName": "Aglaonema modestum",
+      "wikidataId": "Q4056964",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2866488",
+      "powoId": "urn:lsid:ipni.org:names:84081-1"
+    },
+    {
+      "scientificName": "Dieffenbachia seguine",
+      "wikidataId": "Q141806",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2869345",
+      "powoId": "urn:lsid:ipni.org:names:86911-1"
+    },
+    {
+      "scientificName": "Goeppertia orbifolia",
+      "wikidataId": "Q80714198",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7476815",
+      "powoId": "urn:lsid:ipni.org:names:60461168-2"
+    },
+    {
+      "scientificName": "Goeppertia makoyana",
+      "wikidataId": "Q50841683",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7708211",
+      "powoId": "urn:lsid:ipni.org:names:60461041-2"
+    },
+    {
+      "scientificName": "Goeppertia lancifolia",
+      "wikidataId": "Q65939150",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": null,
+      "powoId": "urn:lsid:ipni.org:names:60459370-2"
+    },
+    {
+      "scientificName": "Goeppertia roseopicta",
+      "wikidataId": "Q50841692",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "8023661",
+      "powoId": "urn:lsid:ipni.org:names:60461319-2"
+    },
+    {
+      "scientificName": "Goeppertia zebrina",
+      "wikidataId": "Q80714550",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5302914",
+      "powoId": "urn:lsid:ipni.org:names:796810-1"
+    },
+    {
+      "scientificName": "Goeppertia crocata",
+      "wikidataId": "Q50841675",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7401775",
+      "powoId": "urn:lsid:ipni.org:names:60459270-2"
+    },
+    {
+      "scientificName": "Calathea orbifolia",
+      "wikidataId": "Q5018586",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2761903",
+      "powoId": "urn:lsid:ipni.org:names:41092-2"
+    },
+    {
+      "scientificName": "Calathea makoyana",
+      "wikidataId": "Q2890649",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2761699",
+      "powoId": "urn:lsid:ipni.org:names:565015-1"
+    },
+    {
+      "scientificName": "Maranta leuconeura",
+      "wikidataId": "Q6754829",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2761337",
+      "powoId": "urn:lsid:ipni.org:names:797361-1"
+    },
+    {
+      "scientificName": "Ctenanthe burle-marxii",
+      "wikidataId": "Q15326022",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2762406",
+      "powoId": "urn:lsid:ipni.org:names:71814-2"
+    },
+    {
+      "scientificName": "Ctenanthe oppenheimiana",
+      "wikidataId": "Q5191611",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2762437",
+      "powoId": "urn:lsid:ipni.org:names:71824-2"
+    },
+    {
+      "scientificName": "Stromanthe sanguinea",
+      "wikidataId": "Q15251677",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2761260",
+      "powoId": "urn:lsid:ipni.org:names:798212-1"
+    },
+    {
+      "scientificName": "Chlorophytum comosum",
+      "wikidataId": "Q1164349",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2774846",
+      "powoId": "urn:lsid:ipni.org:names:532810-1"
+    },
+    {
+      "scientificName": "Aspidistra elatior",
+      "wikidataId": "Q3239567",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2769937",
+      "powoId": "urn:lsid:ipni.org:names:531586-1"
+    },
+    {
+      "scientificName": "Chamaedorea elegans",
+      "wikidataId": "Q660200",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2734661",
+      "powoId": "urn:lsid:ipni.org:names:54865-2"
+    },
+    {
+      "scientificName": "Chamaedorea seifrizii",
+      "wikidataId": "Q15248029",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2734708",
+      "powoId": "urn:lsid:ipni.org:names:54954-2"
+    },
+    {
+      "scientificName": "Dypsis lutescens",
+      "wikidataId": "Q1535705",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2735935",
+      "powoId": "urn:lsid:ipni.org:names:985360-1"
+    },
+    {
+      "scientificName": "Howea forsteriana",
+      "wikidataId": "Q146290",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7857942",
+      "powoId": "urn:lsid:ipni.org:names:667434-1"
+    },
+    {
+      "scientificName": "Rhapis excelsa",
+      "wikidataId": "Q164097",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2736747",
+      "powoId": "urn:lsid:ipni.org:names:669577-1"
+    },
+    {
+      "scientificName": "Phoenix roebelenii",
+      "wikidataId": "Q164113",
+      "turkishName": "Cüce hurma palmiyesi",
+      "otherNames": [],
+      "gbifId": "5293153",
+      "powoId": "urn:lsid:ipni.org:names:668945-1"
+    },
+    {
+      "scientificName": "Livistona chinensis",
+      "wikidataId": "Q709649",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2733469",
+      "powoId": "urn:lsid:ipni.org:names:668021-1"
+    },
+    {
+      "scientificName": "Beaucarnea recurvata",
+      "wikidataId": "Q510340",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2768035",
+      "powoId": "urn:lsid:ipni.org:names:531735-1"
+    },
+    {
+      "scientificName": "Yucca gigantea",
+      "wikidataId": "Q15507520",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2775716",
+      "powoId": "urn:lsid:ipni.org:names:543700-1"
+    },
+    {
+      "scientificName": "Yucca elephantipes",
+      "wikidataId": "Q240780",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2775729",
+      "powoId": "urn:lsid:ipni.org:names:57110-1"
+    },
+    {
+      "scientificName": "Cycas revoluta",
+      "wikidataId": "Q161517",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2683217",
+      "powoId": "urn:lsid:ipni.org:names:328823-2"
+    },
+    {
+      "scientificName": "Zamia furfuracea",
+      "wikidataId": "Q924592",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5284125",
+      "powoId": "urn:lsid:ipni.org:names:270522-2"
+    },
+    {
+      "scientificName": "Schefflera arboricola",
+      "wikidataId": null,
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": null,
+      "powoId": null
+    },
+    {
+      "scientificName": "Heptapleurum arboricola",
+      "wikidataId": "Q65940871",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3038724",
+      "powoId": "urn:lsid:ipni.org:names:90845-1"
+    },
+    {
+      "scientificName": "Schefflera actinophylla",
+      "wikidataId": "Q134943",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3038546",
+      "powoId": "urn:lsid:ipni.org:names:114385-3"
+    },
+    {
+      "scientificName": "Fatsia japonica",
+      "wikidataId": "Q203569",
+      "turkishName": "Fatsiya",
+      "otherNames": [],
+      "gbifId": "3039046",
+      "powoId": "urn:lsid:ipni.org:names:90496-1"
+    },
+    {
+      "scientificName": "Hedera helix",
+      "wikidataId": "Q26354",
+      "turkishName": "Duvar sarmaşığı",
+      "otherNames": [
+        "Adi sarmaşık",
+        "Duvarsarmaşığı"
+      ],
+      "gbifId": "8351737",
+      "powoId": "urn:lsid:ipni.org:names:90723-1"
+    },
+    {
+      "scientificName": "Hedera canariensis",
+      "wikidataId": "Q3123106",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3036170",
+      "powoId": "urn:lsid:ipni.org:names:90665-1"
+    },
+    {
+      "scientificName": "Peperomia obtusifolia",
+      "wikidataId": "Q7166271",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3086423",
+      "powoId": "urn:lsid:ipni.org:names:679269-1"
+    },
+    {
+      "scientificName": "Peperomia caperata",
+      "wikidataId": "Q7166267",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4186167",
+      "powoId": "urn:lsid:ipni.org:names:678190-1"
+    },
+    {
+      "scientificName": "Peperomia argyreia",
+      "wikidataId": "Q11167712",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4189296",
+      "powoId": "urn:lsid:ipni.org:names:678021-1"
+    },
+    {
+      "scientificName": "Peperomia prostrata",
+      "wikidataId": "Q22108964",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4185594",
+      "powoId": "urn:lsid:ipni.org:names:679508-1"
+    },
+    {
+      "scientificName": "Peperomia polybotrya",
+      "wikidataId": "Q15606665",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4186205",
+      "powoId": "urn:lsid:ipni.org:names:679474-1"
+    },
+    {
+      "scientificName": "Pilea peperomioides",
+      "wikidataId": "Q311696",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5669632",
+      "powoId": "urn:lsid:ipni.org:names:855664-1"
+    },
+    {
+      "scientificName": "Pilea cadierei",
+      "wikidataId": "Q1026485",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5671157",
+      "powoId": "urn:lsid:ipni.org:names:855275-1"
+    },
+    {
+      "scientificName": "Pilea involucrata",
+      "wikidataId": "Q3388414",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5361843",
+      "powoId": "urn:lsid:ipni.org:names:77091436-1"
+    },
+    {
+      "scientificName": "Tradescantia zebrina",
+      "wikidataId": "Q169381",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2765359",
+      "powoId": "urn:lsid:ipni.org:names:30049896-2"
+    },
+    {
+      "scientificName": "Tradescantia fluminensis",
+      "wikidataId": "Q601079",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2765156",
+      "powoId": "urn:lsid:ipni.org:names:30090792-2"
+    },
+    {
+      "scientificName": "Tradescantia spathacea",
+      "wikidataId": "Q967979",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2765230",
+      "powoId": "urn:lsid:ipni.org:names:173471-1"
+    },
+    {
+      "scientificName": "Tradescantia pallida",
+      "wikidataId": "Q1563504",
+      "turkishName": "Mor Telgraf Çiçeği",
+      "otherNames": [],
+      "gbifId": "2765221",
+      "powoId": "urn:lsid:ipni.org:names:256037-2"
+    },
+    {
+      "scientificName": "Callisia repens",
+      "wikidataId": "Q1693148",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5303420",
+      "powoId": "urn:lsid:ipni.org:names:171826-1"
+    },
+    {
+      "scientificName": "Syngonium podophyllum",
+      "wikidataId": "Q13403357",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2867866",
+      "powoId": "urn:lsid:ipni.org:names:89152-1"
+    },
+    {
+      "scientificName": "Alocasia macrorrhizos",
+      "wikidataId": "Q1484310",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5329904",
+      "powoId": "urn:lsid:ipni.org:names:60444565-2"
+    },
+    {
+      "scientificName": "Alocasia zebrina",
+      "wikidataId": "Q15314868",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5329825",
+      "powoId": "urn:lsid:ipni.org:names:77177187-1"
+    },
+    {
+      "scientificName": "Alocasia cucullata",
+      "wikidataId": "Q4062814",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5329867",
+      "powoId": "urn:lsid:ipni.org:names:84151-1"
+    },
+    {
+      "scientificName": "Colocasia esculenta",
+      "wikidataId": "Q227997",
+      "turkishName": "Gölevez",
+      "otherNames": [],
+      "gbifId": "5330776",
+      "powoId": "urn:lsid:ipni.org:names:1170772-2"
+    },
+    {
+      "scientificName": "Caladium bicolor",
+      "wikidataId": "Q10296092",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2868390",
+      "powoId": "urn:lsid:ipni.org:names:30010088-2"
+    },
+    {
+      "scientificName": "Begonia rex",
+      "wikidataId": "Q2893850",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4156721",
+      "powoId": "urn:lsid:ipni.org:names:105573-1"
+    },
+    {
+      "scientificName": "Begonia maculata",
+      "wikidataId": "Q2893846",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7303475",
+      "powoId": "urn:lsid:ipni.org:names:105130-1"
+    },
+    {
+      "scientificName": "Begonia cucullata",
+      "wikidataId": "Q6395156",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2874717",
+      "powoId": "urn:lsid:ipni.org:names:315562-2"
+    },
+    {
+      "scientificName": "Saintpaulia ionantha",
+      "wikidataId": "Q165406",
+      "turkishName": "Afrika menekşesi",
+      "otherNames": [],
+      "gbifId": "6365236",
+      "powoId": "urn:lsid:ipni.org:names:382692-1"
+    },
+    {
+      "scientificName": "Streptocarpus ionanthus",
+      "wikidataId": "Q50870323",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "6710927",
+      "powoId": "urn:lsid:ipni.org:names:77117375-1"
+    },
+    {
+      "scientificName": "Streptocarpus saxorum",
+      "wikidataId": "Q17708902",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5590445",
+      "powoId": "urn:lsid:ipni.org:names:383021-1"
+    },
+    {
+      "scientificName": "Sinningia speciosa",
+      "wikidataId": "Q163267",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3825228",
+      "powoId": "urn:lsid:ipni.org:names:382786-1"
+    },
+    {
+      "scientificName": "Aeschynanthus radicans",
+      "wikidataId": "Q4688539",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3824774",
+      "powoId": "urn:lsid:ipni.org:names:377844-1"
+    },
+    {
+      "scientificName": "Episcia cupreata",
+      "wikidataId": "Q10923645",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3172881",
+      "powoId": "urn:lsid:ipni.org:names:380772-1"
+    },
+    {
+      "scientificName": "Nematanthus gregarius",
+      "wikidataId": "Q10646907",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5589356",
+      "powoId": "urn:lsid:ipni.org:names:290876-2"
+    },
+    {
+      "scientificName": "Hoya carnosa",
+      "wikidataId": "Q134347",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3170438",
+      "powoId": "urn:lsid:ipni.org:names:107308-3"
+    },
+    {
+      "scientificName": "Hoya kerrii",
+      "wikidataId": "Q292176",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3573959",
+      "powoId": "urn:lsid:ipni.org:names:98512-1"
+    },
+    {
+      "scientificName": "Ceropegia woodii",
+      "wikidataId": "Q148960",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3572767",
+      "powoId": "urn:lsid:ipni.org:names:95848-1"
+    },
+    {
+      "scientificName": "Curio rowleyanus",
+      "wikidataId": "Q50840601",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3149649",
+      "powoId": "urn:lsid:ipni.org:names:1011412-1"
+    },
+    {
+      "scientificName": "Senecio rowleyanus",
+      "wikidataId": "Q2570558",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3107437",
+      "powoId": "urn:lsid:ipni.org:names:895920-1"
+    },
+    {
+      "scientificName": "Asparagus setaceus",
+      "wikidataId": "Q1399941",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2768686",
+      "powoId": "urn:lsid:ipni.org:names:531312-1"
+    },
+    {
+      "scientificName": "Asparagus densiflorus",
+      "wikidataId": "Q1816048",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2768503",
+      "powoId": "urn:lsid:ipni.org:names:531072-1"
+    },
+    {
+      "scientificName": "Nephrolepis exaltata",
+      "wikidataId": "Q136883",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2650927",
+      "powoId": "urn:lsid:ipni.org:names:17160830-1"
+    },
+    {
+      "scientificName": "Nephrolepis cordifolia",
+      "wikidataId": "Q1040814",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2650930",
+      "powoId": "urn:lsid:ipni.org:names:17160730-1"
+    },
+    {
+      "scientificName": "Asplenium nidus",
+      "wikidataId": "Q1736890",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2650676",
+      "powoId": "urn:lsid:ipni.org:names:17048040-1"
+    },
+    {
+      "scientificName": "Platycerium bifurcatum",
+      "wikidataId": "Q2170121",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7126767",
+      "powoId": "urn:lsid:ipni.org:names:17177460-1"
+    },
+    {
+      "scientificName": "Adiantum capillus-veneris",
+      "wikidataId": "Q4678994",
+      "turkishName": "Venüssaçı",
+      "otherNames": [],
+      "gbifId": "2651816",
+      "powoId": "urn:lsid:ipni.org:names:325030-2"
+    },
+    {
+      "scientificName": "Adiantum raddianum",
+      "wikidataId": "Q2797160",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2651826",
+      "powoId": "urn:lsid:ipni.org:names:17012580-1"
+    },
+    {
+      "scientificName": "Pteris cretica",
+      "wikidataId": "Q2050113",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5275404",
+      "powoId": "urn:lsid:ipni.org:names:17211870-1"
+    },
+    {
+      "scientificName": "Phlebodium aureum",
+      "wikidataId": "Q1231082",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2650479",
+      "powoId": "urn:lsid:ipni.org:names:17175390-1"
+    },
+    {
+      "scientificName": "Cyrtomium falcatum",
+      "wikidataId": "Q2415732",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2650829",
+      "powoId": "urn:lsid:ipni.org:names:17268360-1"
+    },
+    {
+      "scientificName": "Selaginella kraussiana",
+      "wikidataId": "Q7447419",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2688189",
+      "powoId": "urn:lsid:ipni.org:names:90781-3"
+    },
+    {
+      "scientificName": "Soleirolia soleirolii",
+      "wikidataId": "Q997566",
+      "turkishName": "Arapsaçı",
+      "otherNames": [],
+      "gbifId": "2984366",
+      "powoId": "urn:lsid:ipni.org:names:856545-1"
+    },
+    {
+      "scientificName": "Fittonia albivenis",
+      "wikidataId": "Q144956",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5574508",
+      "powoId": "urn:lsid:ipni.org:names:105033-2"
+    },
+    {
+      "scientificName": "Hypoestes phyllostachya",
+      "wikidataId": "Q5959593",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3173196",
+      "powoId": "urn:lsid:ipni.org:names:49962-1"
+    },
+    {
+      "scientificName": "Codiaeum variegatum",
+      "wikidataId": "Q1345646",
+      "turkishName": "Kroton",
+      "otherNames": [],
+      "gbifId": "3071476",
+      "powoId": "urn:lsid:ipni.org:names:85073-3"
+    },
+    {
+      "scientificName": "Coleus scutellarioides",
+      "wikidataId": "Q10881792",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5341492",
+      "powoId": "urn:lsid:ipni.org:names:446165-1"
+    },
+    {
+      "scientificName": "Plectranthus scutellarioides",
+      "wikidataId": "Q1009995",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2927315",
+      "powoId": "urn:lsid:ipni.org:names:454698-1"
+    },
+    {
+      "scientificName": "Plectranthus verticillatus",
+      "wikidataId": "Q2296184",
+      "turkishName": "Parlak Mustafa",
+      "otherNames": [],
+      "gbifId": "2926638",
+      "powoId": "urn:lsid:ipni.org:names:454770-1"
+    },
+    {
+      "scientificName": "Plectranthus amboinicus",
+      "wikidataId": "Q2359202",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2926636",
+      "powoId": "urn:lsid:ipni.org:names:168806-3"
+    },
+    {
+      "scientificName": "Cissus rhombifolia",
+      "wikidataId": "Q50828534",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3039161",
+      "powoId": "urn:lsid:ipni.org:names:301239-2"
+    },
+    {
+      "scientificName": "Cissus antarctica",
+      "wikidataId": "Q2697953",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7130688",
+      "powoId": "urn:lsid:ipni.org:names:67511-1"
+    },
+    {
+      "scientificName": "Gynura aurantiaca",
+      "wikidataId": "Q9268236",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3115470",
+      "powoId": "urn:lsid:ipni.org:names:211219-1"
+    },
+    {
+      "scientificName": "Iresine herbstii",
+      "wikidataId": "Q310558",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3085025",
+      "powoId": "urn:lsid:ipni.org:names:320760-2"
+    },
+    {
+      "scientificName": "Strelitzia reginae",
+      "wikidataId": "Q148904",
+      "turkishName": "Cennetkuşu",
+      "otherNames": [],
+      "gbifId": "2763116",
+      "powoId": "urn:lsid:ipni.org:names:798194-1"
+    },
+    {
+      "scientificName": "Strelitzia nicolai",
+      "wikidataId": "Q149601",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2763112",
+      "powoId": "urn:lsid:ipni.org:names:798185-1"
+    },
+    {
+      "scientificName": "Musa acuminata",
+      "wikidataId": "Q132970",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2762680",
+      "powoId": "urn:lsid:ipni.org:names:797527-1"
+    },
+    {
+      "scientificName": "Clivia miniata",
+      "wikidataId": "Q149094",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5326277",
+      "powoId": "urn:lsid:ipni.org:names:994513-1"
+    },
+    {
+      "scientificName": "Zantedeschia aethiopica",
+      "wikidataId": "Q1945905",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2868827",
+      "powoId": "urn:lsid:ipni.org:names:89403-1"
+    },
+    {
+      "scientificName": "Cyclamen persicum",
+      "wikidataId": "Q150055",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3169317",
+      "powoId": "urn:lsid:ipni.org:names:700765-1"
+    },
+    {
+      "scientificName": "Primula obconica",
+      "wikidataId": "Q813591",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7290874",
+      "powoId": "urn:lsid:ipni.org:names:702340-1"
+    },
+    {
+      "scientificName": "Kalanchoe blossfeldiana",
+      "wikidataId": "Q132145",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2985944",
+      "powoId": "urn:lsid:ipni.org:names:274279-1"
+    },
+    {
+      "scientificName": "Euphorbia pulcherrima",
+      "wikidataId": "Q208253",
+      "turkishName": "Atatürk çiçeği",
+      "otherNames": [
+        "Atatürkçiçeği",
+        "Noel Yıldızı"
+      ],
+      "gbifId": "3066465",
+      "powoId": "urn:lsid:ipni.org:names:30176564-2"
+    },
+    {
+      "scientificName": "Euphorbia milii",
+      "wikidataId": "Q148829",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3067157",
+      "powoId": "urn:lsid:ipni.org:names:347359-1"
+    },
+    {
+      "scientificName": "Euphorbia trigona",
+      "wikidataId": "Q1257890",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3067098",
+      "powoId": "urn:lsid:ipni.org:names:348565-1"
+    },
+    {
+      "scientificName": "Euphorbia tirucalli",
+      "wikidataId": "Q883685",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3069353",
+      "powoId": "urn:lsid:ipni.org:names:348517-1"
+    },
+    {
+      "scientificName": "Schlumbergera truncata",
+      "wikidataId": "Q312047",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5383983",
+      "powoId": "urn:lsid:ipni.org:names:229597-2"
+    },
+    {
+      "scientificName": "Rhipsalis baccifera",
+      "wikidataId": "Q136525",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3084036",
+      "powoId": "urn:lsid:ipni.org:names:219250-2"
+    },
+    {
+      "scientificName": "Epiphyllum oxypetalum",
+      "wikidataId": "Q311230",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5384031",
+      "powoId": "urn:lsid:ipni.org:names:132938-1"
+    },
+    {
+      "scientificName": "Phalaenopsis amabilis",
+      "wikidataId": "Q1069597",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5311007",
+      "powoId": "urn:lsid:ipni.org:names:650501-1"
+    },
+    {
+      "scientificName": "Phalaenopsis aphrodite",
+      "wikidataId": "Q5979505",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5311033",
+      "powoId": "urn:lsid:ipni.org:names:650507-1"
+    },
+    {
+      "scientificName": "Dendrobium nobile",
+      "wikidataId": "Q636713",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5317489",
+      "powoId": "urn:lsid:ipni.org:names:628105-1"
+    },
+    {
+      "scientificName": "Guzmania lingulata",
+      "wikidataId": "Q2710056",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2699095",
+      "powoId": "urn:lsid:ipni.org:names:115161-2"
+    },
+    {
+      "scientificName": "Vriesea splendens",
+      "wikidataId": "Q5220923",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5289043",
+      "powoId": "urn:lsid:ipni.org:names:126211-1"
+    },
+    {
+      "scientificName": "Aechmea fasciata",
+      "wikidataId": "Q974721",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2698346",
+      "powoId": "urn:lsid:ipni.org:names:121640-1"
+    },
+    {
+      "scientificName": "Tillandsia usneoides",
+      "wikidataId": "Q311524",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2695149",
+      "powoId": "urn:lsid:ipni.org:names:1169665-2"
+    },
+    {
+      "scientificName": "Tillandsia ionantha",
+      "wikidataId": "Q1937140",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2695006",
+      "powoId": "urn:lsid:ipni.org:names:125266-1"
+    },
+    {
+      "scientificName": "Neoregelia carolinae",
+      "wikidataId": "Q3338220",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2694159",
+      "powoId": "urn:lsid:ipni.org:names:169003-2"
+    },
+    {
+      "scientificName": "Cryptanthus bivittatus",
+      "wikidataId": "Q5190674",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5287727",
+      "powoId": "urn:lsid:ipni.org:names:122611-1"
+    },
+    {
+      "scientificName": "Gardenia jasminoides",
+      "wikidataId": "Q1072101",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5335125",
+      "powoId": "urn:lsid:ipni.org:names:751073-1"
+    },
+    {
+      "scientificName": "Jasminum polyanthum",
+      "wikidataId": "Q282635",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3682631",
+      "powoId": "urn:lsid:ipni.org:names:609699-1"
+    },
+    {
+      "scientificName": "Stephanotis floribunda",
+      "wikidataId": "Q1786657",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3573314",
+      "powoId": "urn:lsid:ipni.org:names:77204413-1"
+    },
+    {
+      "scientificName": "Mandevilla sanderi",
+      "wikidataId": "Q3018376",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3616287",
+      "powoId": "urn:lsid:ipni.org:names:152049-2"
+    },
+    {
+      "scientificName": "Hibiscus rosa-sinensis",
+      "wikidataId": "Q159534",
+      "turkishName": "Japon gülü",
+      "otherNames": [
+        "Çin gülü"
+      ],
+      "gbifId": "3152559",
+      "powoId": "urn:lsid:ipni.org:names:560756-1"
+    },
+    {
+      "scientificName": "Ixora coccinea",
+      "wikidataId": "Q1856114",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2905493",
+      "powoId": "urn:lsid:ipni.org:names:753844-1"
+    },
+    {
+      "scientificName": "Medinilla magnifica",
+      "wikidataId": "Q138748",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3188507",
+      "powoId": "urn:lsid:ipni.org:names:570289-1"
+    },
+    {
+      "scientificName": "Aphelandra squarrosa",
+      "wikidataId": "Q3231986",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7263987",
+      "powoId": "urn:lsid:ipni.org:names:315544-2"
+    },
+    {
+      "scientificName": "Justicia brandegeeana",
+      "wikidataId": "Q3303690",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3173122",
+      "powoId": "urn:lsid:ipni.org:names:289220-2"
+    },
+    {
+      "scientificName": "Pachystachys lutea",
+      "wikidataId": "Q938691",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3778625",
+      "powoId": "urn:lsid:ipni.org:names:52814-1"
+    },
+    {
+      "scientificName": "Impatiens walleriana",
+      "wikidataId": "Q654064",
+      "turkishName": "Cam güzeli",
+      "otherNames": [],
+      "gbifId": "2891772",
+      "powoId": "urn:lsid:ipni.org:names:374419-1"
+    },
+    {
+      "scientificName": "Impatiens hawkeri",
+      "wikidataId": "Q2391577",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4193702",
+      "powoId": "urn:lsid:ipni.org:names:374127-1"
+    },
+    {
+      "scientificName": "Oxalis triangularis",
+      "wikidataId": "Q935848",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7156971",
+      "powoId": "urn:lsid:ipni.org:names:375478-1"
+    },
+    {
+      "scientificName": "Ardisia crenata",
+      "wikidataId": "Q163675",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5414379",
+      "powoId": "urn:lsid:ipni.org:names:586890-1"
+    },
+    {
+      "scientificName": "Cordyline fruticosa",
+      "wikidataId": "Q2717614",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2766278",
+      "powoId": "urn:lsid:ipni.org:names:533580-1"
+    },
+    {
+      "scientificName": "Cordyline australis",
+      "wikidataId": "Q2379130",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2766411",
+      "powoId": "urn:lsid:ipni.org:names:533544-1"
+    },
+    {
+      "scientificName": "Radermachera sinica",
+      "wikidataId": "Q203625",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4092178",
+      "powoId": "urn:lsid:ipni.org:names:110522-1"
+    },
+    {
+      "scientificName": "Pachira aquatica",
+      "wikidataId": "Q310500",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3152235",
+      "powoId": "urn:lsid:ipni.org:names:179762-2"
+    },
+    {
+      "scientificName": "Pachira glabra",
+      "wikidataId": "Q15378937",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4073899",
+      "powoId": "urn:lsid:ipni.org:names:562664-1"
+    },
+    {
+      "scientificName": "Polyscias fruticosa",
+      "wikidataId": "Q5903279",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3035652",
+      "powoId": "urn:lsid:ipni.org:names:847351-1"
+    },
+    {
+      "scientificName": "Polyscias scutellaria",
+      "wikidataId": "Q3024559",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3035778",
+      "powoId": "urn:lsid:ipni.org:names:91817-1"
+    },
+    {
+      "scientificName": "Serissa japonica",
+      "wikidataId": "Q1556733",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2900436",
+      "powoId": "urn:lsid:ipni.org:names:766327-1"
+    },
+    {
+      "scientificName": "Murraya paniculata",
+      "wikidataId": "Q238591",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5421335",
+      "powoId": "urn:lsid:ipni.org:names:774441-1"
+    },
+    {
+      "scientificName": "Coffea arabica",
+      "wikidataId": "Q47685",
+      "turkishName": "Arabica kahvesi",
+      "otherNames": [],
+      "gbifId": "2895345",
+      "powoId": "urn:lsid:ipni.org:names:747038-1"
+    },
+    {
+      "scientificName": "Dionaea muscipula",
+      "wikidataId": "Q155825",
+      "turkishName": "Sinekkapan bitkisi",
+      "otherNames": [
+        "Venüs fly trap",
+        "Venüs sinek kapanı",
+        "Venüs sinekkapanı"
+      ],
+      "gbifId": "5421410",
+      "powoId": "urn:lsid:ipni.org:names:275898-2"
+    },
+    {
+      "scientificName": "Sarracenia purpurea",
+      "wikidataId": "Q1927560",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5421389",
+      "powoId": "urn:lsid:ipni.org:names:30030166-2"
+    },
+    {
+      "scientificName": "Nepenthes alata",
+      "wikidataId": "Q139643",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3702270",
+      "powoId": "urn:lsid:ipni.org:names:603644-1"
+    },
+    {
+      "scientificName": "Drosera capensis",
+      "wikidataId": "Q1570130",
+      "turkishName": "Güneş gülü",
+      "otherNames": [],
+      "gbifId": "3191008",
+      "powoId": "urn:lsid:ipni.org:names:321806-1"
+    },
+    {
+      "scientificName": "Aloe vera",
+      "wikidataId": "Q80079",
+      "turkishName": "Tıbbi sarısabır",
+      "otherNames": [],
+      "gbifId": "2777724",
+      "powoId": "urn:lsid:ipni.org:names:530017-1"
+    },
+    {
+      "scientificName": "Aloe arborescens",
+      "wikidataId": "Q162137",
+      "turkishName": "Testere bitkisi",
+      "otherNames": [],
+      "gbifId": "2777537",
+      "powoId": "urn:lsid:ipni.org:names:529214-1"
+    },
+    {
+      "scientificName": "Aristaloe aristata",
+      "wikidataId": "Q39719918",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "9505138",
+      "powoId": "urn:lsid:ipni.org:names:77142512-1"
+    },
+    {
+      "scientificName": "Haworthiopsis attenuata",
+      "wikidataId": "Q64524505",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "9388529",
+      "powoId": "urn:lsid:ipni.org:names:77138002-1"
+    },
+    {
+      "scientificName": "Haworthiopsis fasciata",
+      "wikidataId": "Q39865423",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "9395407",
+      "powoId": "urn:lsid:ipni.org:names:77138009-1"
+    },
+    {
+      "scientificName": "Haworthia cooperi",
+      "wikidataId": "Q247743",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2780103",
+      "powoId": "urn:lsid:ipni.org:names:536029-1"
+    },
+    {
+      "scientificName": "Gasteria carinata",
+      "wikidataId": "Q154223",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2778567",
+      "powoId": "urn:lsid:ipni.org:names:535752-1"
+    },
+    {
+      "scientificName": "Echeveria elegans",
+      "wikidataId": "Q2783756",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7334640",
+      "powoId": "urn:lsid:ipni.org:names:86934-2"
+    },
+    {
+      "scientificName": "Echeveria pulvinata",
+      "wikidataId": "Q10269958",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4199235",
+      "powoId": "urn:lsid:ipni.org:names:274004-1"
+    },
+    {
+      "scientificName": "Echeveria agavoides",
+      "wikidataId": "Q2413000",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7333993",
+      "powoId": "urn:lsid:ipni.org:names:273738-1"
+    },
+    {
+      "scientificName": "Graptopetalum paraguayense",
+      "wikidataId": "Q3574180",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7334731",
+      "powoId": "urn:lsid:ipni.org:names:113312-2"
+    },
+    {
+      "scientificName": "Sedum morganianum",
+      "wikidataId": "Q2245759",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5690408",
+      "powoId": "urn:lsid:ipni.org:names:231789-2"
+    },
+    {
+      "scientificName": "Sedum rubrotinctum",
+      "wikidataId": "Q2706112",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5688562",
+      "powoId": "urn:lsid:ipni.org:names:275989-1"
+    },
+    {
+      "scientificName": "Sedum acre",
+      "wikidataId": "Q156823",
+      "turkishName": "Acı damkoruğu",
+      "otherNames": [],
+      "gbifId": "5362007",
+      "powoId": "urn:lsid:ipni.org:names:274996-1"
+    },
+    {
+      "scientificName": "Sedum album",
+      "wikidataId": "Q253636",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5362008",
+      "powoId": "urn:lsid:ipni.org:names:275022-1"
+    },
+    {
+      "scientificName": "Hylotelephium spectabile",
+      "wikidataId": "Q922370",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2985863",
+      "powoId": "urn:lsid:ipni.org:names:274221-1"
+    },
+    {
+      "scientificName": "Sempervivum tectorum",
+      "wikidataId": "Q161724",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2985949",
+      "powoId": "urn:lsid:ipni.org:names:276682-1"
+    },
+    {
+      "scientificName": "Aeonium arboreum",
+      "wikidataId": "Q138279",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2985682",
+      "powoId": "urn:lsid:ipni.org:names:272194-1"
+    },
+    {
+      "scientificName": "Crassula ovata",
+      "wikidataId": "Q157299",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5362063",
+      "powoId": "urn:lsid:ipni.org:names:273350-1"
+    },
+    {
+      "scientificName": "Crassula perforata",
+      "wikidataId": "Q15482979",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5690768",
+      "powoId": "urn:lsid:ipni.org:names:273378-1"
+    },
+    {
+      "scientificName": "Crassula muscosa",
+      "wikidataId": "Q5182516",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5362064",
+      "powoId": "urn:lsid:ipni.org:names:273320-1"
+    },
+    {
+      "scientificName": "Portulacaria afra",
+      "wikidataId": "Q2481534",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3084777",
+      "powoId": "urn:lsid:ipni.org:names:699417-1"
+    },
+    {
+      "scientificName": "Kalanchoe daigremontiana",
+      "wikidataId": "Q311176",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2985936",
+      "powoId": "urn:lsid:ipni.org:names:274315-1"
+    },
+    {
+      "scientificName": "Kalanchoe tomentosa",
+      "wikidataId": "Q142606",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4198346",
+      "powoId": "urn:lsid:ipni.org:names:274502-1"
+    },
+    {
+      "scientificName": "Kalanchoe thyrsiflora",
+      "wikidataId": "Q138187",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4198362",
+      "powoId": "urn:lsid:ipni.org:names:274500-1"
+    },
+    {
+      "scientificName": "Kalanchoe beharensis",
+      "wikidataId": "Q146569",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4200862",
+      "powoId": "urn:lsid:ipni.org:names:274270-1"
+    },
+    {
+      "scientificName": "Kalanchoe pinnata",
+      "wikidataId": "Q311188",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2985930",
+      "powoId": "urn:lsid:ipni.org:names:274438-1"
+    },
+    {
+      "scientificName": "Agave americana",
+      "wikidataId": "Q161115",
+      "turkishName": "Sabırağacı",
+      "otherNames": [
+        "Amerikan agavı",
+        "Sabırlık"
+      ],
+      "gbifId": "2767031",
+      "powoId": "urn:lsid:ipni.org:names:319063-2"
+    },
+    {
+      "scientificName": "Agave attenuata",
+      "wikidataId": "Q1254225",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2766613",
+      "powoId": "urn:lsid:ipni.org:names:61824-1"
+    },
+    {
+      "scientificName": "Agave victoriae-reginae",
+      "wikidataId": "Q135235",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2766696",
+      "powoId": "urn:lsid:ipni.org:names:62342-1"
+    },
+    {
+      "scientificName": "Yucca aloifolia",
+      "wikidataId": "Q1520316",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2775744",
+      "powoId": "urn:lsid:ipni.org:names:325009-2"
+    },
+    {
+      "scientificName": "Lithops lesliei",
+      "wikidataId": "Q5977176",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7329207",
+      "powoId": "urn:lsid:ipni.org:names:362458-1"
+    },
+    {
+      "scientificName": "Pleiospilos nelii",
+      "wikidataId": "Q7204480",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3706668",
+      "powoId": "urn:lsid:ipni.org:names:364003-1"
+    },
+    {
+      "scientificName": "Delosperma cooperi",
+      "wikidataId": "Q2714635",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3707394",
+      "powoId": "urn:lsid:ipni.org:names:361479-1"
+    },
+    {
+      "scientificName": "Carpobrotus edulis",
+      "wikidataId": "Q1368577",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3084842",
+      "powoId": "urn:lsid:ipni.org:names:1200427-2"
+    },
+    {
+      "scientificName": "Lampranthus spectabilis",
+      "wikidataId": "Q583395",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3704796",
+      "powoId": "urn:lsid:ipni.org:names:362323-1"
+    },
+    {
+      "scientificName": "Curio repens",
+      "wikidataId": "Q56646846",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3149628",
+      "powoId": "urn:lsid:ipni.org:names:997629-1"
+    },
+    {
+      "scientificName": "Euphorbia obesa",
+      "wikidataId": "Q135673",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4930719",
+      "powoId": "urn:lsid:ipni.org:names:347540-1"
+    },
+    {
+      "scientificName": "Euphorbia ingens",
+      "wikidataId": "Q3272655",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3070041",
+      "powoId": "urn:lsid:ipni.org:names:346904-1"
+    },
+    {
+      "scientificName": "Euphorbia lactea",
+      "wikidataId": "Q5410474",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3069859",
+      "powoId": "urn:lsid:ipni.org:names:347035-1"
+    },
+    {
+      "scientificName": "Opuntia ficus-indica",
+      "wikidataId": "Q144412",
+      "turkishName": "Hint inciri",
+      "otherNames": [],
+      "gbifId": "5384064",
+      "powoId": "urn:lsid:ipni.org:names:1151735-2"
+    },
+    {
+      "scientificName": "Opuntia microdasys",
+      "wikidataId": "Q310523",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7283961",
+      "powoId": "urn:lsid:ipni.org:names:136806-1"
+    },
+    {
+      "scientificName": "Echinocactus grusonii",
+      "wikidataId": "Q131270",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7280494",
+      "powoId": "urn:lsid:ipni.org:names:87403-2"
+    },
+    {
+      "scientificName": "Kroenleinia grusonii",
+      "wikidataId": "Q42751825",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "10911827",
+      "powoId": "urn:lsid:ipni.org:names:77164085-1"
+    },
+    {
+      "scientificName": "Mammillaria elongata",
+      "wikidataId": "Q134530",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7280502",
+      "powoId": "urn:lsid:ipni.org:names:134532-1"
+    },
+    {
+      "scientificName": "Mammillaria gracilis",
+      "wikidataId": "Q4043667",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7280095",
+      "powoId": "urn:lsid:ipni.org:names:151030-2"
+    },
+    {
+      "scientificName": "Cereus repandus",
+      "wikidataId": "Q310887",
+      "turkishName": "Peru Elma Kaktüsü",
+      "otherNames": [],
+      "gbifId": "8429062",
+      "powoId": "urn:lsid:ipni.org:names:130627-1"
+    },
+    {
+      "scientificName": "Cereus hildmannianus",
+      "wikidataId": "Q6653247",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5384000",
+      "powoId": "urn:lsid:ipni.org:names:53030-2"
+    },
+    {
+      "scientificName": "Gymnocalycium mihanovichii",
+      "wikidataId": "Q137994",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7282762",
+      "powoId": "urn:lsid:ipni.org:names:115434-2"
+    },
+    {
+      "scientificName": "Astrophytum asterias",
+      "wikidataId": "Q132514",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5384219",
+      "powoId": "urn:lsid:ipni.org:names:128907-1"
+    },
+    {
+      "scientificName": "Astrophytum myriostigma",
+      "wikidataId": "Q637364",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7282451",
+      "powoId": "urn:lsid:ipni.org:names:30030274-2"
+    },
+    {
+      "scientificName": "Echinopsis oxygona",
+      "wikidataId": "Q142776",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7281375",
+      "powoId": "urn:lsid:ipni.org:names:132749-1"
+    },
+    {
+      "scientificName": "Carnegiea gigantea",
+      "wikidataId": "Q275573",
+      "turkishName": "Saguaro",
+      "otherNames": [],
+      "gbifId": "5384200",
+      "powoId": "urn:lsid:ipni.org:names:47644-2"
+    },
+    {
+      "scientificName": "Cleistocactus strausii",
+      "wikidataId": "Q144921",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7284676",
+      "powoId": "urn:lsid:ipni.org:names:60254-2"
+    },
+    {
+      "scientificName": "Espostoa lanata",
+      "wikidataId": "Q1368378",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7279707",
+      "powoId": "urn:lsid:ipni.org:names:97828-2"
+    },
+    {
+      "scientificName": "Parodia magnifica",
+      "wikidataId": "Q137551",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3949270",
+      "powoId": "urn:lsid:ipni.org:names:911036-1"
+    },
+    {
+      "scientificName": "Selenicereus undatus",
+      "wikidataId": "Q90600463",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "10334868",
+      "powoId": "urn:lsid:ipni.org:names:77163184-1"
+    },
+    {
+      "scientificName": "Hylocereus undatus",
+      "wikidataId": "Q131730",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3084394",
+      "powoId": "urn:lsid:ipni.org:names:125404-2"
+    },
+    {
+      "scientificName": "Disocactus flagelliformis",
+      "wikidataId": "Q310976",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3949733",
+      "powoId": "urn:lsid:ipni.org:names:963217-1"
+    },
+    {
+      "scientificName": "Adenium obesum",
+      "wikidataId": "Q311994",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7155887",
+      "powoId": "urn:lsid:ipni.org:names:76369-1"
+    },
+    {
+      "scientificName": "Pachypodium lamerei",
+      "wikidataId": "Q1278160",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5535474",
+      "powoId": "urn:lsid:ipni.org:names:80705-1"
+    },
+    {
+      "scientificName": "Stapelia gigantea",
+      "wikidataId": "Q287520",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3170422",
+      "powoId": "urn:lsid:ipni.org:names:101594-1"
+    },
+    {
+      "scientificName": "Pelargonium zonale",
+      "wikidataId": "Q3898877",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2891606",
+      "powoId": "urn:lsid:ipni.org:names:377229-1"
+    },
+    {
+      "scientificName": "Pelargonium peltatum",
+      "wikidataId": "Q160925",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2891605",
+      "powoId": "urn:lsid:ipni.org:names:376728-1"
+    },
+    {
+      "scientificName": "Pelargonium graveolens",
+      "wikidataId": "Q164306",
+      "turkishName": "Itır",
+      "otherNames": [],
+      "gbifId": "2891608",
+      "powoId": "urn:lsid:ipni.org:names:376259-1"
+    },
+    {
+      "scientificName": "Pelargonium × hortorum",
+      "wikidataId": "Q6566235",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2891604",
+      "powoId": "urn:lsid:ipni.org:names:376325-1"
+    },
+    {
+      "scientificName": "Pelargonium grandiflorum",
+      "wikidataId": "Q160923",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3827422",
+      "powoId": "urn:lsid:ipni.org:names:376255-1"
+    },
+    {
+      "scientificName": "Petunia × atkinsiana",
+      "wikidataId": "Q16861020",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2928859",
+      "powoId": "urn:lsid:ipni.org:names:817227-1"
+    },
+    {
+      "scientificName": "Tagetes erecta",
+      "wikidataId": "Q759876",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3088488",
+      "powoId": "urn:lsid:ipni.org:names:252092-1"
+    },
+    {
+      "scientificName": "Tagetes patula",
+      "wikidataId": "Q644934",
+      "turkishName": "Kadife çiçeği (Tagetes patula)",
+      "otherNames": [],
+      "gbifId": "3088492",
+      "powoId": "urn:lsid:ipni.org:names:252146-1"
+    },
+    {
+      "scientificName": "Calendula officinalis",
+      "wikidataId": "Q145930",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5391480",
+      "powoId": "urn:lsid:ipni.org:names:187894-1"
+    },
+    {
+      "scientificName": "Zinnia elegans",
+      "wikidataId": "Q15245321",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3111754",
+      "powoId": "urn:lsid:ipni.org:names:261331-1"
+    },
+    {
+      "scientificName": "Cosmos bipinnatus",
+      "wikidataId": "Q575748",
+      "turkishName": "Meksika Yıldızı, Kozmos Çiçeği",
+      "otherNames": [],
+      "gbifId": "3098912",
+      "powoId": "urn:lsid:ipni.org:names:198320-1"
+    },
+    {
+      "scientificName": "Cosmos sulphureus",
+      "wikidataId": "Q1209998",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3098951",
+      "powoId": "urn:lsid:ipni.org:names:198368-1"
+    },
+    {
+      "scientificName": "Helianthus annuus",
+      "wikidataId": "Q171497",
+      "turkishName": "Ayçiçeği",
+      "otherNames": [
+        "Günebakan"
+      ],
+      "gbifId": "9206251",
+      "powoId": "urn:lsid:ipni.org:names:119003-2"
+    },
+    {
+      "scientificName": "Tropaeolum majus",
+      "wikidataId": "Q156288",
+      "turkishName": "Latin çiçeği",
+      "otherNames": [],
+      "gbifId": "2889934",
+      "powoId": "urn:lsid:ipni.org:names:310974-2"
+    },
+    {
+      "scientificName": "Lobelia erinus",
+      "wikidataId": "Q158858",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5408087",
+      "powoId": "urn:lsid:ipni.org:names:143240-1"
+    },
+    {
+      "scientificName": "Lobularia maritima",
+      "wikidataId": "Q2094356",
+      "turkishName": "Kraliyet halısı",
+      "otherNames": [],
+      "gbifId": "5373358",
+      "powoId": "urn:lsid:ipni.org:names:1085072-2"
+    },
+    {
+      "scientificName": "Portulaca grandiflora",
+      "wikidataId": "Q159547",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3084700",
+      "powoId": "urn:lsid:ipni.org:names:208592-2"
+    },
+    {
+      "scientificName": "Salvia splendens",
+      "wikidataId": "Q161080",
+      "turkishName": "Ateş çiçeği",
+      "otherNames": [],
+      "gbifId": "2927029",
+      "powoId": "urn:lsid:ipni.org:names:60466516-2"
+    },
+    {
+      "scientificName": "Salvia farinacea",
+      "wikidataId": "Q796716",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2927064",
+      "powoId": "urn:lsid:ipni.org:names:456204-1"
+    },
+    {
+      "scientificName": "Celosia argentea",
+      "wikidataId": "Q161816",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3085191",
+      "powoId": "urn:lsid:ipni.org:names:316350-2"
+    },
+    {
+      "scientificName": "Gomphrena globosa",
+      "wikidataId": "Q1200680",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3084908",
+      "powoId": "urn:lsid:ipni.org:names:327333-2"
+    },
+    {
+      "scientificName": "Catharanthus roseus",
+      "wikidataId": "Q161093",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3169830",
+      "powoId": "urn:lsid:ipni.org:names:77880-1"
+    },
+    {
+      "scientificName": "Antirrhinum majus",
+      "wikidataId": "Q156843",
+      "turkishName": "Aslanağzı",
+      "otherNames": [],
+      "gbifId": "3172001",
+      "powoId": "urn:lsid:ipni.org:names:799180-1"
+    },
+    {
+      "scientificName": "Viola × wittrockiana",
+      "wikidataId": "Q12861234",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5331389",
+      "powoId": "urn:lsid:ipni.org:names:869552-1"
+    },
+    {
+      "scientificName": "Viola tricolor",
+      "wikidataId": "Q190326",
+      "turkishName": "Hercai menekşe",
+      "otherNames": [],
+      "gbifId": "5331347",
+      "powoId": "urn:lsid:ipni.org:names:869428-1"
+    },
+    {
+      "scientificName": "Viola odorata",
+      "wikidataId": "Q108684",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5331181",
+      "powoId": "urn:lsid:ipni.org:names:868828-1"
+    },
+    {
+      "scientificName": "Bellis perennis",
+      "wikidataId": "Q26158",
+      "turkishName": "Koyungözü",
+      "otherNames": [
+        "Koyun gözü"
+      ],
+      "gbifId": "3117424",
+      "powoId": "urn:lsid:ipni.org:names:184409-1"
+    },
+    {
+      "scientificName": "Dianthus caryophyllus",
+      "wikidataId": "Q158984",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3085420",
+      "powoId": "urn:lsid:ipni.org:names:153205-1"
+    },
+    {
+      "scientificName": "Dianthus barbatus",
+      "wikidataId": "Q161745",
+      "turkishName": "Hüsnüyusuf",
+      "otherNames": [],
+      "gbifId": "3085421",
+      "powoId": "urn:lsid:ipni.org:names:306674-2"
+    },
+    {
+      "scientificName": "Dianthus chinensis",
+      "wikidataId": "Q159013",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3085418",
+      "powoId": "urn:lsid:ipni.org:names:153215-1"
+    },
+    {
+      "scientificName": "Matthiola incana",
+      "wikidataId": "Q30063",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5377378",
+      "powoId": "urn:lsid:ipni.org:names:286910-1"
+    },
+    {
+      "scientificName": "Lathyrus odoratus",
+      "wikidataId": "Q163944",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5356514",
+      "powoId": "urn:lsid:ipni.org:names:501909-1"
+    },
+    {
+      "scientificName": "Ipomoea purpurea",
+      "wikidataId": "Q1630964",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2928576",
+      "powoId": "urn:lsid:ipni.org:names:30043043-2"
+    },
+    {
+      "scientificName": "Ipomoea tricolor",
+      "wikidataId": "Q159698",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2928589",
+      "powoId": "urn:lsid:ipni.org:names:269966-1"
+    },
+    {
+      "scientificName": "Mirabilis jalapa",
+      "wikidataId": "Q13710",
+      "turkishName": "Akşamsefası",
+      "otherNames": [],
+      "gbifId": "3086240",
+      "powoId": "urn:lsid:ipni.org:names:162591-2"
+    },
+    {
+      "scientificName": "Gerbera jamesonii",
+      "wikidataId": "Q746928",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "8409932",
+      "powoId": "urn:lsid:ipni.org:names:208893-1"
+    },
+    {
+      "scientificName": "Chrysanthemum × morifolium",
+      "wikidataId": "Q15530181",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3150767",
+      "powoId": null
+    },
+    {
+      "scientificName": "Chrysanthemum indicum",
+      "wikidataId": "Q4157858",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3150814",
+      "powoId": "urn:lsid:ipni.org:names:193510-1"
+    },
+    {
+      "scientificName": "Leucanthemum vulgare",
+      "wikidataId": "Q27164",
+      "turkishName": "Beyaz Ay Papatyası, Margarit, Büyük Papatya",
+      "otherNames": [
+        "Margarit",
+        "Beyaz aypapatyası",
+        "Çayir kasimpati",
+        "Çayır kasımpatısı"
+      ],
+      "gbifId": "5400982",
+      "powoId": "urn:lsid:ipni.org:names:30296198-2"
+    },
+    {
+      "scientificName": "Argyranthemum frutescens",
+      "wikidataId": "Q2062517",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3104491",
+      "powoId": "urn:lsid:ipni.org:names:178745-1"
+    },
+    {
+      "scientificName": "Dimorphotheca ecklonis",
+      "wikidataId": "Q15629400",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5387293",
+      "powoId": "urn:lsid:ipni.org:names:201468-1"
+    },
+    {
+      "scientificName": "Gazania rigens",
+      "wikidataId": "Q775301",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3112455",
+      "powoId": "urn:lsid:ipni.org:names:208720-1"
+    },
+    {
+      "scientificName": "Rudbeckia hirta",
+      "wikidataId": "Q2532820",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3114225",
+      "powoId": "urn:lsid:ipni.org:names:223740-2"
+    },
+    {
+      "scientificName": "Echinacea purpurea",
+      "wikidataId": "Q272661",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3150935",
+      "powoId": "urn:lsid:ipni.org:names:1174497-2"
+    },
+    {
+      "scientificName": "Coreopsis grandiflora",
+      "wikidataId": "Q1319071",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3133927",
+      "powoId": "urn:lsid:ipni.org:names:20005010-1"
+    },
+    {
+      "scientificName": "Gaillardia pulchella",
+      "wikidataId": "Q2701210",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5387821",
+      "powoId": "urn:lsid:ipni.org:names:329185-2"
+    },
+    {
+      "scientificName": "Lavandula angustifolia",
+      "wikidataId": "Q42081",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2927305",
+      "powoId": "urn:lsid:ipni.org:names:449008-1"
+    },
+    {
+      "scientificName": "Lavandula stoechas",
+      "wikidataId": "Q1342976",
+      "turkishName": "Karabaş otu",
+      "otherNames": [],
+      "gbifId": "2927303",
+      "powoId": "urn:lsid:ipni.org:names:449089-1"
+    },
+    {
+      "scientificName": "Lavandula × intermedia",
+      "wikidataId": "Q3828025",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2927309",
+      "powoId": "urn:lsid:ipni.org:names:449048-1"
+    },
+    {
+      "scientificName": "Salvia rosmarinus",
+      "wikidataId": "Q102240169",
+      "turkishName": "Biberiye",
+      "otherNames": [],
+      "gbifId": "10902460",
+      "powoId": "urn:lsid:ipni.org:names:457138-1"
+    },
+    {
+      "scientificName": "Rosmarinus officinalis",
+      "wikidataId": "Q122679",
+      "turkishName": "Biberiye",
+      "otherNames": [],
+      "gbifId": "2926634",
+      "powoId": "urn:lsid:ipni.org:names:455509-1"
+    },
+    {
+      "scientificName": "Rosa chinensis",
+      "wikidataId": "Q344900",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3005039",
+      "powoId": "urn:lsid:ipni.org:names:732029-1"
+    },
+    {
+      "scientificName": "Rosa × damascena",
+      "wikidataId": "Q578904",
+      "turkishName": "Isparta gülü",
+      "otherNames": [],
+      "gbifId": "7390572",
+      "powoId": "urn:lsid:ipni.org:names:2968261-4"
+    },
+    {
+      "scientificName": "Rosa canina",
+      "wikidataId": "Q146066",
+      "turkishName": "Kuşburnu",
+      "otherNames": [
+        "Yabangülü",
+        "Yabani gül"
+      ],
+      "gbifId": "3002461",
+      "powoId": "urn:lsid:ipni.org:names:731955-1"
+    },
+    {
+      "scientificName": "Rosa gallica",
+      "wikidataId": "Q157668",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3002530",
+      "powoId": "urn:lsid:ipni.org:names:732569-1"
+    },
+    {
+      "scientificName": "Hydrangea macrophylla",
+      "wikidataId": "Q159219",
+      "turkishName": "Ortanca",
+      "otherNames": [],
+      "gbifId": "2985994",
+      "powoId": "urn:lsid:ipni.org:names:791637-1"
+    },
+    {
+      "scientificName": "Hydrangea paniculata",
+      "wikidataId": "Q158443",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2985995",
+      "powoId": "urn:lsid:ipni.org:names:791653-1"
+    },
+    {
+      "scientificName": "Bougainvillea glabra",
+      "wikidataId": "Q159984",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5384862",
+      "powoId": "urn:lsid:ipni.org:names:35444-2"
+    },
+    {
+      "scientificName": "Bougainvillea spectabilis",
+      "wikidataId": "Q2921547",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7167078",
+      "powoId": "urn:lsid:ipni.org:names:604358-1"
+    },
+    {
+      "scientificName": "Jasminum officinale",
+      "wikidataId": "Q515610",
+      "turkishName": "Hakiki yasemin",
+      "otherNames": [],
+      "gbifId": "3172261",
+      "powoId": "urn:lsid:ipni.org:names:609672-1"
+    },
+    {
+      "scientificName": "Jasminum sambac",
+      "wikidataId": "Q1356614",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3172265",
+      "powoId": "urn:lsid:ipni.org:names:609755-1"
+    },
+    {
+      "scientificName": "Jasminum nudiflorum",
+      "wikidataId": "Q623461",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3172266",
+      "powoId": "urn:lsid:ipni.org:names:609662-1"
+    },
+    {
+      "scientificName": "Trachelospermum jasminoides",
+      "wikidataId": "Q1207043",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3169713",
+      "powoId": "urn:lsid:ipni.org:names:82553-1"
+    },
+    {
+      "scientificName": "Wisteria sinensis",
+      "wikidataId": "Q159116",
+      "turkishName": "Çin mor salkımı",
+      "otherNames": [],
+      "gbifId": "2977331",
+      "powoId": "urn:lsid:ipni.org:names:60459148-2"
+    },
+    {
+      "scientificName": "Lonicera japonica",
+      "wikidataId": "Q161083",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5334240",
+      "powoId": "urn:lsid:ipni.org:names:148850-1"
+    },
+    {
+      "scientificName": "Lonicera caprifolium",
+      "wikidataId": "Q158538",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5334227",
+      "powoId": "urn:lsid:ipni.org:names:148670-1"
+    },
+    {
+      "scientificName": "Parthenocissus quinquefolia",
+      "wikidataId": "Q157968",
+      "turkishName": "Virginia sarmaşığı",
+      "otherNames": [],
+      "gbifId": "3039194",
+      "powoId": "urn:lsid:ipni.org:names:184091-2"
+    },
+    {
+      "scientificName": "Parthenocissus tricuspidata",
+      "wikidataId": "Q157979",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3039209",
+      "powoId": "urn:lsid:ipni.org:names:50912710-1"
+    },
+    {
+      "scientificName": "Campsis radicans",
+      "wikidataId": "Q468778",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3172549",
+      "powoId": "urn:lsid:ipni.org:names:30332621-2"
+    },
+    {
+      "scientificName": "Passiflora caerulea",
+      "wikidataId": "Q161120",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2874199",
+      "powoId": "urn:lsid:ipni.org:names:321949-2"
+    },
+    {
+      "scientificName": "Clematis vitalba",
+      "wikidataId": "Q160100",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3033558",
+      "powoId": "urn:lsid:ipni.org:names:319145-2"
+    },
+    {
+      "scientificName": "Plumbago auriculata",
+      "wikidataId": "Q263162",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3082283",
+      "powoId": "urn:lsid:ipni.org:names:687056-1"
+    },
+    {
+      "scientificName": "Nerium oleander",
+      "wikidataId": "Q155833",
+      "turkishName": "Zakkum",
+      "otherNames": [],
+      "gbifId": "3169756",
+      "powoId": "urn:lsid:ipni.org:names:80460-1"
+    },
+    {
+      "scientificName": "Hibiscus syriacus",
+      "wikidataId": "Q157756",
+      "turkishName": "Ağaçhatmi",
+      "otherNames": [
+        "Ağaç hatmi"
+      ],
+      "gbifId": "3152583",
+      "powoId": "urn:lsid:ipni.org:names:560890-1"
+    },
+    {
+      "scientificName": "Lantana camara",
+      "wikidataId": "Q332469",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2925303",
+      "powoId": "urn:lsid:ipni.org:names:325686-2"
+    },
+    {
+      "scientificName": "Fuchsia magellanica",
+      "wikidataId": "Q164101",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5938224",
+      "powoId": "urn:lsid:ipni.org:names:612572-1"
+    },
+    {
+      "scientificName": "Camellia japonica",
+      "wikidataId": "Q160121",
+      "turkishName": "Japon Kamelyası",
+      "otherNames": [],
+      "gbifId": "3189636",
+      "powoId": "urn:lsid:ipni.org:names:828524-1"
+    },
+    {
+      "scientificName": "Rhododendron simsii",
+      "wikidataId": "Q5914721",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7327627",
+      "powoId": "urn:lsid:ipni.org:names:333359-1"
+    },
+    {
+      "scientificName": "Rhododendron ponticum",
+      "wikidataId": "Q557928",
+      "turkishName": "Mor çiçekli ormangülü",
+      "otherNames": [
+        "Komar"
+      ],
+      "gbifId": "7327990",
+      "powoId": "urn:lsid:ipni.org:names:333114-1"
+    },
+    {
+      "scientificName": "Rhododendron luteum",
+      "wikidataId": "Q2591210",
+      "turkishName": "Sarı çiçekli ormangülü",
+      "otherNames": [],
+      "gbifId": "7135755",
+      "powoId": "urn:lsid:ipni.org:names:332817-1"
+    },
+    {
+      "scientificName": "Buxus sempervirens",
+      "wikidataId": "Q27344",
+      "turkishName": "Adi şimşir",
+      "otherNames": [],
+      "gbifId": "2984671",
+      "powoId": "urn:lsid:ipni.org:names:340317-1"
+    },
+    {
+      "scientificName": "Euonymus japonicus",
+      "wikidataId": "Q161383",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7102937",
+      "powoId": "urn:lsid:ipni.org:names:160944-1"
+    },
+    {
+      "scientificName": "Pittosporum tobira",
+      "wikidataId": "Q161375",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2986304",
+      "powoId": "urn:lsid:ipni.org:names:684716-1"
+    },
+    {
+      "scientificName": "Photinia × fraseri",
+      "wikidataId": "Q30913716",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": null,
+      "powoId": null
+    },
+    {
+      "scientificName": "Ligustrum vulgare",
+      "wikidataId": "Q1848856",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3172300",
+      "powoId": "urn:lsid:ipni.org:names:610130-1"
+    },
+    {
+      "scientificName": "Ligustrum japonicum",
+      "wikidataId": "Q1209219",
+      "turkishName": "Japon kurtbağrı",
+      "otherNames": [],
+      "gbifId": "3172301",
+      "powoId": "urn:lsid:ipni.org:names:610001-1"
+    },
+    {
+      "scientificName": "Nandina domestica",
+      "wikidataId": "Q1153858",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5371712",
+      "powoId": "urn:lsid:ipni.org:names:107544-1"
+    },
+    {
+      "scientificName": "Berberis thunbergii",
+      "wikidataId": "Q158397",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3033896",
+      "powoId": "urn:lsid:ipni.org:names:107136-1"
+    },
+    {
+      "scientificName": "Pyracantha coccinea",
+      "wikidataId": "Q159269",
+      "turkishName": "Kızıl ateş dikeni",
+      "otherNames": [],
+      "gbifId": "2988188",
+      "powoId": "urn:lsid:ipni.org:names:730611-1"
+    },
+    {
+      "scientificName": "Cotoneaster horizontalis",
+      "wikidataId": "Q159650",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3025617",
+      "powoId": "urn:lsid:ipni.org:names:722522-1"
+    },
+    {
+      "scientificName": "Viburnum tinus",
+      "wikidataId": "Q1321268",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2888585",
+      "powoId": "urn:lsid:ipni.org:names:326271-2"
+    },
+    {
+      "scientificName": "Viburnum opulus",
+      "wikidataId": "Q156928",
+      "turkishName": "Gilaburu",
+      "otherNames": [
+        "Gilaboru"
+      ],
+      "gbifId": "2888605",
+      "powoId": "urn:lsid:ipni.org:names:326268-2"
+    },
+    {
+      "scientificName": "Forsythia × intermedia",
+      "wikidataId": "Q5470682",
+      "turkishName": "Altınçanak",
+      "otherNames": [],
+      "gbifId": "5415054",
+      "powoId": "urn:lsid:ipni.org:names:608891-1"
+    },
+    {
+      "scientificName": "Syringa vulgaris",
+      "wikidataId": "Q6565319",
+      "turkishName": "Hakiki leylak",
+      "otherNames": [
+        "Leylak"
+      ],
+      "gbifId": "5415039",
+      "powoId": "urn:lsid:ipni.org:names:289009-2"
+    },
+    {
+      "scientificName": "Philadelphus coronarius",
+      "wikidataId": "Q163791",
+      "turkishName": "Filbahri",
+      "otherNames": [],
+      "gbifId": "2986045",
+      "powoId": "urn:lsid:ipni.org:names:792194-1"
+    },
+    {
+      "scientificName": "Weigela florida",
+      "wikidataId": "Q164323",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2888730",
+      "powoId": "urn:lsid:ipni.org:names:150035-1"
+    },
+    {
+      "scientificName": "Hypericum calycinum",
+      "wikidataId": "Q159330",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3189497",
+      "powoId": "urn:lsid:ipni.org:names:433287-1"
+    },
+    {
+      "scientificName": "Callistemon citrinus",
+      "wikidataId": "Q1028271",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3173413",
+      "powoId": "urn:lsid:ipni.org:names:591369-1"
+    },
+    {
+      "scientificName": "Myrtus communis",
+      "wikidataId": "Q6122027",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3180085",
+      "powoId": "urn:lsid:ipni.org:names:599719-1"
+    },
+    {
+      "scientificName": "Tulipa gesneriana",
+      "wikidataId": "Q163060",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5299675",
+      "powoId": "urn:lsid:ipni.org:names:542923-1"
+    },
+    {
+      "scientificName": "Narcissus pseudonarcissus",
+      "wikidataId": "Q27498",
+      "turkishName": "Yabani nergis",
+      "otherNames": [],
+      "gbifId": "2858244",
+      "powoId": "urn:lsid:ipni.org:names:66177-1"
+    },
+    {
+      "scientificName": "Narcissus tazetta",
+      "wikidataId": "Q6965683",
+      "turkishName": "Çin nergisi",
+      "otherNames": [],
+      "gbifId": "2858963",
+      "powoId": "urn:lsid:ipni.org:names:66240-1"
+    },
+    {
+      "scientificName": "Hyacinthus orientalis",
+      "wikidataId": "Q157428",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2772666",
+      "powoId": "urn:lsid:ipni.org:names:536789-1"
+    },
+    {
+      "scientificName": "Muscari armeniacum",
+      "wikidataId": "Q159562",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2772174",
+      "powoId": "urn:lsid:ipni.org:names:77306704-1"
+    },
+    {
+      "scientificName": "Muscari neglectum",
+      "wikidataId": "Q163062",
+      "turkishName": "Dağ sümbülü",
+      "otherNames": [],
+      "gbifId": "2772020",
+      "powoId": "urn:lsid:ipni.org:names:60460275-2"
+    },
+    {
+      "scientificName": "Crocus vernus",
+      "wikidataId": "Q165077",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2747567",
+      "powoId": "urn:lsid:ipni.org:names:60461938-2"
+    },
+    {
+      "scientificName": "Galanthus nivalis",
+      "wikidataId": "Q109995",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2855356",
+      "powoId": "urn:lsid:ipni.org:names:64496-1"
+    },
+    {
+      "scientificName": "Galanthus elwesii",
+      "wikidataId": "Q224586",
+      "turkishName": "Kardelen",
+      "otherNames": [],
+      "gbifId": "2855398",
+      "powoId": "urn:lsid:ipni.org:names:332096-2"
+    },
+    {
+      "scientificName": "Iris germanica",
+      "wikidataId": "Q161734",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5298069",
+      "powoId": "urn:lsid:ipni.org:names:438637-1"
+    },
+    {
+      "scientificName": "Iris sibirica",
+      "wikidataId": "Q145686",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5298126",
+      "powoId": "urn:lsid:ipni.org:names:439087-1"
+    },
+    {
+      "scientificName": "Lilium candidum",
+      "wikidataId": "Q159811",
+      "turkishName": "Ak zambak",
+      "otherNames": [
+        "Meryemana zambağı"
+      ],
+      "gbifId": "2753090",
+      "powoId": "urn:lsid:ipni.org:names:537512-1"
+    },
+    {
+      "scientificName": "Lilium longiflorum",
+      "wikidataId": "Q311206",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2753336",
+      "powoId": "urn:lsid:ipni.org:names:537642-1"
+    },
+    {
+      "scientificName": "Gladiolus communis",
+      "wikidataId": "Q143012",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2750096",
+      "powoId": "urn:lsid:ipni.org:names:437372-1"
+    },
+    {
+      "scientificName": "Dahlia pinnata",
+      "wikidataId": "Q1549236",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5387142",
+      "powoId": "urn:lsid:ipni.org:names:30027297-2"
+    },
+    {
+      "scientificName": "Canna indica",
+      "wikidataId": "Q163559",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "8034409",
+      "powoId": "urn:lsid:ipni.org:names:319130-2"
+    },
+    {
+      "scientificName": "Agapanthus africanus",
+      "wikidataId": "Q161256",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2854740",
+      "powoId": "urn:lsid:ipni.org:names:527258-1"
+    },
+    {
+      "scientificName": "Agapanthus praecox",
+      "wikidataId": "Q161246",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2854755",
+      "powoId": "urn:lsid:ipni.org:names:527283-1"
+    },
+    {
+      "scientificName": "Allium giganteum",
+      "wikidataId": "Q736155",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2857111",
+      "powoId": "urn:lsid:ipni.org:names:528087-1"
+    },
+    {
+      "scientificName": "Fritillaria imperialis",
+      "wikidataId": "Q161939",
+      "turkishName": "Ters Lale, Ağlayan Gelin",
+      "otherNames": [],
+      "gbifId": "5300716",
+      "powoId": "urn:lsid:ipni.org:names:535166-1"
+    },
+    {
+      "scientificName": "Anemone coronaria",
+      "wikidataId": "Q511179",
+      "turkishName": "Taçlı dağ lalesi",
+      "otherNames": [
+        "Taçlı dağlalesi",
+        "Taçlı kırlalesi"
+      ],
+      "gbifId": "3033261",
+      "powoId": "urn:lsid:ipni.org:names:708314-1"
+    },
+    {
+      "scientificName": "Ranunculus asiaticus",
+      "wikidataId": "Q728595",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7721054",
+      "powoId": "urn:lsid:ipni.org:names:712245-1"
+    },
+    {
+      "scientificName": "Freesia refracta",
+      "wikidataId": "Q15235186",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2747084",
+      "powoId": "urn:lsid:ipni.org:names:437030-1"
+    },
+    {
+      "scientificName": "Paeonia lactiflora",
+      "wikidataId": "Q163076",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3083486",
+      "powoId": "urn:lsid:ipni.org:names:711802-1"
+    },
+    {
+      "scientificName": "Paeonia officinalis",
+      "wikidataId": "Q159738",
+      "turkishName": "Adi şakayık",
+      "otherNames": [
+        "Avrupa şakayığı"
+      ],
+      "gbifId": "3083488",
+      "powoId": "urn:lsid:ipni.org:names:711836-1"
+    },
+    {
+      "scientificName": "Papaver rhoeas",
+      "wikidataId": "Q130201",
+      "turkishName": "Gelincik",
+      "otherNames": [],
+      "gbifId": "2888443",
+      "powoId": "urn:lsid:ipni.org:names:306058-2"
+    },
+    {
+      "scientificName": "Papaver somniferum",
+      "wikidataId": "Q131584",
+      "turkishName": "Haşhaş",
+      "otherNames": [],
+      "gbifId": "2888439",
+      "powoId": "urn:lsid:ipni.org:names:673724-1"
+    },
+    {
+      "scientificName": "Papaver orientale",
+      "wikidataId": "Q149279",
+      "turkishName": "Gelincik, Türk Gelinciği",
+      "otherNames": [],
+      "gbifId": "2888437",
+      "powoId": "urn:lsid:ipni.org:names:673641-1"
+    },
+    {
+      "scientificName": "Hemerocallis fulva",
+      "wikidataId": "Q1424440",
+      "turkishName": "Turuncu güngüzeli",
+      "otherNames": [
+        "Gün güzeli"
+      ],
+      "gbifId": "2781074",
+      "powoId": "urn:lsid:ipni.org:names:536335-1"
+    },
+    {
+      "scientificName": "Hosta plantaginea",
+      "wikidataId": "Q11222293",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2771287",
+      "powoId": "urn:lsid:ipni.org:names:536625-1"
+    },
+    {
+      "scientificName": "Heuchera sanguinea",
+      "wikidataId": "Q12332586",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3032653",
+      "powoId": "urn:lsid:ipni.org:names:791403-1"
+    },
+    {
+      "scientificName": "Aquilegia vulgaris",
+      "wikidataId": "Q148929",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3033191",
+      "powoId": "urn:lsid:ipni.org:names:306409-2"
+    },
+    {
+      "scientificName": "Delphinium elatum",
+      "wikidataId": "Q164246",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3033757",
+      "powoId": "urn:lsid:ipni.org:names:710585-1"
+    },
+    {
+      "scientificName": "Digitalis purpurea",
+      "wikidataId": "Q157555",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5414995",
+      "powoId": "urn:lsid:ipni.org:names:802077-1"
+    },
+    {
+      "scientificName": "Alcea rosea",
+      "wikidataId": "Q27682",
+      "turkishName": "Gülhatmi",
+      "otherNames": [],
+      "gbifId": "5406789",
+      "powoId": "urn:lsid:ipni.org:names:558713-1"
+    },
+    {
+      "scientificName": "Malva sylvestris",
+      "wikidataId": "Q156835",
+      "turkishName": "Büyük ebegümeci",
+      "otherNames": [
+        "Ebegümeci"
+      ],
+      "gbifId": "3152374",
+      "powoId": "urn:lsid:ipni.org:names:561932-1"
+    },
+    {
+      "scientificName": "Lupinus polyphyllus",
+      "wikidataId": "Q159737",
+      "turkishName": "Büyük yapraklı acı bakla",
+      "otherNames": [],
+      "gbifId": "2964355",
+      "powoId": "urn:lsid:ipni.org:names:504939-1"
+    },
+    {
+      "scientificName": "Phlox paniculata",
+      "wikidataId": "Q164553",
+      "turkishName": "Bahçe Alev Çiçeği, Bahçe Floksu, Yaz Floksu",
+      "otherNames": [],
+      "gbifId": "2927744",
+      "powoId": "urn:lsid:ipni.org:names:193615-2"
+    },
+    {
+      "scientificName": "Achillea millefolium",
+      "wikidataId": "Q25408",
+      "turkishName": "Civanperçemi",
+      "otherNames": [],
+      "gbifId": "3120060",
+      "powoId": "urn:lsid:ipni.org:names:2294-2"
+    },
+    {
+      "scientificName": "Stachys byzantina",
+      "wikidataId": "Q2034131",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2927230",
+      "powoId": "urn:lsid:ipni.org:names:459393-1"
+    },
+    {
+      "scientificName": "Santolina chamaecyparissus",
+      "wikidataId": "Q1543811",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3125933",
+      "powoId": "urn:lsid:ipni.org:names:241927-1"
+    },
+    {
+      "scientificName": "Helichrysum italicum",
+      "wikidataId": "Q1587861",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3131614",
+      "powoId": "urn:lsid:ipni.org:names:212898-1"
+    },
+    {
+      "scientificName": "Jacobaea maritima",
+      "wikidataId": "Q13217438",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5388595",
+      "powoId": "urn:lsid:ipni.org:names:77075194-1"
+    },
+    {
+      "scientificName": "Festuca glauca",
+      "wikidataId": "Q944944",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2705031",
+      "powoId": "urn:lsid:ipni.org:names:20008857-1"
+    },
+    {
+      "scientificName": "Cenchrus setaceus",
+      "wikidataId": "Q50840675",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5828232",
+      "powoId": "urn:lsid:ipni.org:names:77106046-1"
+    },
+    {
+      "scientificName": "Miscanthus sinensis",
+      "wikidataId": "Q1073621",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2706026",
+      "powoId": "urn:lsid:ipni.org:names:408768-1"
+    },
+    {
+      "scientificName": "Cortaderia selloana",
+      "wikidataId": "Q470109",
+      "turkishName": "Pampas Otu",
+      "otherNames": [],
+      "gbifId": "2704523",
+      "powoId": "urn:lsid:ipni.org:names:66317-2"
+    },
+    {
+      "scientificName": "Ophiopogon japonicus",
+      "wikidataId": "Q537448",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2774158",
+      "powoId": "urn:lsid:ipni.org:names:429781-1"
+    },
+    {
+      "scientificName": "Liriope muscari",
+      "wikidataId": "Q141540",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5549949",
+      "powoId": "urn:lsid:ipni.org:names:537868-1"
+    },
+    {
+      "scientificName": "Vinca minor",
+      "wikidataId": "Q161777",
+      "turkishName": "Küçük Cezayir menekşesi",
+      "otherNames": [],
+      "gbifId": "3169707",
+      "powoId": "urn:lsid:ipni.org:names:82701-1"
+    },
+    {
+      "scientificName": "Vinca major",
+      "wikidataId": "Q161746",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3169708",
+      "powoId": "urn:lsid:ipni.org:names:82697-1"
+    },
+    {
+      "scientificName": "Ajuga reptans",
+      "wikidataId": "Q157249",
+      "turkishName": "Dağ mayasıl otu",
+      "otherNames": [],
+      "gbifId": "2927078",
+      "powoId": "urn:lsid:ipni.org:names:444664-1"
+    },
+    {
+      "scientificName": "Lamium maculatum",
+      "wikidataId": "Q164035",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2926684",
+      "powoId": "urn:lsid:ipni.org:names:448886-1"
+    },
+    {
+      "scientificName": "Convallaria majalis",
+      "wikidataId": "Q101711",
+      "turkishName": "Müge",
+      "otherNames": [],
+      "gbifId": "7459480",
+      "powoId": "urn:lsid:ipni.org:names:533487-1"
+    },
+    {
+      "scientificName": "Cyclamen hederifolium",
+      "wikidataId": "Q1965935",
+      "turkishName": "Kandilkökü",
+      "otherNames": [],
+      "gbifId": "7127810",
+      "powoId": "urn:lsid:ipni.org:names:700730-1"
+    },
+    {
+      "scientificName": "Cyclamen coum",
+      "wikidataId": "Q82611",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7127354",
+      "powoId": "urn:lsid:ipni.org:names:700707-1"
+    },
+    {
+      "scientificName": "Primula vulgaris",
+      "wikidataId": "Q159537",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5414335",
+      "powoId": "urn:lsid:ipni.org:names:702779-1"
+    },
+    {
+      "scientificName": "Primula veris",
+      "wikidataId": "Q157552",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5414325",
+      "powoId": "urn:lsid:ipni.org:names:702751-1"
+    },
+    {
+      "scientificName": "Helleborus orientalis",
+      "wikidataId": "Q937300",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "6374953",
+      "powoId": "urn:lsid:ipni.org:names:711354-1"
+    },
+    {
+      "scientificName": "Erica carnea",
+      "wikidataId": "Q248958",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5682465",
+      "powoId": "urn:lsid:ipni.org:names:332092-2"
+    },
+    {
+      "scientificName": "Calluna vulgaris",
+      "wikidataId": "Q26615",
+      "turkishName": "Süpürge otu",
+      "otherNames": [],
+      "gbifId": "2882482",
+      "powoId": "urn:lsid:ipni.org:names:327305-1"
+    },
+    {
+      "scientificName": "Dichondra argentea",
+      "wikidataId": "Q5805594",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2928668",
+      "powoId": "urn:lsid:ipni.org:names:267747-1"
+    },
+    {
+      "scientificName": "Chaenostoma cordatum",
+      "wikidataId": "Q7649928",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5561475",
+      "powoId": "urn:lsid:ipni.org:names:801445-1"
+    },
+    {
+      "scientificName": "Scaevola aemula",
+      "wikidataId": "Q448069",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5569367",
+      "powoId": "urn:lsid:ipni.org:names:384140-1"
+    },
+    {
+      "scientificName": "Sanvitalia procumbens",
+      "wikidataId": "Q1426361",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3104106",
+      "powoId": "urn:lsid:ipni.org:names:242036-1"
+    },
+    {
+      "scientificName": "Nemesia strumosa",
+      "wikidataId": "Q13036374",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5414643",
+      "powoId": "urn:lsid:ipni.org:names:806327-1"
+    },
+    {
+      "scientificName": "Brachyscome iberidifolia",
+      "wikidataId": "Q882776",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3144603",
+      "powoId": "urn:lsid:ipni.org:names:185950-1"
+    },
+    {
+      "scientificName": "Ageratum houstonianum",
+      "wikidataId": "Q280807",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5401760",
+      "powoId": "urn:lsid:ipni.org:names:175500-1"
+    },
+    {
+      "scientificName": "Nicotiana alata",
+      "wikidataId": "Q924207",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2928761",
+      "powoId": "urn:lsid:ipni.org:names:816845-1"
+    },
+    {
+      "scientificName": "Cleome hassleriana",
+      "wikidataId": "Q5131678",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3054217",
+      "powoId": "urn:lsid:ipni.org:names:60519-2"
+    },
+    {
+      "scientificName": "Amaranthus caudatus",
+      "wikidataId": "Q162791",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "6109611",
+      "powoId": "urn:lsid:ipni.org:names:316347-2"
+    },
+    {
+      "scientificName": "Bassia scoparia",
+      "wikidataId": "Q829752",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5383936",
+      "powoId": "urn:lsid:ipni.org:names:164422-1"
+    },
+    {
+      "scientificName": "Ricinus communis",
+      "wikidataId": "Q155867",
+      "turkishName": "Hint yağı bitkisi",
+      "otherNames": [
+        "Ban yağı",
+        "Hint yağı",
+        "Hintyağı",
+        "Kene otu",
+        "Keneotu"
+      ],
+      "gbifId": "5380041",
+      "powoId": "urn:lsid:ipni.org:names:355498-1"
+    },
+    {
+      "scientificName": "Ocimum basilicum",
+      "wikidataId": "Q38859",
+      "turkishName": "Fesleğen",
+      "otherNames": [],
+      "gbifId": "2927096",
+      "powoId": "urn:lsid:ipni.org:names:452874-1"
+    },
+    {
+      "scientificName": "Mentha spicata",
+      "wikidataId": "Q160114",
+      "turkishName": "Mızraklı nane",
+      "otherNames": [],
+      "gbifId": "2927175",
+      "powoId": "urn:lsid:ipni.org:names:451162-1"
+    },
+    {
+      "scientificName": "Mentha × piperita",
+      "wikidataId": "Q156037",
+      "turkishName": "Bahçe nanesi",
+      "otherNames": [
+        "Biber nanesi"
+      ],
+      "gbifId": "2927179",
+      "powoId": "urn:lsid:ipni.org:names:450969-1"
+    },
+    {
+      "scientificName": "Mentha pulegium",
+      "wikidataId": "Q161235",
+      "turkishName": "Yarpuz",
+      "otherNames": [],
+      "gbifId": "2927189",
+      "powoId": "urn:lsid:ipni.org:names:451022-1"
+    },
+    {
+      "scientificName": "Mentha longifolia",
+      "wikidataId": "Q161924",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2927177",
+      "powoId": "urn:lsid:ipni.org:names:450735-1"
+    },
+    {
+      "scientificName": "Melissa officinalis",
+      "wikidataId": "Q148396",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5341501",
+      "powoId": "urn:lsid:ipni.org:names:450084-1"
+    },
+    {
+      "scientificName": "Origanum vulgare",
+      "wikidataId": "Q134283",
+      "turkishName": "Keklik Otu",
+      "otherNames": [],
+      "gbifId": "2926612",
+      "powoId": "urn:lsid:ipni.org:names:453395-1"
+    },
+    {
+      "scientificName": "Origanum majorana",
+      "wikidataId": "Q22694",
+      "turkishName": "Mercanköşk",
+      "otherNames": [],
+      "gbifId": "2926615",
+      "powoId": "urn:lsid:ipni.org:names:453303-1"
+    },
+    {
+      "scientificName": "Origanum onites",
+      "wikidataId": "Q1745164",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2926613",
+      "powoId": "urn:lsid:ipni.org:names:453331-1"
+    },
+    {
+      "scientificName": "Thymus vulgaris",
+      "wikidataId": "Q148668",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5341442",
+      "powoId": "urn:lsid:ipni.org:names:461765-1"
+    },
+    {
+      "scientificName": "Thymus serpyllum",
+      "wikidataId": "Q147251",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "6409622",
+      "powoId": "urn:lsid:ipni.org:names:30066276-2"
+    },
+    {
+      "scientificName": "Thymbra spicata",
+      "wikidataId": "Q2430270",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7307908",
+      "powoId": "urn:lsid:ipni.org:names:460827-1"
+    },
+    {
+      "scientificName": "Satureja hortensis",
+      "wikidataId": "Q157283",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2926885",
+      "powoId": "urn:lsid:ipni.org:names:457680-1"
+    },
+    {
+      "scientificName": "Salvia officinalis",
+      "wikidataId": "Q1111359",
+      "turkishName": "Ada çayı",
+      "otherNames": [],
+      "gbifId": "2927004",
+      "powoId": "urn:lsid:ipni.org:names:456833-1"
+    },
+    {
+      "scientificName": "Salvia fruticosa",
+      "wikidataId": "Q864698",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "6412283",
+      "powoId": "urn:lsid:ipni.org:names:456249-1"
+    },
+    {
+      "scientificName": "Petroselinum crispum",
+      "wikidataId": "Q25284",
+      "turkishName": "Maydanoz",
+      "otherNames": [
+        "Maydonoz"
+      ],
+      "gbifId": "7828157",
+      "powoId": "urn:lsid:ipni.org:names:60442790-2"
+    },
+    {
+      "scientificName": "Anethum graveolens",
+      "wikidataId": "Q26686",
+      "turkishName": "Dereotu",
+      "otherNames": [
+        "Dere otu"
+      ],
+      "gbifId": "3034646",
+      "powoId": "urn:lsid:ipni.org:names:837530-1"
+    },
+    {
+      "scientificName": "Coriandrum sativum",
+      "wikidataId": "Q41611",
+      "turkishName": "Kişniş",
+      "otherNames": [
+        "Aşotu",
+        "Kinzi"
+      ],
+      "gbifId": "3034871",
+      "powoId": "urn:lsid:ipni.org:names:840760-1"
+    },
+    {
+      "scientificName": "Foeniculum vulgare",
+      "wikidataId": "Q43511",
+      "turkishName": "Rezene",
+      "otherNames": [],
+      "gbifId": "3034922",
+      "powoId": "urn:lsid:ipni.org:names:842680-1"
+    },
+    {
+      "scientificName": "Allium schoenoprasum",
+      "wikidataId": "Q51148",
+      "turkishName": "Yaprak soğanı",
+      "otherNames": [],
+      "gbifId": "2855860",
+      "powoId": "urn:lsid:ipni.org:names:528823-1"
+    },
+    {
+      "scientificName": "Allium cepa",
+      "wikidataId": "Q23485",
+      "turkishName": "Soğan",
+      "otherNames": [
+        "Kuru soğan"
+      ],
+      "gbifId": "2857697",
+      "powoId": "urn:lsid:ipni.org:names:527795-1"
+    },
+    {
+      "scientificName": "Allium sativum",
+      "wikidataId": "Q23400",
+      "turkishName": "Sarımsak",
+      "otherNames": [
+        "Sarmısak"
+      ],
+      "gbifId": "2856681",
+      "powoId": "urn:lsid:ipni.org:names:528796-1"
+    },
+    {
+      "scientificName": "Allium ampeloprasum",
+      "wikidataId": "Q148995",
+      "turkishName": "Pırasa",
+      "otherNames": [],
+      "gbifId": "2856037",
+      "powoId": "urn:lsid:ipni.org:names:332079-2"
+    },
+    {
+      "scientificName": "Lepidium sativum",
+      "wikidataId": "Q27033",
+      "turkishName": "Tere",
+      "otherNames": [
+        "Tere otu"
+      ],
+      "gbifId": "5376565",
+      "powoId": "urn:lsid:ipni.org:names:138141-2"
+    },
+    {
+      "scientificName": "Eruca vesicaria",
+      "wikidataId": "Q5395935",
+      "turkishName": "Roka",
+      "otherNames": [],
+      "gbifId": "5375920",
+      "powoId": "urn:lsid:ipni.org:names:1137625-2"
+    },
+    {
+      "scientificName": "Rumex acetosa",
+      "wikidataId": "Q26297",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2888951",
+      "powoId": "urn:lsid:ipni.org:names:332105-2"
+    },
+    {
+      "scientificName": "Portulaca oleracea",
+      "wikidataId": "Q158015",
+      "turkishName": "Semizotu",
+      "otherNames": [
+        "Semiz otu"
+      ],
+      "gbifId": "3084719",
+      "powoId": "urn:lsid:ipni.org:names:323270-2"
+    },
+    {
+      "scientificName": "Lactuca sativa",
+      "wikidataId": "Q83193",
+      "turkishName": "Marul",
+      "otherNames": [],
+      "gbifId": "7403263",
+      "powoId": "urn:lsid:ipni.org:names:228239-1"
+    },
+    {
+      "scientificName": "Spinacia oleracea",
+      "wikidataId": "Q81464",
+      "turkishName": "Ispanak",
+      "otherNames": [],
+      "gbifId": "3083647",
+      "powoId": "urn:lsid:ipni.org:names:167384-1"
+    },
+    {
+      "scientificName": "Beta vulgaris",
+      "wikidataId": "Q165191",
+      "turkishName": "Pancar",
+      "otherNames": [],
+      "gbifId": "8971274",
+      "powoId": "urn:lsid:ipni.org:names:164505-1"
+    },
+    {
+      "scientificName": "Brassica oleracea",
+      "wikidataId": "Q146212",
+      "turkishName": "Yabani lahana",
+      "otherNames": [],
+      "gbifId": "3042845",
+      "powoId": "urn:lsid:ipni.org:names:279435-1"
+    },
+    {
+      "scientificName": "Brassica rapa",
+      "wikidataId": "Q3384",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3042677",
+      "powoId": "urn:lsid:ipni.org:names:279485-1"
+    },
+    {
+      "scientificName": "Raphanus sativus",
+      "wikidataId": "Q7224565",
+      "turkishName": "Turp",
+      "otherNames": [],
+      "gbifId": "7678610",
+      "powoId": "urn:lsid:ipni.org:names:288491-1"
+    },
+    {
+      "scientificName": "Daucus carota",
+      "wikidataId": "Q30056",
+      "turkishName": "Havuç",
+      "otherNames": [],
+      "gbifId": "3034742",
+      "powoId": "urn:lsid:ipni.org:names:841063-1"
+    },
+    {
+      "scientificName": "Apium graveolens",
+      "wikidataId": "Q28298",
+      "turkishName": "Kereviz",
+      "otherNames": [],
+      "gbifId": "5371879",
+      "powoId": "urn:lsid:ipni.org:names:838067-1"
+    },
+    {
+      "scientificName": "Solanum lycopersicum",
+      "wikidataId": "Q23501",
+      "turkishName": "Domates",
+      "otherNames": [
+        "Kızanak",
+        "Domat",
+        "Domatez",
+        "Lycopersicum esculantum",
+        "Lycopersicum esculentum",
+        "Pomidor"
+      ],
+      "gbifId": "2930137",
+      "powoId": "urn:lsid:ipni.org:names:316947-2"
+    },
+    {
+      "scientificName": "Solanum melongena",
+      "wikidataId": "Q7540",
+      "turkishName": "Patlıcan",
+      "otherNames": [],
+      "gbifId": "2930617",
+      "powoId": "urn:lsid:ipni.org:names:820053-1"
+    },
+    {
+      "scientificName": "Solanum tuberosum",
+      "wikidataId": "Q10998",
+      "turkishName": "Patates",
+      "otherNames": [
+        "Çisil"
+      ],
+      "gbifId": "2930262",
+      "powoId": "urn:lsid:ipni.org:names:821337-1"
+    },
+    {
+      "scientificName": "Capsicum annuum",
+      "wikidataId": "Q1380",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2932944",
+      "powoId": "urn:lsid:ipni.org:names:316944-2"
+    },
+    {
+      "scientificName": "Capsicum frutescens",
+      "wikidataId": "Q311426",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "6402384",
+      "powoId": "urn:lsid:ipni.org:names:316959-2"
+    },
+    {
+      "scientificName": "Capsicum chinense",
+      "wikidataId": "Q311071",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2932942",
+      "powoId": "urn:lsid:ipni.org:names:814752-1"
+    },
+    {
+      "scientificName": "Cucumis sativus",
+      "wikidataId": "Q23425",
+      "turkishName": "Salatalık",
+      "otherNames": [
+        "Hıyar"
+      ],
+      "gbifId": "2874569",
+      "powoId": "urn:lsid:ipni.org:names:292296-1"
+    },
+    {
+      "scientificName": "Cucumis melo",
+      "wikidataId": "Q81602",
+      "turkishName": "Kavun",
+      "otherNames": [],
+      "gbifId": "2874570",
+      "powoId": "urn:lsid:ipni.org:names:292238-1"
+    },
+    {
+      "scientificName": "Citrullus lanatus",
+      "wikidataId": "Q17507129",
+      "turkishName": "Karpuz",
+      "otherNames": [],
+      "gbifId": "2874621",
+      "powoId": "urn:lsid:ipni.org:names:291938-1"
+    },
+    {
+      "scientificName": "Cucurbita pepo",
+      "wikidataId": "Q7229863",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2874508",
+      "powoId": "urn:lsid:ipni.org:names:292416-1"
+    },
+    {
+      "scientificName": "Cucurbita maxima",
+      "wikidataId": "Q161180",
+      "turkishName": "Helvacı kabağı",
+      "otherNames": [],
+      "gbifId": "2874515",
+      "powoId": "urn:lsid:ipni.org:names:30006538-2"
+    },
+    {
+      "scientificName": "Cucurbita moschata",
+      "wikidataId": "Q160571",
+      "turkishName": "Bal kabağı",
+      "otherNames": [],
+      "gbifId": "2874509",
+      "powoId": "urn:lsid:ipni.org:names:320034-2"
+    },
+    {
+      "scientificName": "Lagenaria siceraria",
+      "wikidataId": "Q1277255",
+      "turkishName": "Su kabağı",
+      "otherNames": [],
+      "gbifId": "2874672",
+      "powoId": "urn:lsid:ipni.org:names:134809-2"
+    },
+    {
+      "scientificName": "Phaseolus vulgaris",
+      "wikidataId": "Q42339",
+      "turkishName": "Fasulye",
+      "otherNames": [],
+      "gbifId": "5350452",
+      "powoId": "urn:lsid:ipni.org:names:514191-1"
+    },
+    {
+      "scientificName": "Phaseolus coccineus",
+      "wikidataId": "Q159753",
+      "turkishName": "Ateş fasulyesi",
+      "otherNames": [],
+      "gbifId": "5350466",
+      "powoId": "urn:lsid:ipni.org:names:513754-1"
+    },
+    {
+      "scientificName": "Pisum sativum",
+      "wikidataId": "Q25237",
+      "turkishName": "Bezelye",
+      "otherNames": [],
+      "gbifId": "5347845",
+      "powoId": "urn:lsid:ipni.org:names:60454055-2"
+    },
+    {
+      "scientificName": "Vicia faba",
+      "wikidataId": "Q131342",
+      "turkishName": "Bakla",
+      "otherNames": [],
+      "gbifId": "2974832",
+      "powoId": "urn:lsid:ipni.org:names:524737-1"
+    },
+    {
+      "scientificName": "Cicer arietinum",
+      "wikidataId": "Q81375",
+      "turkishName": "Nohut",
+      "otherNames": [],
+      "gbifId": "2947311",
+      "powoId": "urn:lsid:ipni.org:names:486336-1"
+    },
+    {
+      "scientificName": "Lens culinaris",
+      "wikidataId": "Q131226",
+      "turkishName": "Mercimek",
+      "otherNames": [
+        "Kırmızı mercimek",
+        "Yeşil mercimek"
+      ],
+      "gbifId": "5350010",
+      "powoId": "urn:lsid:ipni.org:names:30001819-2"
+    },
+    {
+      "scientificName": "Vigna unguiculata",
+      "wikidataId": "Q498940",
+      "turkishName": "Börülce",
+      "otherNames": [
+        "Börülceler",
+        "Karnıkara"
+      ],
+      "gbifId": "2982583",
+      "powoId": "urn:lsid:ipni.org:names:1127257-2"
+    },
+    {
+      "scientificName": "Abelmoschus esculentus",
+      "wikidataId": "Q80531",
+      "turkishName": "Bamya",
+      "otherNames": [
+        "Bamyanın faydaları"
+      ],
+      "gbifId": "3152707",
+      "powoId": "urn:lsid:ipni.org:names:558006-1"
+    },
+    {
+      "scientificName": "Zea mays",
+      "wikidataId": "Q11575",
+      "turkishName": "Mısır",
+      "otherNames": [],
+      "gbifId": "5290052",
+      "powoId": "urn:lsid:ipni.org:names:426810-1"
+    },
+    {
+      "scientificName": "Fragaria × ananassa",
+      "wikidataId": "Q13158",
+      "turkishName": "Bahçe çileği",
+      "otherNames": [
+        "Çilek"
+      ],
+      "gbifId": "3029912",
+      "powoId": "urn:lsid:ipni.org:names:30117681-2"
+    },
+    {
+      "scientificName": "Fragaria vesca",
+      "wikidataId": "Q146684",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3029817",
+      "powoId": "urn:lsid:ipni.org:names:30074127-2"
+    },
+    {
+      "scientificName": "Rubus idaeus",
+      "wikidataId": "Q12252383",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2993094",
+      "powoId": "urn:lsid:ipni.org:names:298089-2"
+    },
+    {
+      "scientificName": "Rubus fruticosus",
+      "wikidataId": "Q13541716",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2989764",
+      "powoId": "urn:lsid:ipni.org:names:736933-1"
+    },
+    {
+      "scientificName": "Ribes rubrum",
+      "wikidataId": "Q146661",
+      "turkishName": "Kırmızı frenk üzümü",
+      "otherNames": [],
+      "gbifId": "2986097",
+      "powoId": "urn:lsid:ipni.org:names:792965-1"
+    },
+    {
+      "scientificName": "Ribes nigrum",
+      "wikidataId": "Q146604",
+      "turkishName": "Siyah frenk üzümü",
+      "otherNames": [
+        "Kuş üzümü"
+      ],
+      "gbifId": "2986192",
+      "powoId": "urn:lsid:ipni.org:names:792873-1"
+    },
+    {
+      "scientificName": "Vaccinium corymbosum",
+      "wikidataId": "Q468695",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2882849",
+      "powoId": "urn:lsid:ipni.org:names:261823-2"
+    },
+    {
+      "scientificName": "Vitis vinifera",
+      "wikidataId": "Q30046",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5372392",
+      "powoId": "urn:lsid:ipni.org:names:30478388-2"
+    },
+    {
+      "scientificName": "Morus alba",
+      "wikidataId": "Q157307",
+      "turkishName": "Ak dut",
+      "otherNames": [
+        "Akdut"
+      ],
+      "gbifId": "5361889",
+      "powoId": "urn:lsid:ipni.org:names:30051955-2"
+    },
+    {
+      "scientificName": "Morus nigra",
+      "wikidataId": "Q161040",
+      "turkishName": "Kara dut",
+      "otherNames": [],
+      "gbifId": "5361888",
+      "powoId": "urn:lsid:ipni.org:names:854688-1"
+    },
+    {
+      "scientificName": "Ficus carica",
+      "wikidataId": "Q36146",
+      "turkishName": "İncir",
+      "otherNames": [],
+      "gbifId": "5361909",
+      "powoId": "urn:lsid:ipni.org:names:852556-1"
+    },
+    {
+      "scientificName": "Punica granatum",
+      "wikidataId": "Q13188",
+      "turkishName": "Nar",
+      "otherNames": [],
+      "gbifId": "5420901",
+      "powoId": "urn:lsid:ipni.org:names:554129-1"
+    },
+    {
+      "scientificName": "Olea europaea",
+      "wikidataId": "Q37083",
+      "turkishName": "Zeytin",
+      "otherNames": [
+        "Zeytincilik"
+      ],
+      "gbifId": "5415040",
+      "powoId": "urn:lsid:ipni.org:names:610675-1"
+    },
+    {
+      "scientificName": "Laurus nobilis",
+      "wikidataId": "Q26006",
+      "turkishName": "Akdeniz defnesi",
+      "otherNames": [],
+      "gbifId": "3034015",
+      "powoId": "urn:lsid:ipni.org:names:465049-1"
+    },
+    {
+      "scientificName": "Prunus avium",
+      "wikidataId": "Q165137",
+      "turkishName": "Kiraz",
+      "otherNames": [],
+      "gbifId": "3020791",
+      "powoId": "urn:lsid:ipni.org:names:30093848-2"
+    },
+    {
+      "scientificName": "Prunus cerasus",
+      "wikidataId": "Q131517",
+      "turkishName": "Vişne",
+      "otherNames": [],
+      "gbifId": "3021922",
+      "powoId": "urn:lsid:ipni.org:names:729574-1"
+    },
+    {
+      "scientificName": "Prunus armeniaca",
+      "wikidataId": "Q37453",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3021245",
+      "powoId": "urn:lsid:ipni.org:names:729463-1"
+    },
+    {
+      "scientificName": "Prunus persica",
+      "wikidataId": "Q13189",
+      "turkishName": "Şeftali",
+      "otherNames": [
+        "Şeftali ağacı"
+      ],
+      "gbifId": "3022511",
+      "powoId": "urn:lsid:ipni.org:names:1212858-2"
+    },
+    {
+      "scientificName": "Prunus domestica",
+      "wikidataId": "Q44120",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3021365",
+      "powoId": "urn:lsid:ipni.org:names:30221374-2"
+    },
+    {
+      "scientificName": "Prunus dulcis",
+      "wikidataId": "Q39918",
+      "turkishName": "Badem",
+      "otherNames": [
+        "Acıbadem",
+        "Amygdalus communis",
+        "Badem ağacı",
+        "Payam"
+      ],
+      "gbifId": "3022502",
+      "powoId": "urn:lsid:ipni.org:names:729673-1"
+    },
+    {
+      "scientificName": "Prunus laurocerasus",
+      "wikidataId": "Q157508",
+      "turkishName": "Karayemiş",
+      "otherNames": [
+        "Laurocerasus officinalis",
+        "Laz kirazı",
+        "Taflan",
+        "Tahnal",
+        "Tanal"
+      ],
+      "gbifId": "3021496",
+      "powoId": "urn:lsid:ipni.org:names:324745-2"
+    },
+    {
+      "scientificName": "Malus domestica",
+      "wikidataId": "Q18674606",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3001244",
+      "powoId": "urn:lsid:ipni.org:names:726282-1"
+    },
+    {
+      "scientificName": "Pyrus communis",
+      "wikidataId": "Q146281",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5362573",
+      "powoId": "urn:lsid:ipni.org:names:30065762-2"
+    },
+    {
+      "scientificName": "Cydonia oblonga",
+      "wikidataId": "Q43300",
+      "turkishName": "Ayva",
+      "otherNames": [],
+      "gbifId": "5362215",
+      "powoId": "urn:lsid:ipni.org:names:724549-1"
+    },
+    {
+      "scientificName": "Mespilus germanica",
+      "wikidataId": "Q146186",
+      "turkishName": "Muşmula",
+      "otherNames": [],
+      "gbifId": "3031774",
+      "powoId": "urn:lsid:ipni.org:names:726564-1"
+    },
+    {
+      "scientificName": "Eriobotrya japonica",
+      "wikidataId": "Q41505",
+      "turkishName": "Malta eriği",
+      "otherNames": [
+        "Maltaeriği",
+        "Yenidünya"
+      ],
+      "gbifId": "3024146",
+      "powoId": "urn:lsid:ipni.org:names:724793-1"
+    },
+    {
+      "scientificName": "Diospyros kaki",
+      "wikidataId": "Q158482",
+      "turkishName": "Trabzon hurması",
+      "otherNames": [
+        "Cennet hurması"
+      ],
+      "gbifId": "3032984",
+      "powoId": "urn:lsid:ipni.org:names:322553-1"
+    },
+    {
+      "scientificName": "Actinidia deliciosa",
+      "wikidataId": "Q343300",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7270761",
+      "powoId": "urn:lsid:ipni.org:names:913605-1"
+    },
+    {
+      "scientificName": "Citrus × limon",
+      "wikidataId": "Q500",
+      "turkishName": "Limon",
+      "otherNames": [],
+      "gbifId": "9198046",
+      "powoId": "urn:lsid:ipni.org:names:60454758-2"
+    },
+    {
+      "scientificName": "Citrus × sinensis",
+      "wikidataId": "Q3355098",
+      "turkishName": "Portakal",
+      "otherNames": [],
+      "gbifId": "8206387",
+      "powoId": "urn:lsid:ipni.org:names:772052-1"
+    },
+    {
+      "scientificName": "Citrus reticulata",
+      "wikidataId": "Q125337",
+      "turkishName": "Mandalina",
+      "otherNames": [
+        "Mandalin"
+      ],
+      "gbifId": "3190172",
+      "powoId": "urn:lsid:ipni.org:names:772038-1"
+    },
+    {
+      "scientificName": "Citrus × aurantium",
+      "wikidataId": "Q147096",
+      "turkishName": "Turunç",
+      "otherNames": [
+        "Acı portakal"
+      ],
+      "gbifId": "8077391",
+      "powoId": "urn:lsid:ipni.org:names:59600-2"
+    },
+    {
+      "scientificName": "Citrus × paradisi",
+      "wikidataId": "Q41350",
+      "turkishName": "Greyfurt",
+      "otherNames": [
+        "Greyfrut"
+      ],
+      "gbifId": "3190168",
+      "powoId": "urn:lsid:ipni.org:names:772019-1"
+    },
+    {
+      "scientificName": "Citrus × microcarpa",
+      "wikidataId": "Q3748857",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3831218",
+      "powoId": "urn:lsid:ipni.org:names:927792-1"
+    },
+    {
+      "scientificName": "Citrus japonica",
+      "wikidataId": "Q124344319",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3831801",
+      "powoId": "urn:lsid:ipni.org:names:771939-1"
+    },
+    {
+      "scientificName": "Persea americana",
+      "wikidataId": "Q37153",
+      "turkishName": "Avokado",
+      "otherNames": [
+        "Amerikan armudu"
+      ],
+      "gbifId": "3034046",
+      "powoId": "urn:lsid:ipni.org:names:325643-2"
+    },
+    {
+      "scientificName": "Juglans regia",
+      "wikidataId": "Q46871",
+      "turkishName": "Adi ceviz",
+      "otherNames": [],
+      "gbifId": "3054368",
+      "powoId": "urn:lsid:ipni.org:names:442427-1"
+    },
+    {
+      "scientificName": "Corylus avellana",
+      "wikidataId": "Q124969",
+      "turkishName": "Adi fındık",
+      "otherNames": [],
+      "gbifId": "2875979",
+      "powoId": "urn:lsid:ipni.org:names:295446-1"
+    },
+    {
+      "scientificName": "Castanea sativa",
+      "wikidataId": "Q22699",
+      "turkishName": "Anadolu kestanesi",
+      "otherNames": [],
+      "gbifId": "5333294",
+      "powoId": "urn:lsid:ipni.org:names:295349-1"
+    },
+    {
+      "scientificName": "Pistacia vera",
+      "wikidataId": "Q36071",
+      "turkishName": "Antep fıstığı",
+      "otherNames": [
+        "Antepfıstığı"
+      ],
+      "gbifId": "3190585",
+      "powoId": "urn:lsid:ipni.org:names:70280-1"
+    },
+    {
+      "scientificName": "Pistacia terebinthus",
+      "wikidataId": "Q63045",
+      "turkishName": "Menengiç",
+      "otherNames": [
+        "Melengiç"
+      ],
+      "gbifId": "3190580",
+      "powoId": "urn:lsid:ipni.org:names:70274-1"
+    },
+    {
+      "scientificName": "Pistacia lentiscus",
+      "wikidataId": "Q159812",
+      "turkishName": "Sakız ağacı",
+      "otherNames": [
+        "Sakızağacı"
+      ],
+      "gbifId": "3190583",
+      "powoId": "urn:lsid:ipni.org:names:70253-1"
+    },
+    {
+      "scientificName": "Ceratonia siliqua",
+      "wikidataId": "Q68763",
+      "turkishName": "Keçiboynuzu",
+      "otherNames": [
+        "Harnup",
+        "Harnup ağacı",
+        "Keçi boynuzu"
+      ],
+      "gbifId": "5356354",
+      "powoId": "urn:lsid:ipni.org:names:485647-1"
+    },
+    {
+      "scientificName": "Ziziphus jujuba",
+      "wikidataId": "Q11181633",
+      "turkishName": "Hünnap",
+      "otherNames": [],
+      "gbifId": "3039423",
+      "powoId": "urn:lsid:ipni.org:names:719213-1"
+    },
+    {
+      "scientificName": "Elaeagnus angustifolia",
+      "wikidataId": "Q157969",
+      "turkishName": "Kuş iğdesi",
+      "otherNames": [],
+      "gbifId": "3039269",
+      "powoId": "urn:lsid:ipni.org:names:323646-1"
+    },
+    {
+      "scientificName": "Cornus mas",
+      "wikidataId": "Q158642",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3082263",
+      "powoId": "urn:lsid:ipni.org:names:271612-1"
+    },
+    {
+      "scientificName": "Sambucus nigra",
+      "wikidataId": "Q22701",
+      "turkishName": "Kara Mürver",
+      "otherNames": [],
+      "gbifId": "2888728",
+      "powoId": "urn:lsid:ipni.org:names:30122169-2"
+    },
+    {
+      "scientificName": "Hippophae rhamnoides",
+      "wikidataId": "Q165378",
+      "turkishName": "Yalancı iğde",
+      "otherNames": [],
+      "gbifId": "3039285",
+      "powoId": "urn:lsid:ipni.org:names:323851-1"
+    },
+    {
+      "scientificName": "Physalis peruviana",
+      "wikidataId": "Q165227",
+      "turkishName": "Altın Çilek",
+      "otherNames": [
+        "Altın Çiçek"
+      ],
+      "gbifId": "5341784",
+      "powoId": "urn:lsid:ipni.org:names:195473-2"
+    },
+    {
+      "scientificName": "Aloysia citrodora",
+      "wikidataId": "Q206532",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5667503",
+      "powoId": "urn:lsid:ipni.org:names:1015994-1"
+    },
+    {
+      "scientificName": "Stevia rebaudiana",
+      "wikidataId": "Q7213452",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3125557",
+      "powoId": null
+    },
+    {
+      "scientificName": "Capparis spinosa",
+      "wikidataId": "Q156251",
+      "turkishName": "Gebre otu",
+      "otherNames": [
+        "Gebreotu",
+        "Kapari",
+        "Kebere"
+      ],
+      "gbifId": "6370689",
+      "powoId": "urn:lsid:ipni.org:names:146789-1"
+    },
+    {
+      "scientificName": "Crocus sativus",
+      "wikidataId": "Q15041677",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2747430",
+      "powoId": "urn:lsid:ipni.org:names:436688-1"
+    },
+    {
+      "scientificName": "Nigella sativa",
+      "wikidataId": "Q160575",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5371700",
+      "powoId": "urn:lsid:ipni.org:names:711687-1"
+    },
+    {
+      "scientificName": "Cuminum cyminum",
+      "wikidataId": "Q132624",
+      "turkishName": "Kimyon",
+      "otherNames": [],
+      "gbifId": "3034775",
+      "powoId": "urn:lsid:ipni.org:names:840882-1"
+    },
+    {
+      "scientificName": "Sesamum indicum",
+      "wikidataId": "Q2763698",
+      "turkishName": "Susam",
+      "otherNames": [],
+      "gbifId": "3172622",
+      "powoId": "urn:lsid:ipni.org:names:675971-1"
+    },
+    {
+      "scientificName": "Helianthus tuberosus",
+      "wikidataId": "Q146190",
+      "turkishName": "Yerelması",
+      "otherNames": [],
+      "gbifId": "3119175",
+      "powoId": "urn:lsid:ipni.org:names:329252-2"
+    },
+    {
+      "scientificName": "Cynara cardunculus",
+      "wikidataId": "Q7186137",
+      "turkishName": "Yabani enginar",
+      "otherNames": [
+        "Deve dikeni",
+        "Devedikeni"
+      ],
+      "gbifId": "3112364",
+      "powoId": "urn:lsid:ipni.org:names:200876-1"
+    },
+    {
+      "scientificName": "Asparagus officinalis",
+      "wikidataId": "Q28367",
+      "turkishName": "Kuşkonmaz",
+      "otherNames": [],
+      "gbifId": "2768885",
+      "powoId": "urn:lsid:ipni.org:names:531229-1"
+    },
+    {
+      "scientificName": "Rheum rhabarbarum",
+      "wikidataId": "Q7535",
+      "turkishName": "Ravent",
+      "otherNames": [],
+      "gbifId": "2888867",
+      "powoId": "urn:lsid:ipni.org:names:301818-2"
+    },
+    {
+      "scientificName": "Armoracia rusticana",
+      "wikidataId": "Q26545",
+      "turkishName": "Bayır turpu",
+      "otherNames": [
+        "Aсırga",
+        "Bayırturpu",
+        "Cochlearia armoracia",
+        "Yaban turpu"
+      ],
+      "gbifId": "3041022",
+      "powoId": "urn:lsid:ipni.org:names:278747-1"
+    },
+    {
+      "scientificName": "Hibiscus sabdariffa",
+      "wikidataId": "Q319390",
+      "turkishName": "Kerkede",
+      "otherNames": [
+        "Hibisküs",
+        "Karabamya"
+      ],
+      "gbifId": "3152582",
+      "powoId": "urn:lsid:ipni.org:names:326388-2"
+    },
+    {
+      "scientificName": "Camellia sinensis",
+      "wikidataId": "Q101815",
+      "turkishName": "Çay",
+      "otherNames": [],
+      "gbifId": "3189635",
+      "powoId": "urn:lsid:ipni.org:names:828548-1"
+    },
+    {
+      "scientificName": "Zingiber officinale",
+      "wikidataId": "Q35625",
+      "turkishName": "Zencefil",
+      "otherNames": [],
+      "gbifId": "2757280",
+      "powoId": "urn:lsid:ipni.org:names:798372-1"
+    },
+    {
+      "scientificName": "Curcuma longa",
+      "wikidataId": "Q42562",
+      "turkishName": "Zerdeçal",
+      "otherNames": [
+        "Hint safranı"
+      ],
+      "gbifId": "2757624",
+      "powoId": "urn:lsid:ipni.org:names:796451-1"
+    },
+    {
+      "scientificName": "Cymbopogon citratus",
+      "wikidataId": "Q33913",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2705275",
+      "powoId": "urn:lsid:ipni.org:names:396896-1"
+    },
+    {
+      "scientificName": "Artemisia absinthium",
+      "wikidataId": "Q25686",
+      "turkishName": "Pelin otu",
+      "otherNames": [
+        "Hamam otu",
+        "Hamamotu",
+        "Kıl otu",
+        "Kılotu",
+        "Pelinotu",
+        "Tüy otu",
+        "Tüyotu",
+        "Pelin"
+      ],
+      "gbifId": "3121319",
+      "powoId": "urn:lsid:ipni.org:names:300106-2"
+    },
+    {
+      "scientificName": "Artemisia dracunculus",
+      "wikidataId": "Q155814",
+      "turkishName": "Tarhun",
+      "otherNames": [],
+      "gbifId": "3121581",
+      "powoId": "urn:lsid:ipni.org:names:307848-2"
+    },
+    {
+      "scientificName": "Hyssopus officinalis",
+      "wikidataId": "Q137931",
+      "turkishName": "Züfa Otu",
+      "otherNames": [],
+      "gbifId": "5341387",
+      "powoId": "urn:lsid:ipni.org:names:127231-2"
+    },
+    {
+      "scientificName": "Matricaria chamomilla",
+      "wikidataId": "Q28437",
+      "turkishName": "Mayıs papatyası",
+      "otherNames": [],
+      "gbifId": "8370958",
+      "powoId": "urn:lsid:ipni.org:names:154715-2"
+    },
+    {
+      "scientificName": "Chamaemelum nobile",
+      "wikidataId": "Q5723577",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5391599",
+      "powoId": "urn:lsid:ipni.org:names:192489-1"
+    },
+    {
+      "scientificName": "Tanacetum parthenium",
+      "wikidataId": "Q818481",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3118430",
+      "powoId": "urn:lsid:ipni.org:names:252460-1"
+    },
+    {
+      "scientificName": "Borago officinalis",
+      "wikidataId": "Q147075",
+      "turkishName": "Hodan",
+      "otherNames": [],
+      "gbifId": "2926110",
+      "powoId": "urn:lsid:ipni.org:names:113618-1"
+    },
+    {
+      "scientificName": "Urtica dioica",
+      "wikidataId": "Q155909",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5361816",
+      "powoId": "urn:lsid:ipni.org:names:260630-2"
+    },
+    {
+      "scientificName": "Plantago major",
+      "wikidataId": "Q157154",
+      "turkishName": "Sinirotu",
+      "otherNames": [],
+      "gbifId": "3189767",
+      "powoId": "urn:lsid:ipni.org:names:321286-2"
+    },
+    {
+      "scientificName": "Taraxacum officinale",
+      "wikidataId": "Q131219",
+      "turkishName": "Karahindiba",
+      "otherNames": [
+        "Kara Hindiba",
+        "Radika"
+      ],
+      "gbifId": "5394163",
+      "powoId": "urn:lsid:ipni.org:names:1003018-2"
+    },
+    {
+      "scientificName": "Hypericum perforatum",
+      "wikidataId": "Q158289",
+      "turkishName": "Kantaron",
+      "otherNames": [],
+      "gbifId": "3189486",
+      "powoId": "urn:lsid:ipni.org:names:433719-1"
+    },
+    {
+      "scientificName": "Ananas comosus",
+      "wikidataId": "Q1493",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5288819",
+      "powoId": "urn:lsid:ipni.org:names:12322-2"
+    },
+    {
+      "scientificName": "Platanus orientalis",
+      "wikidataId": "Q161105",
+      "turkishName": "Doğu çınarı",
+      "otherNames": [],
+      "gbifId": "3152816",
+      "powoId": "urn:lsid:ipni.org:names:685873-1"
+    },
+    {
+      "scientificName": "Platanus × hispanica",
+      "wikidataId": "Q161374",
+      "turkishName": "Londra çınarı",
+      "otherNames": [],
+      "gbifId": "7400250",
+      "powoId": "urn:lsid:ipni.org:names:685854-1"
+    },
+    {
+      "scientificName": "Tilia tomentosa",
+      "wikidataId": "Q161382",
+      "turkishName": "Gümüşi ıhlamur",
+      "otherNames": [],
+      "gbifId": "4259350",
+      "powoId": "urn:lsid:ipni.org:names:835608-1"
+    },
+    {
+      "scientificName": "Tilia platyphyllos",
+      "wikidataId": "Q156831",
+      "turkishName": "Büyük yapraklı ıhlamur",
+      "otherNames": [],
+      "gbifId": "3152048",
+      "powoId": "urn:lsid:ipni.org:names:332109-2"
+    },
+    {
+      "scientificName": "Aesculus hippocastanum",
+      "wikidataId": "Q26899",
+      "turkishName": "Beyaz çiçekli at kestanesi",
+      "otherNames": [],
+      "gbifId": "3189815",
+      "powoId": "urn:lsid:ipni.org:names:781594-1"
+    },
+    {
+      "scientificName": "Robinia pseudoacacia",
+      "wikidataId": "Q157417",
+      "turkishName": "Beyaz çiçekli yalancı akasya",
+      "otherNames": [
+        "Beyaz çiçekli yalancıakasya"
+      ],
+      "gbifId": "5352251",
+      "powoId": "urn:lsid:ipni.org:names:30034699-2"
+    },
+    {
+      "scientificName": "Albizia julibrissin",
+      "wikidataId": "Q750307",
+      "turkishName": "Gülibrişim",
+      "otherNames": [],
+      "gbifId": "2972983",
+      "powoId": "urn:lsid:ipni.org:names:473275-1"
+    },
+    {
+      "scientificName": "Cercis siliquastrum",
+      "wikidataId": "Q29488",
+      "turkishName": "Erguvan",
+      "otherNames": [],
+      "gbifId": "5353590",
+      "powoId": "urn:lsid:ipni.org:names:485691-1"
+    },
+    {
+      "scientificName": "Melia azedarach",
+      "wikidataId": "Q162171",
+      "turkishName": "Tespih ağacı",
+      "otherNames": [
+        "Tespih çalısı",
+        "Tespihağacı"
+      ],
+      "gbifId": "5914287",
+      "powoId": "urn:lsid:ipni.org:names:578949-1"
+    },
+    {
+      "scientificName": "Ailanthus altissima",
+      "wikidataId": "Q159570",
+      "turkishName": "Kokar ağaç",
+      "otherNames": [
+        "Aylandız Ağacı",
+        "Kokarağaç"
+      ],
+      "gbifId": "3190653",
+      "powoId": "urn:lsid:ipni.org:names:813521-1"
+    },
+    {
+      "scientificName": "Acer negundo",
+      "wikidataId": "Q161166",
+      "turkishName": "Dişbudak yapraklı akçaağaç",
+      "otherNames": [],
+      "gbifId": "3189866",
+      "powoId": "urn:lsid:ipni.org:names:781412-1"
+    },
+    {
+      "scientificName": "Acer pseudoplatanus",
+      "wikidataId": "Q156944",
+      "turkishName": "Dağ akçaağacı",
+      "otherNames": [],
+      "gbifId": "3189870",
+      "powoId": "urn:lsid:ipni.org:names:781462-1"
+    },
+    {
+      "scientificName": "Acer platanoides",
+      "wikidataId": "Q26745",
+      "turkishName": "Çınar yapraklı akçaağaç",
+      "otherNames": [],
+      "gbifId": "3189846",
+      "powoId": "urn:lsid:ipni.org:names:781455-1"
+    },
+    {
+      "scientificName": "Acer palmatum",
+      "wikidataId": "Q269224",
+      "turkishName": "Japon akçaağacı",
+      "otherNames": [],
+      "gbifId": "3189882",
+      "powoId": "urn:lsid:ipni.org:names:927504-1"
+    },
+    {
+      "scientificName": "Quercus robur",
+      "wikidataId": "Q165145",
+      "turkishName": "Saplı meşe",
+      "otherNames": [],
+      "gbifId": "2878688",
+      "powoId": "urn:lsid:ipni.org:names:304293-2"
+    },
+    {
+      "scientificName": "Quercus cerris",
+      "wikidataId": "Q157277",
+      "turkishName": "Saçlı meşe",
+      "otherNames": [],
+      "gbifId": "2880580",
+      "powoId": "urn:lsid:ipni.org:names:295941-1"
+    },
+    {
+      "scientificName": "Quercus ilex",
+      "wikidataId": "Q218155",
+      "turkishName": "Pırnal meşe",
+      "otherNames": [],
+      "gbifId": "2879098",
+      "powoId": "urn:lsid:ipni.org:names:296290-1"
+    },
+    {
+      "scientificName": "Fagus orientalis",
+      "wikidataId": "Q1543749",
+      "turkishName": "Doğu kayını",
+      "otherNames": [],
+      "gbifId": "2882360",
+      "powoId": "urn:lsid:ipni.org:names:295615-1"
+    },
+    {
+      "scientificName": "Carpinus betulus",
+      "wikidataId": "Q158776",
+      "turkishName": "Adi gürgen",
+      "otherNames": [],
+      "gbifId": "2875818",
+      "powoId": "urn:lsid:ipni.org:names:295248-1"
+    },
+    {
+      "scientificName": "Betula pendula",
+      "wikidataId": "Q156895",
+      "turkishName": "Adi huş",
+      "otherNames": [],
+      "gbifId": "5331916",
+      "powoId": "urn:lsid:ipni.org:names:295174-1"
+    },
+    {
+      "scientificName": "Populus nigra",
+      "wikidataId": "Q147064",
+      "turkishName": "Kara kavak",
+      "otherNames": [],
+      "gbifId": "3040227",
+      "powoId": "urn:lsid:ipni.org:names:776790-1"
+    },
+    {
+      "scientificName": "Populus alba",
+      "wikidataId": "Q146269",
+      "turkishName": "Ak kavak",
+      "otherNames": [],
+      "gbifId": "3040233",
+      "powoId": "urn:lsid:ipni.org:names:776573-1"
+    },
+    {
+      "scientificName": "Salix babylonica",
+      "wikidataId": "Q156307",
+      "turkishName": "Salkım söğüt",
+      "otherNames": [],
+      "gbifId": "5372639",
+      "powoId": "urn:lsid:ipni.org:names:777133-1"
+    },
+    {
+      "scientificName": "Salix alba",
+      "wikidataId": "Q156918",
+      "turkishName": "Ak söğüt",
+      "otherNames": [],
+      "gbifId": "5372513",
+      "powoId": "urn:lsid:ipni.org:names:776974-1"
+    },
+    {
+      "scientificName": "Fraxinus excelsior",
+      "wikidataId": "Q156907",
+      "turkishName": "Adi dişbudak",
+      "otherNames": [
+        "Avrupa dişbudağı"
+      ],
+      "gbifId": "3172358",
+      "powoId": "urn:lsid:ipni.org:names:609009-1"
+    },
+    {
+      "scientificName": "Ulmus minor",
+      "wikidataId": "Q147487",
+      "turkishName": "Ova karaağacı",
+      "otherNames": [],
+      "gbifId": "5361865",
+      "powoId": "urn:lsid:ipni.org:names:856890-1"
+    },
+    {
+      "scientificName": "Celtis australis",
+      "wikidataId": "Q255375",
+      "turkishName": "Adi çitlembik",
+      "otherNames": [],
+      "gbifId": "2984492",
+      "powoId": "urn:lsid:ipni.org:names:850999-1"
+    },
+    {
+      "scientificName": "Catalpa bignonioides",
+      "wikidataId": "Q163831",
+      "turkishName": "Katalpa",
+      "otherNames": [],
+      "gbifId": "3172615",
+      "powoId": "urn:lsid:ipni.org:names:30194969-2"
+    },
+    {
+      "scientificName": "Paulownia tomentosa",
+      "wikidataId": "Q157393",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3170823",
+      "powoId": "urn:lsid:ipni.org:names:185784-2"
+    },
+    {
+      "scientificName": "Magnolia grandiflora",
+      "wikidataId": "Q161116",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3153283",
+      "powoId": "urn:lsid:ipni.org:names:554723-1"
+    },
+    {
+      "scientificName": "Magnolia × soulangeana",
+      "wikidataId": "Q731443",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "7925303",
+      "powoId": "urn:lsid:ipni.org:names:60468302-2"
+    },
+    {
+      "scientificName": "Liquidambar orientalis",
+      "wikidataId": "Q2093169",
+      "turkishName": "Anadolu sığla ağacı",
+      "otherNames": [
+        "Sığla"
+      ],
+      "gbifId": "3152825",
+      "powoId": "urn:lsid:ipni.org:names:430714-1"
+    },
+    {
+      "scientificName": "Ginkgo biloba",
+      "wikidataId": "Q43284",
+      "turkishName": "Mabet ağacı",
+      "otherNames": [],
+      "gbifId": "2687885",
+      "powoId": "urn:lsid:ipni.org:names:262125-1"
+    },
+    {
+      "scientificName": "Pinus pinea",
+      "wikidataId": "Q106094",
+      "turkishName": "Fıstık çamı",
+      "otherNames": [],
+      "gbifId": "5285165",
+      "powoId": "urn:lsid:ipni.org:names:263221-1"
+    },
+    {
+      "scientificName": "Pinus brutia",
+      "wikidataId": "Q628329",
+      "turkishName": "Kızılçam",
+      "otherNames": [],
+      "gbifId": "5285710",
+      "powoId": "urn:lsid:ipni.org:names:677009-1"
+    },
+    {
+      "scientificName": "Pinus nigra",
+      "wikidataId": "Q145954",
+      "turkishName": "Karaçam",
+      "otherNames": [],
+      "gbifId": "5284809",
+      "powoId": "urn:lsid:ipni.org:names:677088-1"
+    },
+    {
+      "scientificName": "Pinus sylvestris",
+      "wikidataId": "Q133128",
+      "turkishName": "Sarıçam",
+      "otherNames": [
+        "Sarıçam (bitki)"
+      ],
+      "gbifId": "5285637",
+      "powoId": "urn:lsid:ipni.org:names:263353-1"
+    },
+    {
+      "scientificName": "Cedrus libani",
+      "wikidataId": "Q61105",
+      "turkishName": "Lübnan sediri",
+      "otherNames": [
+        "Katran ağacı"
+      ],
+      "gbifId": "5284682",
+      "powoId": "urn:lsid:ipni.org:names:676705-1"
+    },
+    {
+      "scientificName": "Cedrus atlantica",
+      "wikidataId": "Q623489",
+      "turkishName": "Atlas sediri",
+      "otherNames": [],
+      "gbifId": "5284702",
+      "powoId": "urn:lsid:ipni.org:names:50881822-1"
+    },
+    {
+      "scientificName": "Cedrus deodara",
+      "wikidataId": "Q146935",
+      "turkishName": "Himalaya sediri",
+      "otherNames": [],
+      "gbifId": "5284698",
+      "powoId": "urn:lsid:ipni.org:names:676701-1"
+    },
+    {
+      "scientificName": "Abies nordmanniana",
+      "wikidataId": "Q148920",
+      "turkishName": "Doğu Karadeniz göknarı",
+      "otherNames": [
+        "Doğu Karadeniz köknarı"
+      ],
+      "gbifId": "2685552",
+      "powoId": "urn:lsid:ipni.org:names:261599-1"
+    },
+    {
+      "scientificName": "Picea abies",
+      "wikidataId": "Q145992",
+      "turkishName": "Avrupa ladini",
+      "otherNames": [],
+      "gbifId": "5284884",
+      "powoId": "urn:lsid:ipni.org:names:262609-1"
+    },
+    {
+      "scientificName": "Picea pungens",
+      "wikidataId": "Q146025",
+      "turkishName": "Mavi ladin",
+      "otherNames": [
+        "Kolorado ladini"
+      ],
+      "gbifId": "5284871",
+      "powoId": "urn:lsid:ipni.org:names:30095300-2"
+    },
+    {
+      "scientificName": "Cupressus sempervirens",
+      "wikidataId": "Q147513",
+      "turkishName": "Akdeniz servisi",
+      "otherNames": [
+        "Dallı servi",
+        "Adi servi"
+      ],
+      "gbifId": "2684030",
+      "powoId": "urn:lsid:ipni.org:names:261974-1"
+    },
+    {
+      "scientificName": "Hesperocyparis arizonica",
+      "wikidataId": "Q50843037",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2683983",
+      "powoId": "urn:lsid:ipni.org:names:60451546-2"
+    },
+    {
+      "scientificName": "Platycladus orientalis",
+      "wikidataId": "Q33482",
+      "turkishName": "Doğu mazısı",
+      "otherNames": [],
+      "gbifId": "2684855",
+      "powoId": "urn:lsid:ipni.org:names:677124-1"
+    },
+    {
+      "scientificName": "Thuja occidentalis",
+      "wikidataId": "Q147468",
+      "turkishName": "Batı mazısı",
+      "otherNames": [],
+      "gbifId": "2684178",
+      "powoId": "urn:lsid:ipni.org:names:263956-1"
+    },
+    {
+      "scientificName": "Juniperus communis",
+      "wikidataId": "Q26325",
+      "turkishName": "Adi ardıç",
+      "otherNames": [],
+      "gbifId": "2684709",
+      "powoId": "urn:lsid:ipni.org:names:30088655-2"
+    },
+    {
+      "scientificName": "Juniperus excelsa",
+      "wikidataId": "Q773892",
+      "turkishName": "Boylu ardıç",
+      "otherNames": [],
+      "gbifId": "2684626",
+      "powoId": "urn:lsid:ipni.org:names:60461568-2"
+    },
+    {
+      "scientificName": "Taxus baccata",
+      "wikidataId": "Q179729",
+      "turkishName": "Yaygın porsuk",
+      "otherNames": [
+        "Adi porsuk"
+      ],
+      "gbifId": "5284517",
+      "powoId": "urn:lsid:ipni.org:names:306036-2"
+    },
+    {
+      "scientificName": "Chamaecyparis lawsoniana",
+      "wikidataId": "Q161360",
+      "turkishName": "Elwoodii Çamı",
+      "otherNames": [],
+      "gbifId": "2683866",
+      "powoId": "urn:lsid:ipni.org:names:261839-1"
+    },
+    {
+      "scientificName": "Cupressus × leylandii",
+      "wikidataId": "Q1290970",
+      "turkishName": "Leylandi",
+      "otherNames": [],
+      "gbifId": "3611465",
+      "powoId": "urn:lsid:ipni.org:names:676759-1"
+    },
+    {
+      "scientificName": "Eucalyptus camaldulensis",
+      "wikidataId": "Q162822",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3176197",
+      "powoId": "urn:lsid:ipni.org:names:592777-1"
+    },
+    {
+      "scientificName": "Arbutus unedo",
+      "wikidataId": "Q329046",
+      "turkishName": "Kocayemiş",
+      "otherNames": [
+        "Çilek ağacı"
+      ],
+      "gbifId": "2882803",
+      "powoId": "urn:lsid:ipni.org:names:326526-1"
+    },
+    {
+      "scientificName": "Arbutus andrachne",
+      "wikidataId": "Q938579",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "4170901",
+      "powoId": "urn:lsid:ipni.org:names:326280-2"
+    },
+    {
+      "scientificName": "Jacaranda mimosifolia",
+      "wikidataId": "Q838818",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3172499",
+      "powoId": "urn:lsid:ipni.org:names:130936-2"
+    },
+    {
+      "scientificName": "Lagerstroemia indica",
+      "wikidataId": "Q1148692",
+      "turkishName": "Oya ağacı",
+      "otherNames": [
+        "Oyaağacı"
+      ],
+      "gbifId": "3188725",
+      "powoId": "urn:lsid:ipni.org:names:553576-1"
+    },
+    {
+      "scientificName": "Prunus cerasifera",
+      "wikidataId": "Q146951",
+      "turkishName": "Kiraz eriği",
+      "otherNames": [],
+      "gbifId": "3021730",
+      "powoId": "urn:lsid:ipni.org:names:729568-1"
+    },
+    {
+      "scientificName": "Prunus serrulata",
+      "wikidataId": "Q165321",
+      "turkishName": "Sakura",
+      "otherNames": [],
+      "gbifId": "3022609",
+      "powoId": "urn:lsid:ipni.org:names:730268-1"
+    },
+    {
+      "scientificName": "Styphnolobium japonicum",
+      "wikidataId": "Q288558",
+      "turkishName": "Japon soforası",
+      "otherNames": [],
+      "gbifId": "2963569",
+      "powoId": "urn:lsid:ipni.org:names:1119529-2"
+    },
+    {
+      "scientificName": "Gleditsia triacanthos",
+      "wikidataId": "Q157650",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2959443",
+      "powoId": "urn:lsid:ipni.org:names:110723-2"
+    },
+    {
+      "scientificName": "Phoenix canariensis",
+      "wikidataId": "Q27657",
+      "turkishName": "Kanarya adaları palmiyesi",
+      "otherNames": [],
+      "gbifId": "6109529",
+      "powoId": "urn:lsid:ipni.org:names:668909-1"
+    },
+    {
+      "scientificName": "Phoenix dactylifera",
+      "wikidataId": "Q25292",
+      "turkishName": "Hurma ağacı",
+      "otherNames": [],
+      "gbifId": "6109699",
+      "powoId": "urn:lsid:ipni.org:names:668912-1"
+    },
+    {
+      "scientificName": "Washingtonia filifera",
+      "wikidataId": "Q158389",
+      "turkishName": "Çöl yelpaze palmiyesi",
+      "otherNames": [],
+      "gbifId": "5294589",
+      "powoId": "urn:lsid:ipni.org:names:267788-2"
+    },
+    {
+      "scientificName": "Washingtonia robusta",
+      "wikidataId": "Q1096456",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "5294595",
+      "powoId": "urn:lsid:ipni.org:names:670278-1"
+    },
+    {
+      "scientificName": "Trachycarpus fortunei",
+      "wikidataId": "Q158383",
+      "turkishName": "Telli Palmiye",
+      "otherNames": [],
+      "gbifId": "2739071",
+      "powoId": "urn:lsid:ipni.org:names:670182-1"
+    },
+    {
+      "scientificName": "Chamaerops humilis",
+      "wikidataId": "Q161747",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2736625",
+      "powoId": "urn:lsid:ipni.org:names:665917-1"
+    },
+    {
+      "scientificName": "Begonia",
+      "wikidataId": "Q158617",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2874710",
+      "powoId": "urn:lsid:ipni.org:names:327437-2"
+    },
+    {
+      "scientificName": "Pelargonium",
+      "wikidataId": "Q146118",
+      "turkishName": "Itır",
+      "otherNames": [
+        "Itırçiçeği"
+      ],
+      "gbifId": "9348640",
+      "powoId": "urn:lsid:ipni.org:names:30302759-2"
+    },
+    {
+      "scientificName": "Phalaenopsis",
+      "wikidataId": "Q133897",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2804680",
+      "powoId": "urn:lsid:ipni.org:names:30326-1"
+    },
+    {
+      "scientificName": "Goeppertia",
+      "wikidataId": "Q18291183",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2761307",
+      "powoId": "urn:lsid:ipni.org:names:30215678-2"
+    },
+    {
+      "scientificName": "Calathea",
+      "wikidataId": "Q1650700",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "8394666",
+      "powoId": "urn:lsid:ipni.org:names:30001411-2"
+    },
+    {
+      "scientificName": "Dracaena",
+      "wikidataId": "Q158009",
+      "turkishName": "Draçena",
+      "otherNames": [],
+      "gbifId": "2752062",
+      "powoId": "urn:lsid:ipni.org:names:30010732-2"
+    },
+    {
+      "scientificName": "Ficus",
+      "wikidataId": "Q59798",
+      "turkishName": "İncir",
+      "otherNames": [],
+      "gbifId": "2984588",
+      "powoId": "urn:lsid:ipni.org:names:327905-2"
+    },
+    {
+      "scientificName": "Rosa",
+      "wikidataId": "Q34687",
+      "turkishName": "Gül",
+      "otherNames": [],
+      "gbifId": "8395064",
+      "powoId": "urn:lsid:ipni.org:names:30002432-2"
+    },
+    {
+      "scientificName": "Tulipa",
+      "wikidataId": "Q93201",
+      "turkishName": "Lale",
+      "otherNames": [
+        "Lâle",
+        "Lale soğanı"
+      ],
+      "gbifId": "2750913",
+      "powoId": "urn:lsid:ipni.org:names:24874-1"
+    },
+    {
+      "scientificName": "Lilium",
+      "wikidataId": "Q5194627",
+      "turkishName": "Zambak",
+      "otherNames": [],
+      "gbifId": "2752977",
+      "powoId": "urn:lsid:ipni.org:names:30009317-2"
+    },
+    {
+      "scientificName": "Iris",
+      "wikidataId": "Q156901",
+      "turkishName": "Süsen",
+      "otherNames": [],
+      "gbifId": "2748017",
+      "powoId": "urn:lsid:ipni.org:names:326330-2"
+    },
+    {
+      "scientificName": "Narcissus",
+      "wikidataId": "Q29465",
+      "turkishName": "Nergis",
+      "otherNames": [
+        "Nergiz"
+      ],
+      "gbifId": "2858200",
+      "powoId": "urn:lsid:ipni.org:names:1558-1"
+    },
+    {
+      "scientificName": "Hyacinthus",
+      "wikidataId": "Q158758",
+      "turkishName": "Sümbül",
+      "otherNames": [],
+      "gbifId": "2766192",
+      "powoId": "urn:lsid:ipni.org:names:24372-1"
+    },
+    {
+      "scientificName": "Dianthus",
+      "wikidataId": "Q156099",
+      "turkishName": "Karanfil",
+      "otherNames": [],
+      "gbifId": "3085411",
+      "powoId": "urn:lsid:ipni.org:names:6245-1"
+    },
+    {
+      "scientificName": "Viola",
+      "wikidataId": "Q146095",
+      "turkishName": "Menekşe",
+      "otherNames": [
+        "Kır menekşesi"
+      ],
+      "gbifId": "2874237",
+      "powoId": "urn:lsid:ipni.org:names:30000540-2"
+    },
+    {
+      "scientificName": "Cyclamen",
+      "wikidataId": "Q147295",
+      "turkishName": "Siklamen",
+      "otherNames": [
+        "Domuz turpu",
+        "Tavşan çiçeği",
+        "Tavşan kulağı",
+        "Yer somunu"
+      ],
+      "gbifId": "3169314",
+      "powoId": "urn:lsid:ipni.org:names:32774-1"
+    },
+    {
+      "scientificName": "Chrysanthemum",
+      "wikidataId": "Q59882",
+      "turkishName": "Kasımpatı",
+      "otherNames": [
+        "Krizantem"
+      ],
+      "gbifId": "3150746",
+      "powoId": "urn:lsid:ipni.org:names:331492-2"
+    },
+    {
+      "scientificName": "Dahlia",
+      "wikidataId": "Q130918",
+      "turkishName": "Yıldız çiçeği",
+      "otherNames": [
+        "Dalya",
+        "Yıldızçiçeği"
+      ],
+      "gbifId": "3093023",
+      "powoId": "urn:lsid:ipni.org:names:325940-2"
+    },
+    {
+      "scientificName": "Petunia",
+      "wikidataId": "Q161103",
+      "turkishName": "Petunya",
+      "otherNames": [
+        "Boruçiçeği"
+      ],
+      "gbifId": "2928858",
+      "powoId": "urn:lsid:ipni.org:names:331845-2"
+    },
+    {
+      "scientificName": "Lavandula",
+      "wikidataId": "Q171892",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "2927302",
+      "powoId": "urn:lsid:ipni.org:names:20960-1"
+    },
+    {
+      "scientificName": "Mentha",
+      "wikidataId": "Q47859",
+      "turkishName": "Nane",
+      "otherNames": [],
+      "gbifId": "2927173",
+      "powoId": "urn:lsid:ipni.org:names:30016176-2"
+    },
+    {
+      "scientificName": "Citrus",
+      "wikidataId": "Q81513",
+      "turkishName": "Narenciye",
+      "otherNames": [
+        "Turunçgil",
+        "Turunçgiller"
+      ],
+      "gbifId": "3190155",
+      "powoId": "urn:lsid:ipni.org:names:30022289-2"
+    },
+    {
+      "scientificName": "Prunus",
+      "wikidataId": "Q190545",
+      "turkishName": null,
+      "otherNames": [],
+      "gbifId": "3020559",
+      "powoId": "urn:lsid:ipni.org:names:30003057-2"
+    },
+    {
+      "scientificName": "Pinus",
+      "wikidataId": "Q12024",
+      "turkishName": "Çam",
+      "otherNames": [],
+      "gbifId": "2684241",
+      "powoId": "urn:lsid:ipni.org:names:328247-2"
+    },
+    {
+      "scientificName": "Quercus",
+      "wikidataId": "Q12004",
+      "turkishName": "Meşe",
+      "otherNames": [],
+      "gbifId": "2877951",
+      "powoId": "urn:lsid:ipni.org:names:325819-2"
+    }
+  ]
+}
