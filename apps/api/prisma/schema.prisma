@@ -328,6 +328,19 @@ enum ScanStatus {
   FAILED
 }
 
+// A diagnosis photo tied to an earlier one (ADR 0013).
+enum ScanLink {
+  SECOND_PHOTO // the first result was unsure
+  FOLLOW_UP // 5–7 days later: is it getting better?
+}
+
+// The owner's own read at the follow-up.
+enum Recovery {
+  BETTER
+  SAME
+  WORSE
+}
+
 enum ChatRole {
   USER
   ASSISTANT
@@ -456,10 +469,20 @@ model Scan {
   // False when no plant was recognized: such scans do not use the free
   // weekly quota, only the daily fair-use limit.
   chargeable  Boolean    @default(true)
+  // Second photo or follow-up of a first diagnosis (always the first one).
+  parentId    Int?       @map("parent_id")
+  parent      Scan?      @relation("ScanLinks", fields: [parentId], references: [id], onDelete: Cascade)
+  linked      Scan[]     @relation("ScanLinks")
+  link        ScanLink?
+  // "Bu teşhis doğru muydu?"; null until answered.
+  correct     Boolean?
+  recovery    Recovery?
+  feedbackAt  DateTime?  @map("feedback_at")
   createdAt   DateTime   @default(now()) @map("created_at")
 
   @@index([userId, createdAt])
   @@index([userId, imageHash])
+  @@index([parentId])
   @@map("scans")
 }
 

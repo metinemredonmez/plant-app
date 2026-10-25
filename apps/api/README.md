@@ -92,13 +92,14 @@ Ayrıntı ve tasarım kararları [ADR 0009](../../docs/adr/0009-yapay-zekali-bak
 | `POST /api/v1/my/plants/:id/care` | oturum | Bakım kaydı; sulama sonraki sulama gününü günceller |
 | `GET /api/v1/my/today` | oturum | Sulanacaklar ve yaklaşanlar |
 | `GET /api/v1/my/consents/ai`, `POST /api/v1/my/consents` | oturum | Yapay zekâ işleme onayı |
-| `POST /api/v1/scans/identify`, `/api/v1/scans/diagnose` | oturum, onay, kota | Çok parçalı `image` (JPEG, PNG, WebP; 8 MB). Sunucu EXIF'i siler, 1280 piksele küçültür; aynı fotoğraf önceki sonucu döndürür. Tanımada `outcome`: `identified`, `possible` ya da `not_recognized`. Teşhis ilaç önermez |
-| `GET /api/v1/scans`, `/api/v1/scans/:id` | oturum | Tarama geçmişi |
+| `POST /api/v1/scans/identify`, `/api/v1/scans/diagnose` | oturum, onay, kota | Çok parçalı `image` (JPEG, PNG, WebP; 8 MB). Sunucu EXIF'i siler, 1280 piksele küçültür; aynı fotoğraf önceki sonucu döndürür. Tanımada `outcome`: `identified`, `possible` ya da `not_recognized`. Teşhiste ürün adı, doz ve uygulama zamanı süzülür, her sonuçta `referral` var ([ADR 0013](../../docs/adr/0013-teshis-guvenligi-ve-iyilesme-takibi.md)). Teşhiste `secondPhotoOf` (emin olunamayan sonuçtan sonra bir kez, 24 saat içinde) ya da `followUpOf` (en çok iki takip) alanı fotoğrafı ilk teşhise bağlar; bu fotoğraflar kotadan düşmez |
+| `POST /api/v1/scans/:id/feedback` | oturum | `{correct}` teşhiste ("Bu teşhis doğru muydu?"), `{recovery: BETTER\|SAME\|WORSE}` takip fotoğrafında |
+| `GET /api/v1/scans`, `/api/v1/scans/:id` | oturum | Tarama geçmişi; `parentId`, `link`, `correct`, `recovery` ile |
 | `GET /api/v1/app-config` | açık | Açık giriş yolları, Google istemci kimlikleri, en düşük uygulama sürümü |
 | `POST /api/v1/auth/apple`, `/api/v1/auth/google` | açık, hız sınırlı | Kimlik jetonuyla giriş ya da hesap açma; `isNew` döner |
 | `POST /api/v1/auth/phone/code`, `/api/v1/auth/phone/verify` | açık, hız sınırlı | +90 numaraya 6 haneli SMS kodu; kodla giriş ya da hesap açma |
 | `PUT /api/v1/me/care-profile`, `POST /api/v1/me/paywall-offered` | oturum | İlk soruların cevapları; tek seferlik üyelik ekranının gösterildiği |
-| `GET`, `POST /api/v1/assistant/messages` | oturum, onay, kota | Bitkiyi bilen bakım asistanı |
+| `GET`, `POST /api/v1/assistant/messages` | oturum, onay, kota | Bitkiyi bilen bakım asistanı. Yanıttaki ürün adı, doz ve uygulama zamanı içeren cümleler çıkarılır; gerekirse uzman yönlendirmesi eklenir |
 | `GET /api/v1/me` | oturum | Profil, `publicId`, plan, limitler, kullanım |
 | `POST /api/v1/billing/revenuecat` | paylaşılan sır | RevenueCat webhook'u |
 
@@ -111,7 +112,10 @@ Eski mağaza uygulaması kökten `pnpm mock:api` ile çalışır: kimlik, kullan
 ```bash
 pnpm test        # birim testleri + e2e
 pnpm test:e2e    # yalnızca e2e
+pnpm red-team    # 50 istemlik kırmızı takım seti gerçek modele (ANTHROPIC_API_KEY gerekir, ücretli)
 ```
+
+Kırmızı takım seti `test/fixtures/red-team.ts` dosyasında. e2e testi bu istemleri kasıtlı olarak kurala aykırı yanıt veren bir modelle çalıştırır ve kullanıcıya hiçbir ürün adı, doz ya da uygulama zamanının ulaşmadığını doğrular. `pnpm red-team` aynı istemleri yapılandırılmış modele gönderir ve her istem için ham yanıtın neyi ihlal ettiğini, süzgeçten sonra neyin kaldığını yazar.
 
 e2e testleri `DATABASE_URL`'deki veritabanının `_test` sonekli kopyasını kullanır (`everbloom_dev` → `everbloom_test`). Başka bir adres için `TEST_DATABASE_URL` verin. Kurulum yalnızca bekleyen migration'ları uygular ve seed'i çalıştırır, hiçbir veriyi silmez. Testler her çalıştırmada benzersiz e-postalarla yeni test hesapları açar. Sözleşme snapshot'ları `test/__snapshots__` altında; bilinçli bir sözleşme değişikliğinden sonra `pnpm test:e2e -u` ile güncellenir.
 

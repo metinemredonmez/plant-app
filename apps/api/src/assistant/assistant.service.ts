@@ -7,6 +7,7 @@ import { MyPlantsService } from '../care/my-plants.service.js';
 import { ConsentsService } from '../consents/consents.service.js';
 import { ownerContext } from '../care/profile.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { guardReply } from '../safety/plant-protection.js';
 import {
   AssistantUnavailableError,
   CareAssistant,
@@ -143,6 +144,13 @@ export class AssistantService {
         'Asistan şu anda yanıt veremiyor, lütfen biraz sonra tekrar deneyin',
       );
     }
+    // What the user sees and what is stored: no product, dose or schedule.
+    const guarded = guardReply(answer, body.message);
+    if (guarded.redacted) {
+      // Counted for review; the text itself stays out of the logs.
+      this.logger.warn('assistant reply redacted (plant protection)');
+    }
+    answer = guarded.text;
 
     // Saved only when answered, so a failure does not use up the quota.
     const [, reply] = await this.prisma.$transaction([

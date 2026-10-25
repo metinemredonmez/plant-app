@@ -83,6 +83,15 @@ export class UsageService {
     this.assertDaily(limits.scansPerDay, used.scansToday);
   }
 
+  /**
+   * A second photo or follow-up belongs to a diagnosis already counted: only
+   * fair use applies (ScansService caps how many one diagnosis gets).
+   */
+  async assertCanLinkScan(userId: number) {
+    const { limits, used } = await this.summary(userId);
+    this.assertDaily(limits.scansPerDay, used.scansToday);
+  }
+
   async assertCanAsk(userId: number) {
     const { premium, limits, used } = await this.summary(userId);
     if (used.messagesMonth >= limits.messagesPerMonth) {

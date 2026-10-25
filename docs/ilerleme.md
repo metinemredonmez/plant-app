@@ -10,6 +10,7 @@
 | 2 | 2–8 Kas | Öne çekildi: şablon temizliği, Expo 57, iOS ve Android derlemesi tamam; staging, Sentry ve EAS hesap bekliyor |
 | 3 | 9–15 Kas | Öne çekildi: fotoğraf temizleme, tekrar önleme, güven eşikleri, R2 sürücüsü ve Wikidata adları tamam; R2 hesabı ve sağlayıcı anahtarları bekliyor |
 | 4 | 16–22 Kas | Öne çekildi: yerleşim, mevsimlik sulama, 14 günlük takvim, günde tek hatırlatıcı, elle ekleme tamam; kapsam dondurma sahibin onayında |
+| 5 | 23–29 Kas | Öne çekildi: teşhis güvenlik süzgeci, uzman yönlendirmesi, ikinci fotoğraf, iyileşme takibi, doğruluk sorusu ve 50 istemlik kırmızı takım seti tamam; canlı model ve Kindwise denemesi anahtar ve kredi bekliyor |
 
 ### 1. hafta (yeni plan)
 
@@ -217,6 +218,39 @@ Tamamlanan:
   - Şablonun düğmesi tema kancasını yalnız ikon varken çağırıyordu (kanca sırası bozulabiliyordu); açılış animasyonundaki çizgi yardımcısı da kanca kuralına uyduruldu.
 
 Açık kalanlar ve sahibin kararları: SMS sağlayıcısı (Netgsm hesabı), ödeme duvarı modu (şimdilik ücretsiz çekirdek), Apple ve Google geliştirici hesapları, RevenueCat ve mağaza ürünleri (7. hafta), hukuk metinleri (taslak). Ayrıntı ADR 0012'de.
+
+### 5. hafta (yeni plan)
+
+[ADR 0013](adr/0013-teshis-guvenligi-ve-iyilesme-takibi.md).
+
+Tamamlanan:
+- Bitki koruma süzgeci (`src/safety/plant-protection.ts`): teşhisin açıklamasından, tedavi adımlarından ve asistanın yanıtından şunları çıkarıyor:
+  - Ürün, etken madde ve marka adları.
+  - Doz ve karışım oranı.
+  - İlaçla birlikte geçen uygulama zamanı.
+  - Uzmana yönlendirmeyen ilaç talimatları.
+  - Sulama miktarı, gübre oranı ve mekanik önlemler serbest.
+- Her teşhis sonucunda uzman yönlendirmesi var (ziraat mühendisi, il veya ilçe tarım müdürlüğü, B-Reçete). Asistanın sistem istemi güçlendirildi.
+- Güven düşükse ikinci fotoğraf isteniyor: 24 saat içinde bir kez, kotadan düşmüyor.
+- İyileşme takibi:
+  - 5 gün sonra hatırlatma; bildirime dokununca o teşhisin takip fotoğrafı açılıyor.
+  - Takip fotoğrafı ilk teşhise bağlanıyor; en çok iki takip var.
+  - Sonuç "fotoğrafa göre daha iyi, aynı ya da daha kötü" diye gösteriliyor; sahibine de kendi gözlemi soruluyor.
+  - Bitki sayfasında "Teşhis takibi" kartı var.
+- "Bu teşhis doğru muydu?" sorusu ve `POST /v1/scans/:id/feedback`.
+- Kırmızı takım seti: 50 istem; `pnpm red-team` gerçek modelle çalıştırmak için hazır.
+- Testler:
+  - API birim 98: süzgecin 50 testi.
+  - API e2e 102: 6'sı yeni teşhis testi; kasıtlı olarak kurala aykırı yanıt veren modelle 50 istemin hiçbirinde ürün adı, doz ya da zaman kullanıcıya ulaşmadı.
+  - Uygulama Jest 75: teşhis sonucu, takip kartı ve açık teşhis hesabı için 9 yeni test.
+  - Lint ve tip kontrolü temiz.
+
+Denenmeyenler:
+- Yeni teşhis ekranları simülatörde görülmedi; simülatör deneme sırasında kapandı. Ekranları Jest testleri kapsıyor.
+- Canlı model ile kırmızı takım: ANTHROPIC_API_KEY sunucuda yok.
+- Kindwise'ın gerçek metinleri: kredi bekliyor.
+
+Açık kalanlar: canlı kırmızı takım çalıştırması, Kindwise kredisi, yönlendirme metninin hukuki teyidi, eşiklerin kendi verimizle ayarlanması. Ayrıntı ADR 0013'te.
 
 ## Bitki mağazası dönemi (1–4. haftalar)
 

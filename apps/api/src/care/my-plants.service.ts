@@ -265,10 +265,20 @@ export class MyPlantsService {
         take: 30,
       }),
       this.prisma.scan.findMany({
-        where: { userPlantId: plant.id },
+        where: { userPlantId: plant.id, status: 'DONE' },
         orderBy: { createdAt: 'desc' },
         take: 10,
-        select: { id: true, kind: true, result: true, createdAt: true },
+        // The app finds the open diagnosis and its follow-ups here.
+        select: {
+          id: true,
+          kind: true,
+          parentId: true,
+          link: true,
+          correct: true,
+          recovery: true,
+          result: true,
+          createdAt: true,
+        },
       }),
     ]);
     return {

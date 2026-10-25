@@ -12,11 +12,24 @@ import { MyPlantsService } from '../care/my-plants.service.js';
 import { DAY_MS } from '../care/season.js';
 import { SpeciesService } from '../care/species.service.js';
 import { ConsentsService } from '../consents/consents.service.js';
-import type { Prisma, ScanKind } from '../generated/prisma/client.js';
+import { z } from 'zod';
+
+import type {
+  Prisma,
+  Scan,
+  ScanKind,
+  ScanLink,
+} from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import {
+  EXPERT_REFERRAL,
+  redact,
+  safeSteps,
+} from '../safety/plant-protection.js';
 import { ImageStorage } from '../storage/image-storage.js';
 import { ACCEPTED_PHOTO_TYPES, type CleanPhoto, cleanPhoto } from './photo.js';
 import {
+  type DiagnoseResult,
   type IdentifyResult,
   VisionProvider,
   VisionProviderError,
@@ -27,7 +40,16 @@ import {
 // "Bitki tanınamadı" with photo tips below.
 const SURE = 0.6;
 const POSSIBLE = 0.2;
-const FOLLOW_UP_DAYS = 7;
+
+// Diagnosis (ADR 0013): below these the app asks for one more photo, which
+// uses no quota. Follow-ups are reminded after 5 days, two per diagnosis.
+const DIAGNOSIS_SURE = 0.4;
+const HEALTHY_SURE = 0.6;
+const FOLLOW_UP_DAYS = 5;
+const MAX_FOLLOW_UPS = 2;
+const SECOND_PHOTO_MS = DAY_MS;
+// The healthy share moving this much between photos counts as a change.
+const TREND_STEP = 0.15;
 
 export const PHOTO_TIPS = [
   'Bitkiyi gün ışığında, flaş kullanmadan çek.',
@@ -35,6 +57,71 @@ export const PHOTO_TIPS = [
   'Tek bir bitkiye odaklan; arkada başka bitki olmasın.',
   'Fotoğraf bulanık çıktıysa telefonu sabit tutup tekrar çek.',
 ];
+
+export const DIAGNOSIS_TIPS = [
+  'Sorunlu yaprağı kadrajı dolduracak kadar yakından çek.',
+  'Gün ışığında, flaşsız çek; lekeler net görünsün.',
+  'Yaprağın alt yüzünü de çek; zararlılar çoğu zaman oradadır.',
+];
+
+const UNSURE_HINT =
+  'Emin olamadım. Sorunlu yaprağı yakından, gün ışığında çekip ikinci bir fotoğraf gönderirsen daha net söyleyebilirim.';
+const STILL_UNSURE_HINT =
+  'Hâlâ emin olamadım. Bitkiyi bir ziraat mühendisine ya da fidanlığa göstermeni öneririm.';
+
+type Trend = 'better' | 'same' | 'worse' | 'unclear';
+const TREND_HINTS: Record<Trend, string> = {
+  better: 'Fotoğrafa göre toparlanıyor. Bakıma böyle devam et.',
+  same: 'Fotoğrafa göre belirgin bir değişim yok. Birkaç gün daha izle; kötüleşirse bir ziraat mühendisine göster.',
+  worse:
+    'Fotoğrafa göre kötüleşmiş görünüyor. Bir ziraat mühendisine ya da il veya ilçe tarım müdürlüğüne göstermeni öneririm.',
+  unclear: 'Karşılaştıramadım. Aynı bölümü benzer ışıkta yeniden çek.',
+};
+
+/** A DIAGNOSE scan's stored `result`, as the app receives it. */
+export interface Diagnosis extends DiagnoseResult {
+  hint: string | null;
+  tips: string[];
+  disclaimer: string;
+  /** Expert and B-Reçete referral; on every result with a plant. */
+  referral: string | null;
+  confident: boolean;
+  /** Unsure first result: one more photo, no quota. */
+  needsSecondPhoto: boolean;
+  /** When to remind the follow-up photo; null when there is nothing to follow. */
+  followUpAt: string | null;
+  followUp?: {
+    trend: Trend;
+    before: { healthyProbability: number; issue: string | null; at: string };
+  };
+}
+
+export interface DiagnoseOptions {
+  userPlantId?: number;
+  secondPhotoOf?: number;
+  followUpOf?: number;
+}
+
+export const feedbackSchema = z
+  .object({
+    correct: z.boolean().optional(),
+    recovery: z.enum(['BETTER', 'SAME', 'WORSE']).optional(),
+  })
+  .refine((body) => body.correct !== undefined || body.recovery !== undefined, {
+    message: 'Bir yanıt seçin',
+  });
+export type FeedbackBody = z.output<typeof feedbackSchema>;
+
+const stored = (scan: Scan) => scan.result as unknown as Diagnosis;
+
+function trendOf(before: Diagnosis, now: Diagnosis): Trend {
+  if (!before.isPlant || !now.isPlant) return 'unclear';
+  if (now.isHealthy && !before.isHealthy) return 'better';
+  const delta = now.healthyProbability - before.healthyProbability;
+  if (delta >= TREND_STEP) return 'better';
+  if (delta <= -TREND_STEP) return 'worse';
+  return 'same';
+}
 
 type Outcome = 'identified' | 'possible' | 'not_recognized';
 
@@ -54,6 +141,19 @@ interface Identification {
 
 export const DIAGNOSIS_DISCLAIMER =
   'Bu bir ön değerlendirmedir, kesin teşhis değildir. Bitki koruma ürünü (ilaç) gerekiyorsa yalnızca yetkili bir ziraat mühendisinin reçetesiyle kullanın.';
+
+/** What the app sees of a scan in lists and on the plant page. */
+export const SCAN_FIELDS = {
+  id: true,
+  kind: true,
+  userPlantId: true,
+  parentId: true,
+  link: true,
+  correct: true,
+  recovery: true,
+  result: true,
+  createdAt: true,
+} as const;
 
 export interface UploadedImage {
   buffer: Buffer;
@@ -132,7 +232,14 @@ export class ScansService {
     {
       chargeable = true,
       userPlantId,
-    }: { chargeable?: boolean; userPlantId?: number } = {},
+      parentId,
+      link,
+    }: {
+      chargeable?: boolean;
+      userPlantId?: number;
+      parentId?: number;
+      link?: ScanLink | null;
+    } = {},
   ) {
     return this.prisma.scan.create({
       data: {
@@ -145,6 +252,8 @@ export class ScansService {
         provider: this.vision.name,
         result,
         chargeable,
+        parentId: parentId ?? null,
+        link: link ?? null,
       },
     });
   }
@@ -247,12 +356,140 @@ export class ScansService {
     return this.identification(scan.id, result, false);
   }
 
+  /**
+   * Provider output as shown: unsafe text out (product names, doses,
+   * schedules), the expert referral in, unsure results asking for one more
+   * photo.
+   */
+  private presentDiagnosis(
+    diagnosis: DiagnoseResult,
+    link: ScanLink | null,
+  ): Diagnosis {
+    const issues = diagnosis.issues.map((issue) => ({
+      ...issue,
+      probability: Math.round(issue.probability * 100) / 100,
+      description: issue.description
+        ? redact(issue.description).text || undefined
+        : undefined,
+      biological: safeSteps(issue.biological),
+      prevention: safeSteps(issue.prevention),
+    }));
+    const top = issues[0];
+    const unsure =
+      diagnosis.isPlant &&
+      (diagnosis.isHealthy
+        ? diagnosis.healthyProbability < HEALTHY_SURE
+        : !top || top.probability < DIAGNOSIS_SURE);
+    const needsSecondPhoto = unsure && link === null;
+    const hint = !diagnosis.isPlant
+      ? 'Fotoğrafta bir bitki göremedim.'
+      : needsSecondPhoto
+        ? UNSURE_HINT
+        : unsure
+          ? STILL_UNSURE_HINT
+          : null;
+    return {
+      ...diagnosis,
+      issues,
+      hint,
+      tips: !diagnosis.isPlant
+        ? PHOTO_TIPS
+        : needsSecondPhoto
+          ? DIAGNOSIS_TIPS
+          : [],
+      disclaimer: DIAGNOSIS_DISCLAIMER,
+      referral: diagnosis.isPlant ? EXPERT_REFERRAL : null,
+      confident: diagnosis.isPlant && !unsure,
+      needsSecondPhoto,
+      // The app reminds the user to send a new photo to see if it improves.
+      followUpAt:
+        diagnosis.isPlant && !diagnosis.isHealthy && link !== 'FOLLOW_UP'
+          ? new Date(Date.now() + FOLLOW_UP_DAYS * DAY_MS).toISOString()
+          : null,
+    };
+  }
+
+  /**
+   * The first diagnosis a second photo or follow-up belongs to, and the
+   * result to compare a follow-up with (the second photo when there is one).
+   */
+  private async chain(caller: AuthUser, link: ScanLink, scanId: number) {
+    const scan = await this.prisma.scan.findFirst({
+      where: {
+        id: scanId,
+        userId: caller.id,
+        kind: 'DIAGNOSE',
+        status: 'DONE',
+      },
+    });
+    if (!scan) throw new NotFoundException('Teşhis bulunamadı');
+    const root = scan.parentId
+      ? await this.prisma.scan.findUniqueOrThrow({
+          where: { id: scan.parentId },
+        })
+      : scan;
+    const linked = await this.prisma.scan.findMany({
+      where: { parentId: root.id, status: 'DONE' },
+      orderBy: { createdAt: 'asc' },
+    });
+    const second = linked.find((s) => s.link === 'SECOND_PHOTO');
+    if (link === 'SECOND_PHOTO') {
+      if (
+        scan.id !== root.id ||
+        !stored(root).needsSecondPhoto ||
+        second ||
+        Date.now() - root.createdAt.getTime() > SECOND_PHOTO_MS
+      ) {
+        throw new UnprocessableEntityException(
+          'İkinci fotoğraf yalnız emin olunamayan bir teşhisten sonra, 24 saat içinde bir kez gönderilebilir',
+        );
+      }
+    } else {
+      if (![root, second].some((s) => s && stored(s).followUpAt)) {
+        throw new UnprocessableEntityException(
+          'Takip fotoğrafı yalnız sorun bulunan bir teşhisten sonra gönderilebilir',
+        );
+      }
+      if (
+        linked.filter((s) => s.link === 'FOLLOW_UP').length >= MAX_FOLLOW_UPS
+      ) {
+        throw new UnprocessableEntityException(
+          `Bir teşhis için en çok ${MAX_FOLLOW_UPS} takip fotoğrafı gönderilebilir`,
+        );
+      }
+    }
+    return { root, reference: second ?? root };
+  }
+
   async diagnose(
     caller: AuthUser,
     file: UploadedImage | undefined,
-    userPlantId?: number,
+    options: DiagnoseOptions = {},
   ) {
-    if (userPlantId !== undefined) await this.plants.owned(caller, userPlantId);
+    if (options.secondPhotoOf && options.followUpOf) {
+      throw new UnprocessableEntityException(
+        'İkinci fotoğraf ile takip fotoğrafı birlikte gönderilemez',
+      );
+    }
+    const link: ScanLink | null = options.secondPhotoOf
+      ? 'SECOND_PHOTO'
+      : options.followUpOf
+        ? 'FOLLOW_UP'
+        : null;
+    const chain = link
+      ? await this.chain(
+          caller,
+          link,
+          (options.secondPhotoOf ?? options.followUpOf)!,
+        )
+      : null;
+    // A linked photo belongs to the first diagnosis's plant.
+    const userPlantId = chain
+      ? (chain.root.userPlantId ?? undefined)
+      : options.userPlantId;
+    if (!chain && userPlantId !== undefined) {
+      await this.plants.owned(caller, userPlantId);
+    }
     const photo = await this.accept(caller, file);
     const earlier = await this.earlier(caller, 'DIAGNOSE', photo, userPlantId);
     if (earlier) {
@@ -263,38 +500,82 @@ export class ScansService {
       };
     }
 
-    await this.usage.assertCanDiagnose(caller.id);
+    if (chain) await this.usage.assertCanLinkScan(caller.id);
+    else await this.usage.assertCanDiagnose(caller.id);
     const imageKey = await this.store(caller, photo);
+    const linkTo = { parentId: chain?.root.id, link };
     let diagnosis;
     try {
       diagnosis = await this.vision.diagnose(photo);
     } catch (error) {
       await this.save(caller, 'DIAGNOSE', photo, imageKey, undefined, {
         userPlantId,
+        ...linkTo,
       });
       this.failed(error);
     }
-    const result = {
-      ...diagnosis,
-      issues: diagnosis.issues.map((issue) => ({
-        ...issue,
-        probability: Math.round(issue.probability * 100) / 100,
-      })),
-      hint: diagnosis.isPlant ? null : 'Fotoğrafta bir bitki göremedim.',
-      tips: diagnosis.isPlant ? [] : PHOTO_TIPS,
-      disclaimer: DIAGNOSIS_DISCLAIMER,
-      // The app reminds the user to send a new photo to see if it improves.
-      followUpAt:
-        diagnosis.isPlant && !diagnosis.isHealthy
-          ? new Date(Date.now() + FOLLOW_UP_DAYS * DAY_MS).toISOString()
-          : null,
-    };
-    const scan = await this.save(caller, 'DIAGNOSE', photo, imageKey, result, {
-      // A photo without a plant does not use up the trial diagnosis.
-      chargeable: diagnosis.isPlant,
-      userPlantId,
-    });
+    let result = this.presentDiagnosis(diagnosis, link);
+    if (link === 'FOLLOW_UP' && chain) {
+      const before = stored(chain.reference);
+      const trend = trendOf(before, result);
+      const issue = before.issues[0];
+      result = {
+        ...result,
+        hint: TREND_HINTS[trend],
+        tips: trend === 'unclear' ? DIAGNOSIS_TIPS : [],
+        followUp: {
+          trend,
+          before: {
+            healthyProbability: before.healthyProbability,
+            issue: issue ? (issue.localName ?? issue.name) : null,
+            at: chain.reference.createdAt.toISOString(),
+          },
+        },
+      };
+    }
+    const scan = await this.save(
+      caller,
+      'DIAGNOSE',
+      photo,
+      imageKey,
+      result as unknown as Prisma.InputJsonValue,
+      {
+        // A photo without a plant does not use up the trial diagnosis, and a
+        // linked photo belongs to one already counted.
+        chargeable: diagnosis.isPlant && !chain,
+        userPlantId,
+        ...linkTo,
+      },
+    );
     return { scanId: scan.id, duplicate: false, ...result };
+  }
+
+  /** "Bu teşhis doğru muydu?" on a diagnosis; better, same or worse on a follow-up. */
+  async feedback(caller: AuthUser, id: number, body: FeedbackBody) {
+    const scan = await this.prisma.scan.findFirst({
+      where: { id, userId: caller.id, kind: 'DIAGNOSE', status: 'DONE' },
+    });
+    if (!scan) throw new NotFoundException('Teşhis bulunamadı');
+    const followUp = scan.link === 'FOLLOW_UP';
+    if (body.recovery && !followUp) {
+      throw new UnprocessableEntityException(
+        'İyileşme yalnız takip fotoğrafında sorulur',
+      );
+    }
+    if (body.correct !== undefined && followUp) {
+      throw new UnprocessableEntityException(
+        'Teşhisin doğruluğu ilk teşhiste sorulur',
+      );
+    }
+    return this.prisma.scan.update({
+      where: { id },
+      data: {
+        correct: body.correct,
+        recovery: body.recovery,
+        feedbackAt: new Date(),
+      },
+      select: { id: true, correct: true, recovery: true },
+    });
   }
 
   async list(caller: AuthUser) {
@@ -302,27 +583,14 @@ export class ScansService {
       where: { userId: caller.id, status: 'DONE' },
       orderBy: { createdAt: 'desc' },
       take: 30,
-      select: {
-        id: true,
-        kind: true,
-        userPlantId: true,
-        result: true,
-        createdAt: true,
-      },
+      select: SCAN_FIELDS,
     });
   }
 
   async detail(caller: AuthUser, id: number) {
     const scan = await this.prisma.scan.findFirst({
       where: { id, userId: caller.id },
-      select: {
-        id: true,
-        kind: true,
-        status: true,
-        userPlantId: true,
-        result: true,
-        createdAt: true,
-      },
+      select: { ...SCAN_FIELDS, status: true },
     });
     if (!scan) throw new NotFoundException('Tarama bulunamadı');
     return scan;
