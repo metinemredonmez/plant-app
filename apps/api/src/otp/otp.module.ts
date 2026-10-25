@@ -9,5 +9,6 @@ import { VerificationService } from './verification.service.js';
   imports: [AuthModule],
   controllers: [VerificationController],
   providers: [OtpService, VerificationService],
+  exports: [OtpService],
 })
 export class OtpModule {}

@@ -77,4 +77,41 @@ describe('validateEnv', () => {
       /VISION_DRIVER[\s\S]*ASSISTANT_DRIVER[\s\S]*REVENUECAT_WEBHOOK_SECRET/,
     );
   });
+
+  it('needs the Apple key before Sign in with Apple can be switched on', () => {
+    expect(() => validateEnv({ ...base, AUTH_APPLE_ENABLED: 'true' })).toThrow(
+      /APPLE_TEAM_ID[\s\S]*APPLE_KEY_ID[\s\S]*APPLE_PRIVATE_KEY[\s\S]*TOKEN_ENCRYPTION_KEY/,
+    );
+    expect(() => validateEnv({ ...base, AUTH_PHONE_ENABLED: 'true' })).toThrow(
+      /PHONE_PEPPER/,
+    );
+    expect(() =>
+      validateEnv({
+        ...base,
+        AUTH_GOOGLE_ENABLED: 'true',
+        GOOGLE_WEB_CLIENT_ID: 'w',
+      }),
+    ).toThrow(/GOOGLE_IOS_CLIENT_ID/);
+  });
+
+  it('refuses Google without Apple in production (App Store 4.8)', () => {
+    expect(() =>
+      validateEnv({
+        ...base,
+        NODE_ENV: 'production',
+        AUTH_GOOGLE_ENABLED: 'true',
+        GOOGLE_WEB_CLIENT_ID: 'w',
+        GOOGLE_IOS_CLIENT_ID: 'i',
+      }),
+    ).toThrow(/App Store 4\.8\)\n  → at AUTH_APPLE_ENABLED/);
+  });
+
+  it('keeps every new sign-in method off by default', () => {
+    expect(validateEnv(base)).toMatchObject({
+      AUTH_APPLE_ENABLED: false,
+      AUTH_GOOGLE_ENABLED: false,
+      AUTH_PHONE_ENABLED: false,
+      PAYWALL_ONBOARDING: true,
+    });
+  });
 });

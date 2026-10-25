@@ -10,6 +10,7 @@ import type { AuthUser } from '../auth/auth.decorators.js';
 import { PasswordService } from '../auth/password.service.js';
 import { TokenService } from '../auth/token.service.js';
 import { Prisma } from '../generated/prisma/client.js';
+import { AppleRevocationsService } from '../identity/apple-revocations.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ImageStorage } from '../storage/image-storage.js';
 import { toLegacyUser } from './legacy-user.mapper.js';
@@ -28,6 +29,7 @@ export class UsersService {
     private readonly passwords: PasswordService,
     private readonly tokens: TokenService,
     private readonly images: ImageStorage,
+    private readonly appleRevocations: AppleRevocationsService,
   ) {}
 
   async signUp({ name, email, password }: SignUpBody) {
@@ -36,7 +38,9 @@ export class UsersService {
     }
     const passwordHash = await this.passwords.hash(password);
     const user = await this.prisma.user
-      .create({ data: { name, email, passwordHash } })
+      .create({
+        data: { name, email, passwordHash, lastSignInMethod: 'EMAIL' },
+      })
       .catch((error: unknown) => {
         // Lost a race with a concurrent sign-up for the same e-mail.
         if (
@@ -56,6 +60,10 @@ export class UsersService {
     if (!user || user.anonymizedAt || !valid) {
       throw new UnauthorizedException('E-posta veya parola hatalı');
     }
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { lastSignInMethod: 'EMAIL' },
+    });
     return { user: toLegacyUser(user), ...(await this.tokens.issue(user)) };
   }
 
@@ -81,12 +89,21 @@ export class UsersService {
 
   /**
    * Account deletion (Apple 5.1.1(v), Google Play, KVKK): plants, care log,
-   * scans and their photos, chats and the entitlement are deleted, personal
-   * fields blanked and every session ends. The anonymized row stays so
+   * scans and their photos, chats, the entitlement and the Apple, Google
+   * and phone links are deleted, Apple access is revoked, personal fields
+   * blanked and every session ends. The anonymized row stays so
    * billing events from the stores still have something to point at.
    */
   async deleteAccount(caller: AuthUser, id: number) {
     assertSelf(caller, id);
+    const apple = await this.prisma.authIdentity.findMany({
+      where: {
+        userId: id,
+        provider: 'APPLE',
+        appleRefreshToken: { not: null },
+      },
+      select: { appleRefreshToken: true },
+    });
     await this.prisma.$transaction([
       this.prisma.user.update({
         where: { id },
@@ -98,9 +115,16 @@ export class UsersService {
           location: null,
           emailVerified: false,
           phoneVerified: false,
+          city: null,
+          careProfile: Prisma.DbNull,
+          careProfileAt: null,
+          lastSignInMethod: null,
           anonymizedAt: new Date(),
         },
       }),
+      // Apple, Google and phone links: the same identity later opens a new
+      // account. The phone link holds only a hash of the number.
+      this.prisma.authIdentity.deleteMany({ where: { userId: id } }),
       this.prisma.refreshToken.deleteMany({ where: { userId: id } }),
       this.prisma.otpCode.deleteMany({ where: { userId: id } }),
       this.prisma.chatMessage.deleteMany({ where: { userId: id } }),
@@ -113,6 +137,13 @@ export class UsersService {
       select: { publicId: true },
     });
     await this.images.removeAll(publicId);
+    // App Store 5.1.1(v): end Sign in with Apple access too; retried later
+    // if Apple does not answer now.
+    await this.appleRevocations.revokeOrQueue(
+      apple.flatMap(({ appleRefreshToken }) =>
+        appleRefreshToken ? [appleRefreshToken] : [],
+      ),
+    );
     return { message: 'Hesap silindi' };
   }
 }

@@ -13,9 +13,15 @@ import type { Env } from '../config/env.js';
 import type { OtpCode, OtpPurpose } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 
-// The app's code inputs take exactly 5 digits (validateOTPCode: ^\d{5}$).
-const CODE_LENGTH = 5;
-const TTL_MS = 10 * 60_000;
+// Verification codes have 5 digits (the old app's inputs: ^\d{5}$) and live
+// 10 minutes. Phone login codes are 6 digits for 5 minutes, which iOS
+// one-time-code autofill and Android SMS Retriever both handle.
+const POLICY: Record<OtpPurpose, { length: number; ttlMs: number }> = {
+  EMAIL_VERIFY: { length: 5, ttlMs: 10 * 60_000 },
+  PHONE_VERIFY: { length: 5, ttlMs: 10 * 60_000 },
+  PASSWORD_RESET: { length: 5, ttlMs: 10 * 60_000 },
+  PHONE_LOGIN: { length: 6, ttlMs: 5 * 60_000 },
+};
 const RESEND_AFTER_MS = 60_000;
 /** Wrong guesses allowed per code; the next attempt is refused. */
 export const MAX_ATTEMPTS = 5;
@@ -27,8 +33,8 @@ export interface OtpTarget {
 }
 
 /**
- * One-time codes for e-mail and phone verification and password reset.
- * Only a keyed hash is stored; codes live 10 minutes, a new one can be
+ * One-time codes for e-mail and phone verification, password reset and
+ * phone login. Only a keyed hash is stored; a new one can be
  * requested every 60 seconds (which voids the previous one), and a code is
  * locked after 5 wrong guesses.
  */
@@ -62,10 +68,8 @@ export class OtpService {
       );
     }
 
-    const code = String(randomInt(0, 10 ** CODE_LENGTH)).padStart(
-      CODE_LENGTH,
-      '0',
-    );
+    const { length, ttlMs } = POLICY[otp.purpose];
+    const code = String(randomInt(0, 10 ** length)).padStart(length, '0');
     await this.prisma.$transaction([
       // A new code voids the older ones for the same target and purpose.
       this.prisma.otpCode.updateMany({
@@ -77,7 +81,7 @@ export class OtpService {
           ...otp,
           userId,
           codeHash: this.hash(otp, code),
-          expiresAt: new Date(Date.now() + TTL_MS),
+          expiresAt: new Date(Date.now() + ttlMs),
         },
       }),
     ]);

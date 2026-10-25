@@ -14,7 +14,8 @@ export class LogSmsSender extends SmsSender {
 
   async send(to: string, text: string) {
     this.outbox.push({ channel: 'sms', to, text });
-    this.logger.warn(`[not sent, SMS_DRIVER=log] ${to}: ${text}`);
+    // Numbers never reach the log, even in development.
+    this.logger.warn(`[not sent, SMS_DRIVER=log] ••${to.slice(-2)}: ${text}`);
   }
 }
 

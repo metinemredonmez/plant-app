@@ -40,4 +40,26 @@ describe('API (e2e)', () => {
       .expect(200)
       .expect('Content-Type', 'image/jpeg');
   });
+
+  it('keeps Apple, Google and phone sign-in off until configured', async () => {
+    const config = await request(app.getHttpServer())
+      .get('/api/v1/app-config')
+      .expect(200);
+    expect(config.body.auth).toEqual({
+      email: true,
+      apple: false,
+      google: null,
+      phone: false,
+    });
+    for (const [path, body] of [
+      ['apple', { identityToken: 'x'.repeat(30), nonce: 'n'.repeat(20) }],
+      ['google', { idToken: 'x'.repeat(30) }],
+      ['phone/code', { phone: '0532 123 45 67' }],
+    ] as const) {
+      await request(app.getHttpServer())
+        .post(`/api/v1/auth/${path}`)
+        .send(body)
+        .expect(404);
+    }
+  });
 });

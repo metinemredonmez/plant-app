@@ -17,6 +17,7 @@ import { LegacyErrorFilter } from './common/legacy-error.filter.js';
 import { type Env, validateEnv } from './config/env.js';
 import { ConsentsModule } from './consents/consents.module.js';
 import { HealthController } from './health/health.controller.js';
+import { IdentityModule } from './identity/identity.module.js';
 import { MessagingModule } from './messaging/messaging.module.js';
 import { OtpModule } from './otp/otp.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
@@ -79,6 +80,7 @@ const isAuthRateLimited = (context: ExecutionContext) =>
     CatalogModule,
     UsersModule,
     OtpModule,
+    IdentityModule,
     // AI plant care app
     StorageModule,
     CareModule,

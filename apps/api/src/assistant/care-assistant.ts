@@ -14,6 +14,8 @@ export interface PlantContext {
   card?: string;
   recentCare?: string[];
   lastDiagnosis?: string;
+  /** From the onboarding answers: experience, pets at home. */
+  owner?: string;
 }
 
 export abstract class CareAssistant {
@@ -56,6 +58,7 @@ export function describeContext(context: PlantContext) {
     context.recentCare?.length &&
       `Son bakım kayıtları: ${context.recentCare.join('; ')}`,
     context.lastDiagnosis && `Son teşhis: ${context.lastDiagnosis}`,
+    context.owner && `Bitkinin sahibi: ${context.owner}`,
   ].filter(Boolean);
   return `Bitki bilgisi:\n${lines.join('\n')}`;
 }

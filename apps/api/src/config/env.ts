@@ -61,6 +61,53 @@ const fields = z.object({
   REVENUECAT_WEBHOOK_SECRET: z.string().min(16).optional(),
   // Current version of the AI processing consent text (KVKK, Apple 5.1.2(i)).
   AI_CONSENT_VERSION: z.string().min(1).default('2026-10-25'),
+
+  // Sign-in methods besides e-mail (docs/adr/0012). Each is off until its
+  // settings exist; the app shows only what GET /v1/app-config lists.
+  AUTH_APPLE_ENABLED: z.stringbool().default(false),
+  // The app's bundle id: the `aud` of Apple identity tokens.
+  APPLE_BUNDLE_ID: z.string().min(1).default('com.everbloom.care'),
+  // "Sign in with Apple" key, for the token exchange and the revocation at
+  // account deletion. The .p8 content may be one line with \n escapes.
+  APPLE_TEAM_ID: z.string().min(1).optional(),
+  APPLE_KEY_ID: z.string().min(1).optional(),
+  APPLE_PRIVATE_KEY: z.string().min(1).optional(),
+  AUTH_GOOGLE_ENABLED: z.stringbool().default(false),
+  // OAuth client ids (public values). Tokens from the app carry the web id
+  // on Android and the iOS id on iOS.
+  GOOGLE_WEB_CLIENT_ID: z.string().min(1).optional(),
+  GOOGLE_IOS_CLIENT_ID: z.string().min(1).optional(),
+  AUTH_PHONE_ENABLED: z.stringbool().default(false),
+  // HMAC key for phone numbers: only the hash and the last two digits are
+  // stored.
+  PHONE_PEPPER: z.string().min(32).optional(),
+  PHONE_CODES_PER_NUMBER_PER_DAY: z.coerce.number().int().positive().default(5),
+  PHONE_CODES_PER_DAY: z.coerce.number().int().positive().default(1000),
+  // Android SMS Retriever: the app's 11-character hash, last line of the SMS.
+  SMS_RETRIEVER_HASH: z
+    .string()
+    .regex(/^[A-Za-z0-9+/]{11}$/)
+    .optional(),
+  // AES-256-GCM key (32 bytes, base64) for the stored Apple refresh tokens.
+  TOKEN_ENCRYPTION_KEY: z
+    .string()
+    .refine(
+      (key) => Buffer.from(key, 'base64').length === 32,
+      'must be 32 bytes in base64',
+    )
+    .optional(),
+  // Testing and overrides; the defaults are the providers' real addresses.
+  APPLE_AUTH_URL: z.url().default('https://appleid.apple.com'),
+  GOOGLE_JWKS_URL: z
+    .url()
+    .default('https://www.googleapis.com/oauth2/v3/certs'),
+  // Older app versions are sent to the update screen.
+  MIN_APP_VERSION: z
+    .string()
+    .regex(/^\d+\.\d+\.\d+$/)
+    .default('1.0.0'),
+  // Show the one-time paywall after the first sign-up.
+  PAYWALL_ONBOARDING: z.stringbool().default(true),
 });
 
 /** Rules that span several variables. */
@@ -96,6 +143,23 @@ export const envSchema = fields.superRefine((env, ctx) => {
       require(key, 'STORAGE_DRIVER=r2');
     }
   }
+  if (env.AUTH_APPLE_ENABLED) {
+    // Without the key, access could not be revoked at account deletion.
+    for (const key of [
+      'APPLE_TEAM_ID',
+      'APPLE_KEY_ID',
+      'APPLE_PRIVATE_KEY',
+      'TOKEN_ENCRYPTION_KEY',
+    ] as const) {
+      require(key, 'AUTH_APPLE_ENABLED=true');
+    }
+  }
+  if (env.AUTH_GOOGLE_ENABLED) {
+    require('GOOGLE_WEB_CLIENT_ID', 'AUTH_GOOGLE_ENABLED=true');
+    require('GOOGLE_IOS_CLIENT_ID', 'AUTH_GOOGLE_ENABLED=true');
+  }
+  if (env.AUTH_PHONE_ENABLED)
+    require('PHONE_PEPPER', 'AUTH_PHONE_ENABLED=true');
   // A production server must never "send" codes to its own log, nor answer
   // scans and questions from fixtures.
   if (env.NODE_ENV === 'production') {
@@ -116,6 +180,14 @@ export const envSchema = fields.superRefine((env, ctx) => {
           message: 'fake driver is not allowed in production',
         });
       }
+    }
+    // App Store 4.8: an app with Google sign-in offers Sign in with Apple.
+    if (env.AUTH_GOOGLE_ENABLED && !env.AUTH_APPLE_ENABLED) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['AUTH_APPLE_ENABLED'],
+        message: 'required when AUTH_GOOGLE_ENABLED=true (App Store 4.8)',
+      });
     }
     // A server's disk is not durable (Railway redeploys wipe it).
     if (env.STORAGE_DRIVER === 'local') {

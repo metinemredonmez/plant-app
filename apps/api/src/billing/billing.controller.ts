@@ -19,6 +19,8 @@ import { CITIES } from '../care/cities.js';
 import { ZodBody } from '../common/zod-body.pipe.js';
 import type { Env } from '../config/env.js';
 import { ConsentsService } from '../consents/consents.service.js';
+import { hasRealEmail } from '../identity/identity.service.js';
+import { maskedPhone } from '../identity/phone.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import {
   revenueCatEventSchema,
@@ -72,9 +74,13 @@ export class BillingController {
   /** What the app needs on start: who I am, my plan, today's usage. */
   @Get('me')
   async me(@CurrentUser() caller: AuthUser) {
-    const user = await this.prisma.user.findUniqueOrThrow({
-      where: { id: caller.id },
-    });
+    const [user, phone] = await Promise.all([
+      this.prisma.user.findUniqueOrThrow({ where: { id: caller.id } }),
+      this.prisma.authIdentity.findFirst({
+        where: { userId: caller.id, provider: 'PHONE' },
+        select: { hint: true },
+      }),
+    ]);
     const [{ premium, entitlement, limits, used }, aiConsent] =
       await Promise.all([
         this.usage.summary(caller.id),
@@ -84,7 +90,8 @@ export class BillingController {
       id: user.id,
       publicId: user.publicId,
       name: user.name,
-      email: user.email,
+      // Phone and some Apple accounts have no address of their own.
+      email: hasRealEmail(user.email) ? user.email : null,
       emailVerified: user.emailVerified,
       plan: {
         premium,
@@ -98,6 +105,19 @@ export class BillingController {
       aiConsent,
       city: user.city,
       reminderMinute: user.reminderMinute,
+      signInMethod: user.lastSignInMethod,
+      phoneHint: phone ? maskedPhone(phone.hint ?? '••') : null,
+      careProfile: user.careProfile,
+      // Onboarding steps still open, in order. The app opens the first one
+      // it knows and ignores names it does not (newer servers may add some).
+      missingSteps: [
+        ...(user.careProfileAt ? [] : ['profile']),
+        ...(this.config.get('PAYWALL_ONBOARDING', { infer: true }) &&
+        !user.paywallOfferedAt &&
+        !premium
+          ? ['paywall']
+          : []),
+      ],
     };
   }
 

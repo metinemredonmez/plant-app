@@ -22,6 +22,15 @@ enum OtpPurpose {
   EMAIL_VERIFY
   PHONE_VERIFY
   PASSWORD_RESET
+  PHONE_LOGIN // target is the peppered hash of the number, never the number
+}
+
+// How a person signs in. EMAIL is e-mail and password.
+enum AuthProvider {
+  EMAIL
+  APPLE
+  GOOGLE
+  PHONE
 }
 
 enum LightLevel {
@@ -38,33 +47,40 @@ enum Difficulty {
 }
 
 model User {
-  id             Int            @id @default(autoincrement())
-  name           String
-  email          String         @unique
-  passwordHash   String         @map("password_hash") // Argon2id
-  phoneNumber    String?        @unique @map("phone_number")
-  location       String?
-  emailVerified  Boolean        @default(false) @map("email_verified")
-  phoneVerified  Boolean        @default(false) @map("phone_verified")
-  role           Role           @default(CUSTOMER)
-  createdAt      DateTime       @default(now()) @map("created_at")
+  id               Int            @id @default(autoincrement())
+  name             String
+  email            String         @unique
+  passwordHash     String         @map("password_hash") // Argon2id
+  phoneNumber      String?        @unique @map("phone_number")
+  location         String?
+  emailVerified    Boolean        @default(false) @map("email_verified")
+  phoneVerified    Boolean        @default(false) @map("phone_verified")
+  role             Role           @default(CUSTOMER)
+  createdAt        DateTime       @default(now()) @map("created_at")
   // Account deletion blanks personal fields and deletes the user's plants,
   // scans, photos and chats.
-  anonymizedAt   DateTime?      @map("anonymized_at")
-  refreshTokens  RefreshToken[]
-  otpCodes       OtpCode[]
-  consents       Consent[]
+  anonymizedAt     DateTime?      @map("anonymized_at")
+  refreshTokens    RefreshToken[]
+  otpCodes         OtpCode[]
+  consents         Consent[]
   // AI plant app (from week 5 of the new plan)
   // Stable id for third parties (RevenueCat app_user_id); never the row id.
-  publicId       String         @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  publicId         String         @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
   // One of the 81 provinces (care/cities.ts); optional, for weather alerts.
-  city           String?
+  city             String?
   // Daily watering reminder, minutes after local midnight (09:00).
-  reminderMinute Int            @default(540) @map("reminder_minute")
-  userPlants     UserPlant[]
-  scans          Scan[]
-  chatMessages   ChatMessage[]
-  entitlement    Entitlement?
+  reminderMinute   Int            @default(540) @map("reminder_minute")
+  // Onboarding (docs/adr/0012): the last way in, the answers to the first
+  // questions (null = never asked) and when the one-time paywall was shown.
+  lastSignInMethod AuthProvider?  @map("last_sign_in_method")
+  careProfile      Json?          @map("care_profile")
+  careProfileAt    DateTime?      @map("care_profile_at")
+  paywallOfferedAt DateTime?      @map("paywall_offered_at")
+  identities       AuthIdentity[]
+  userPlants       UserPlant[]
+  scans            Scan[]
+  chatMessages     ChatMessage[]
+  entitlement      Entitlement?
 
   @@map("users")
 }
@@ -223,6 +239,41 @@ model Banner {
   active       Boolean @default(true)
 
   @@map("banners")
+}
+
+/// Apple, Google or a phone number linked to an account. For PHONE the
+/// subject is an HMAC of the number with a server-side pepper; the number
+/// itself is never stored, logged or returned.
+model AuthIdentity {
+  id                Int          @id @default(autoincrement())
+  userId            Int          @map("user_id")
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider          AuthProvider
+  subject           String
+  // PHONE: last two digits, for "•••• ••• •• 45".
+  hint              String?
+  // APPLE: refresh token (AES-256-GCM) to revoke access at account deletion.
+  appleRefreshToken String?      @map("apple_refresh_token")
+  createdAt         DateTime     @default(now()) @map("created_at")
+  lastUsedAt        DateTime     @default(now()) @map("last_used_at")
+
+  @@unique([provider, subject])
+  @@index([userId])
+  @@map("auth_identities")
+}
+
+/// Apple access of a deleted account that Apple did not revoke at once;
+/// retried with backoff (App Store 5.1.1(v)).
+model AppleRevocation {
+  id            Int      @id @default(autoincrement())
+  refreshToken  String   @map("refresh_token") // AES-256-GCM
+  attempts      Int      @default(0)
+  nextAttemptAt DateTime @default(now()) @map("next_attempt_at")
+  lastError     String?  @map("last_error")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@index([nextAttemptAt])
+  @@map("apple_revocations")
 }
 
 model Consent {

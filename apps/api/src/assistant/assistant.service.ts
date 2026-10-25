@@ -5,6 +5,7 @@ import type { AuthUser } from '../auth/auth.decorators.js';
 import { UsageService } from '../billing/usage.service.js';
 import { MyPlantsService } from '../care/my-plants.service.js';
 import { ConsentsService } from '../consents/consents.service.js';
+import { ownerContext } from '../care/profile.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import {
   AssistantUnavailableError,
@@ -58,7 +59,13 @@ export class AssistantService {
     userPlantId?: number,
   ): Promise<PlantContext | null> {
     if (userPlantId === undefined) return null;
-    const plant = await this.plants.detail(caller, userPlantId);
+    const [plant, owner] = await Promise.all([
+      this.plants.detail(caller, userPlantId),
+      this.prisma.user.findUniqueOrThrow({
+        where: { id: caller.id },
+        select: { careProfile: true },
+      }),
+    ]);
     const diagnosis = plant.scans.find((scan) => scan.kind === 'DIAGNOSE');
     const issues = (
       diagnosis?.result as {
@@ -88,6 +95,7 @@ export class AssistantService {
           (event) =>
             `${event.at.toISOString().slice(0, 10)} ${event.kind}${event.note ? ` (${event.note})` : ''}`,
         ),
+      owner: ownerContext(owner.careProfile) ?? undefined,
       lastDiagnosis: issues?.length
         ? `${diagnosis!.createdAt.toISOString().slice(0, 10)}: ${issues.map((i) => i.localName ?? i.name).join(', ')}`
         : undefined,
