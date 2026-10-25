@@ -16,7 +16,7 @@ Uygulama bakım ve bilgi üzerine kurulu. Ürün ya da bitki satışı yok. Geli
 | Hastalık ve zararlı teşhisi | 1 deneme teşhisi | Teşhis ve 5–7 günlük iyileşme takibi | API hazır; ilaç adı ve dozu yok |
 | Yapay zekâ bakım asistanı | Ayda 10 mesaj | Ayda 300 mesaj (adil kullanım) | API hazır (sahte sürücüyle) |
 | Hava uyarıları | Şehre göre don ve sıcak uyarısı | Aynı | 10. hafta |
-| Hesap | E-posta ve OTP, uygulama içi ve web üzerinden silme | Aynı | Hazır; silme bitkileri, taramaları ve fotoğrafları da siliyor |
+| Hesap | Apple, Google, telefon (+90 SMS kodu) ya da e-posta; uygulama içi ve web üzerinden silme | Aynı | Akış hazır ([ADR 0012](adr/0012-giris-kayit-ve-uyelik-akisi.md)); Apple, Google ve telefon sağlayıcı hesapları gelince açılır. Silme Apple erişimini de iptal ediyor |
 
 **Fiyat:** aylık ₺149,99 (denemesiz) ve 7 gün denemeli yıllık ₺599,99. Haftalık ve ömür boyu plan yok. Fiyatlar üç ayda bir enflasyona göre gözden geçirilecek.
 

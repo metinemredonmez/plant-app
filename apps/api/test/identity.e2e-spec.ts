@@ -353,6 +353,7 @@ describe('phone', () => {
       .expect(200);
     expect(signedIn.body.isNew).toBe(true);
     expect(await me(signedIn.body.token)).toMatchObject({
+      name: '',
       email: null,
       signInMethod: 'PHONE',
       phoneHint: `•••• ••• •• ${digits.slice(-2)}`,

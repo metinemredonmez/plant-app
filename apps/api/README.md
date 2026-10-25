@@ -46,6 +46,15 @@ Uygulama açılışta hepsini doğrular ([src/config/env.ts](src/config/env.ts))
 | `PREMIUM_SCANS_PER_DAY`, `PREMIUM_MESSAGES_PER_MONTH` | hayır | Premium adil kullanım: 50, 300 |
 | `REVENUECAT_WEBHOOK_SECRET` | üretimde evet | RevenueCat'te webhook yetki başlığına `Bearer <sır>` olarak girilir |
 | `AI_CONSENT_VERSION` | hayır | Yapay zekâ işleme onay metninin sürümü; değişince yeniden onay istenir |
+| `AUTH_APPLE_ENABLED` | hayır | Apple ile giriş (varsayılan kapalı). Açıkken `APPLE_TEAM_ID`, `APPLE_KEY_ID`, `APPLE_PRIVATE_KEY` ve `TOKEN_ENCRYPTION_KEY` zorunlu: hesap silmede Apple erişimi iptal edilir |
+| `APPLE_BUNDLE_ID` | hayır | Apple kimlik jetonunun `aud` değeri, varsayılan `com.everbloom.care` |
+| `AUTH_GOOGLE_ENABLED` | hayır | Google ile giriş; `GOOGLE_WEB_CLIENT_ID` ve `GOOGLE_IOS_CLIENT_ID` zorunlu (herkese açık değerler). Üretimde Apple da açık olmalı (App Store 4.8) |
+| `AUTH_PHONE_ENABLED` | hayır | Telefonla giriş (yalnız +90). `PHONE_PEPPER` zorunlu; numara yalnız özet ve son iki hane olarak saklanır |
+| `PHONE_CODES_PER_NUMBER_PER_DAY`, `PHONE_CODES_PER_DAY` | hayır | SMS tavanları: numara başına 24 saatte (5) ve günde toplam (1000) |
+| `SMS_RETRIEVER_HASH` | hayır | Android SMS Retriever için uygulama özeti (11 karakter); SMS'in son satırına yazılır |
+| `TOKEN_ENCRYPTION_KEY` | Apple ile evet | Apple yenileme jetonları için AES-256-GCM anahtarı (32 bayt, base64) |
+| `MIN_APP_VERSION` | hayır | Bundan eski uygulamalar güncelleme ekranını görür (varsayılan `1.0.0`) |
+| `PAYWALL_ONBOARDING` | hayır | Yeni hesaba bir kez üyelik ekranı (varsayılan açık) |
 | `PORT` | hayır | Varsayılan 4100 |
 | `NODE_ENV` | hayır | `development` ise loglar okunaklı tek satır; `production` ise `trust proxy` açık |
 | `LOG_LEVEL` | hayır | Varsayılan `info` |
@@ -85,6 +94,10 @@ Ayrıntı ve tasarım kararları [ADR 0009](../../docs/adr/0009-yapay-zekali-bak
 | `GET /api/v1/my/consents/ai`, `POST /api/v1/my/consents` | oturum | Yapay zekâ işleme onayı |
 | `POST /api/v1/scans/identify`, `/api/v1/scans/diagnose` | oturum, onay, kota | Çok parçalı `image` (JPEG, PNG, WebP; 8 MB). Sunucu EXIF'i siler, 1280 piksele küçültür; aynı fotoğraf önceki sonucu döndürür. Tanımada `outcome`: `identified`, `possible` ya da `not_recognized`. Teşhis ilaç önermez |
 | `GET /api/v1/scans`, `/api/v1/scans/:id` | oturum | Tarama geçmişi |
+| `GET /api/v1/app-config` | açık | Açık giriş yolları, Google istemci kimlikleri, en düşük uygulama sürümü |
+| `POST /api/v1/auth/apple`, `/api/v1/auth/google` | açık, hız sınırlı | Kimlik jetonuyla giriş ya da hesap açma; `isNew` döner |
+| `POST /api/v1/auth/phone/code`, `/api/v1/auth/phone/verify` | açık, hız sınırlı | +90 numaraya 6 haneli SMS kodu; kodla giriş ya da hesap açma |
+| `PUT /api/v1/me/care-profile`, `POST /api/v1/me/paywall-offered` | oturum | İlk soruların cevapları; tek seferlik üyelik ekranının gösterildiği |
 | `GET`, `POST /api/v1/assistant/messages` | oturum, onay, kota | Bitkiyi bilen bakım asistanı |
 | `GET /api/v1/me` | oturum | Profil, `publicId`, plan, limitler, kullanım |
 | `POST /api/v1/billing/revenuecat` | paylaşılan sır | RevenueCat webhook'u |

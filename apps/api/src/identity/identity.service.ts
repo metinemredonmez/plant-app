@@ -256,7 +256,8 @@ export class IdentityService {
     } else {
       user = await this.prisma.user.create({
         data: {
-          name: profile.name?.trim() || 'EverBloom üyesi',
+          // No name (phone, or Apple after the first time): the app greets without one.
+          name: profile.name?.trim() || '',
           email:
             verifiedEmail && !sameEmail
               ? verifiedEmail

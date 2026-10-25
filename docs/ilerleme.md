@@ -175,6 +175,49 @@ Android emülatöründe doğrulanan: yeni hesapla kayıt, "Ekle" düğmesi, elle
 
 Gelen istek: açılış animasyonu ve fal-app düzeninde giriş, kayıt ve üyelik akışı (Apple, Google, telefon, e-posta). Kapsama alındı ([kapsam.md](kapsam.md)); 5. haftanın önüne geçiyor.
 
+### Gelen istek: açılış, giriş, kayıt ve üyelik akışı (25 Ekim)
+
+[ADR 0012](adr/0012-giris-kayit-ve-uyelik-akisi.md). fal-app'in düzeni ve mantığı, EverBloom'un içeriği ve renkleriyle.
+
+Tamamlanan:
+- Yeni uygulama ikonu (minimal filiz), Android adaptif ve tek renk ikon; açılış ekranıyla aynı zemin.
+- Açılış animasyonu:
+  - Çizilerek beliren ve dolan filiz, inci parlaması, ışıltılar, nefes alan hale.
+  - Serif "EverBloom" ve altın parıltı, ardından slogan; sonda büyüme ve solma.
+  - "Hareketi azalt" açıkken sakin bir solma.
+- Akış: karşılama → beş soru (bellekte) → gizlilik (aydınlatma ayrı, açık rıza isteğe bağlı) → plan ön seçimi → hesap → onboarding üyelik ekranı → uygulama.
+- Hesap yolları:
+  - Apple (sistem düğmesi, nonce).
+  - Google (resmî G).
+  - Telefon: +90, 6 haneli SMS kodu, 60 sn yeniden gönderme, iOS oneTimeCode, Android SMS Retriever modülü; SMS izni yok.
+  - E-posta.
+- Dönen kullanıcı: cihaz damgası, "Tekrar hoş geldin", son kullanılan yol üstte; girişte ödeme ekranı yok.
+- Kök yönlendirme saf bir fonksiyon; 22 durumluk tablo testi var.
+- Sunucu:
+  - Apple ve Google jeton doğrulaması (JWKS).
+  - Apple erişim iptali: şifreli jeton ve yeniden deneme.
+  - Telefon kodu: tavanlar; numaranın yalnız özeti saklanıyor.
+  - `GET /v1/app-config`; `/v1/me` için `missingSteps`, `careProfile`, `signInMethod`.
+  - Bütün yeni yollar kapalı başlıyor.
+- İzin ön ekranları tek "Devam" düğmeli. Kamera izni reddedilince galeri öneriliyor.
+- Gereksiz Android izinleri kaldırıldı: mikrofon, üstte gösterme, depolama.
+- Testler:
+  - API birim 48, API e2e 96: yeni kimlik testleri ve varsayılanın kapalı kaldığının testi.
+  - Uygulama Jest 66: ekran testleri, yönlendirme tablosu, oturum akışı.
+  - Lint'te hata yok (kalan uyarılar şablondan geliyor); tip kontrolü ve expo-doctor temiz.
+- iOS simülatöründe uçtan uca denendi:
+  - Açılış animasyonu, karşılama, sorular, gizlilik ve plan.
+  - Telefonla hesap açma; üyelik ekranından hem "Şimdi değil" hem "Şimdilik ücretsiz devam et" ile çıkış.
+  - Açık rıza ve şehir hesaba geçiyor.
+  - Çıkışta "Tekrar hoş geldin" geliyor; hesap silinince karşılama ekranına dönülüyor.
+  - Android APK derleniyor, ama arayüz Android'de denenmedi.
+- Denemede ve lint'te bulunan hatalar düzeltildi:
+  - Adı olmayan hesap "Merhaba EverBloom" diye selamlanıyordu; ad artık boş kalıyor.
+  - Telefon numarası çıkıştan sonra bellekte kalıp sonraki kişinin alanına doluyordu; girişte ve çıkışta siliniyor.
+  - Şablonun düğmesi tema kancasını yalnız ikon varken çağırıyordu (kanca sırası bozulabiliyordu); açılış animasyonundaki çizgi yardımcısı da kanca kuralına uyduruldu.
+
+Açık kalanlar ve sahibin kararları: SMS sağlayıcısı (Netgsm hesabı), ödeme duvarı modu (şimdilik ücretsiz çekirdek), Apple ve Google geliştirici hesapları, RevenueCat ve mağaza ürünleri (7. hafta), hukuk metinleri (taslak). Ayrıntı ADR 0012'de.
+
 ## Bitki mağazası dönemi (1–4. haftalar)
 
 Takvim: [reports/Bitki mağazası pazar ve MVP planı.md](../reports/Bitki%20mağazası%20pazar%20ve%20MVP%20planı.md).
