@@ -68,7 +68,7 @@ const cases: {name: keyof typeof responseSchemas; method: string; path: string; 
   {name: 'VERIFY_EMAIL_OTP', method: 'POST', path: '/api/verify/otp/email', body: {email: demo.email, otp: DEMO_OTP}},
   {name: 'SEND_PHONE_OTP', method: 'POST', path: '/api/send/otp/phone', body: {email: demo.email, phoneNumber: '+905551112233'}},
   {name: 'VERIFY_PHONE_OTP', method: 'POST', path: '/api/verify/otp/phone', body: {email: demo.email, phoneNumber: '+905551112233', otp: DEMO_OTP}},
-  {name: 'CHANGE_PASSWORD', method: 'POST', path: '/api/change/password', body: {email: 'deniz@everbloom.test', password: 'secret34'}},
+  {name: 'CHANGE_PASSWORD', method: 'POST', path: '/api/change/password', body: {email: 'deniz@everbloom.test', password: 'secret34', resetToken: 'mock-reset-2'}},
   {name: 'AUTH_REFRESH', method: 'POST', path: '/api/auth/refresh', body: {refreshToken: 'mock-refresh-2'}},
   {name: 'AUTH_LOGOUT', method: 'POST', path: '/api/auth/logout', body: {refreshToken: 'mock-refresh-2'}},
   {name: 'DELETE_ACCOUNT', method: 'DELETE', path: '/api/user/delete/2'},
@@ -203,5 +203,12 @@ describe('mock sessions', () => {
   test('a password shorter than 8 characters → 422', async () => {
     const {status} = await call('POST', '/api/user/create', {name: 'Kısa', email: 'kisa@everbloom.test', password: 'abc123'});
     assert.equal(status, 422);
+  });
+});
+
+describe('password change needs the reset token', () => {
+  test('without a reset token → 401', async () => {
+    const {status} = await call('POST', '/api/change/password', {email: demo.email, password: 'yenisifre1'});
+    assert.equal(status, 401);
   });
 });

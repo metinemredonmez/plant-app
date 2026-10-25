@@ -15,10 +15,16 @@ export interface TokenPair {
 }
 
 const EXPIRED = 'Oturum süresi doldu, lütfen tekrar giriş yapın';
+const RESET_INVALID =
+  'Şifre sıfırlama süresi doldu, lütfen yeni bir kod isteyin';
+const RESET_TTL_SECONDS = 15 * 60;
 
 /** Only the hash of a refresh token is stored, never the token itself. */
 const digest = (token: string) =>
   createHash('sha256').update(token).digest('hex');
+
+/** Changes whenever the password changes; reveals nothing about it. */
+const fingerprint = (passwordHash: string) => digest(passwordHash).slice(0, 16);
 
 @Injectable()
 export class TokenService {
@@ -52,21 +58,61 @@ export class TokenService {
       },
     });
     const token = await this.jwt.signAsync(
-      { sub: String(user.id), role: user.role },
+      { sub: String(user.id), role: user.role, typ: 'access' },
       { expiresIn: this.accessTtlSeconds },
     );
     return { token, refreshToken };
   }
 
   async verifyAccess(token: string): Promise<AuthUser> {
-    try {
-      const payload = await this.jwt.verifyAsync<{ sub: string; role: Role }>(
-        token,
-      );
-      return { id: Number(payload.sub), role: payload.role };
-    } catch {
-      throw new UnauthorizedException(EXPIRED);
+    const payload = await this.jwt
+      .verifyAsync<{ sub: string; role: Role; typ?: string }>(token)
+      .catch(() => null);
+    // `typ` keeps a password-reset token from being used as a session.
+    if (payload?.typ !== 'access') throw new UnauthorizedException(EXPIRED);
+    return { id: Number(payload.sub), role: payload.role };
+  }
+
+  /**
+   * Proof that the caller verified a PASSWORD_RESET code, valid for 15
+   * minutes. It is bound to the current password hash, so it works once:
+   * after the change the fingerprint no longer matches.
+   */
+  issueResetToken(user: { id: number; passwordHash: string }) {
+    return this.jwt.signAsync(
+      {
+        sub: String(user.id),
+        typ: 'reset',
+        pwv: fingerprint(user.passwordHash),
+      },
+      { expiresIn: RESET_TTL_SECONDS },
+    );
+  }
+
+  /** Returns the user id if `token` is a valid, unused reset token. */
+  async verifyResetToken(
+    token: string,
+    currentPasswordHash: (id: number) => Promise<string | null>,
+  ) {
+    const payload = await this.jwt
+      .verifyAsync<{ sub: string; typ?: string; pwv?: string }>(token)
+      .catch(() => null);
+    if (payload?.typ !== 'reset')
+      throw new UnauthorizedException(RESET_INVALID);
+    const userId = Number(payload.sub);
+    const hash = await currentPasswordHash(userId);
+    if (!hash || payload.pwv !== fingerprint(hash)) {
+      throw new UnauthorizedException(RESET_INVALID);
     }
+    return userId;
+  }
+
+  /** Ends every session of a user (password change, account deletion). */
+  async revokeAll(userId: number) {
+    await this.prisma.refreshToken.updateMany({
+      where: { userId, revokedAt: null },
+      data: { revokedAt: new Date() },
+    });
   }
 
   /**

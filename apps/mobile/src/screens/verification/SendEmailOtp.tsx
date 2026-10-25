@@ -37,7 +37,7 @@ const SendEmailOtp: React.FC = () => {
       }
       alert.somethingWentWrong();
     } catch (error) {
-      alert.somethingWentWrong();
+      alert.serverError(error);
     } finally {
       setLoading(false);
     }

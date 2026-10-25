@@ -55,14 +55,14 @@ Yolların hepsi `${BASE_URL}api/...` altında. Başarı her zaman **200** döner
 | 13 | `POST /api/user/create` | SignUp | `{name, email, password}` | `{user, token, refreshToken}` (oturum; SignUpAccountCreated bunu başlatır) | 409 mükerrer e-posta, 422 parola < 8 |
 | 14 | `POST /api/order/create` | Checkout | `{name, total, address, discount, delivery, subtotal, cardHolderName, products, userId, email, phoneNumber}` | `{order}` (uygulama okumuyor) | 200 dışı her şey → OrderFailed |
 | 15 | `DELETE /api/user/delete/:id` | DeleteAccount | — | `{message}` | 401, 403 başka hesap |
-| 16 | `POST /api/review/create` | LeaveAReview | `{comment, rating, name, plantId, email}` | `{review}` | — |
-| 17 | `POST /api/promocode/show` | MyPromocodes | `{voucher}` | `{promocode}` | 404 |
-| 18 | `POST /api/change/password` | NewPassword | `{email, password}` | `{message}` | — |
+| 16 | `POST /api/review/create` | LeaveAReview | `{comment, rating, name, plantId, email}` (API `name` ve `email`'i yok sayar) | `{review}` | 401, 403 teslim alınmamış, 409 ikinci yorum, 422 |
+| 17 | `POST /api/promocode/show` | MyPromocodes | `{voucher}` | `{promocode}` | 404 bulunamadı, süresi dolmuş, limiti dolmuş (mesajda gerekçe) |
+| 18 | `POST /api/change/password` | NewPassword | `{email, password, resetToken}` | `{message}`; bütün oturumlar kapanır | 401 token yok, geçersiz ya da kullanılmış |
 | 19 | `PUT /api/user/update/:id` | EditProfile | `{name, location}` | `{user}` | 401, 403 başka hesap, 422 |
 | 20 | `POST /api/send/otp/email` | SendEmailOtp(+Forgot), yeniden gönderim | `{email}` (yeniden gönderimde `otp` da geliyor) | `{message}` | — |
 | 21 | `POST /api/send/otp/phone` | SendPhoneOtp, VerifyPhone | `{email, phoneNumber}` | `{message}` | — |
 | 22 | `POST /api/verify/otp/phone` | VerifyPhone | `{email, phoneNumber, otp}` | `{user}` | 401 |
-| 23 | `POST /api/verify/otp/email` | VerifyEmail(+Forgot) | `{email, otp}` | `{user, resetToken}` | 401/404/422 `{message}` |
+| 23 | `POST /api/verify/otp/email` | VerifyEmail(+Forgot) | `{email, otp}` | Oturumla `{user}` (e-posta doğrulandı); oturumsuz `{user, resetToken}` | 401 yanlış kod, 403, 422 süresi dolmuş, 429 kilitlendi |
 | 24 | `POST /api/auth/refresh` | api istemcisi, 401 sonrası | `{refreshToken}` | `{token, refreshToken}` (yeni çift) | 401 oturum bitti |
 | 25 | `POST /api/auth/logout` | Çıkış, hesap silme | `{refreshToken}` | `{message}` | — (her zaman 200) |
 
@@ -91,15 +91,16 @@ Uygulama tanımadığı alanları yok saydığı için bitkiler, pazar araştır
 ## API'nin mock'tan farklı davrandığı yerler
 
 - API stoğu 0 olan bitkileri listelemiyor; şablonda "tükendi" arayüzü yok.
-- API `GET /api/promocodes` ucunda yalnızca sahibi olmayan, süresi geçmemiş ve limiti dolmamış kodları döndürüyor.
+- API yorumlarda adı maskeliyor ("Ayşe Y."), yalnızca teslim almış müşterinin yorum yazmasına izin veriyor ve puanı yorumlardan hesaplıyor.
+- API doğrulama kodlarını gerçekten üretiyor; geliştirmede SMS ve e-posta gönderilmiyor, kod API logunda görünüyor.
+- API `GET /api/promocodes` ucunda yalnızca süresi geçmemiş ve limiti dolmamış kodları döndürüyor: herkese açık olanlar ve oturum varsa kullanıcının kişisel kodları.
 - API'nin verisi 41 bitkilik geliştirme kataloğu (`apps/api/prisma/seed-data.ts`). Mock ise 10 bitkilik küçük fikstürle çalışıyor. İkisi de aynı şemalara karşı test ediliyor.
 
 ## Bilinen sınırlamalar
 
 - Mock oturumları imzasız: token yalnızca kullanıcı id'sini taşıyor (`mock-access-<id>`) ve mock `Authorization` başlığını denetlemiyor. Sahiplik ve süre kontrolleri yalnızca gerçek API'de; `pnpm mock:api` bu uçları zaten API'ye yönlendiriyor.
-- `EditProfile` ve `SignUp` doğrulamaları Türkçe harfleri (ç, ğ, ı, ö, ş, ü) reddediyor. Demo kullanıcının adı bu yüzden "Ayse Yilmaz". Düzeltme 4. haftada.
-- Fiyatlar TL ama uygulama `$` işaretiyle gösteriyor. `₺` dönüşümü 4. haftada.
-- Şablonun `textTransform: 'uppercase'` ve `'capitalize'` stilleri Türkçe büyük harf kuralını bilmiyor: "Seramik" ekranda "SERAMIK", "indirim" "Indirim" olarak görünüyor. Veri doğru; düzeltme 4. haftadaki Türkçe uyarlamada (stil yerine `toLocaleUpperCase('tr-TR')`).
+- Demo kullanıcının adı "Ayse Yilmaz" (Türkçe harfsiz) kaldı; 4. haftadan beri uygulama da API de Türkçe harfleri kabul ediyor.
+- Mock doğrulama kodlarını kilitlemiyor ve 60 saniye kuralını uygulamıyor; bu kurallar yalnızca gerçek API'de (OTP her zaman `12345`).
 
 ## Testler
 

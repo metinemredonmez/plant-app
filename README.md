@@ -1,6 +1,6 @@
 # EverBloom
 
-Türkiye pazarı için bitki mağazası: Expo mobil uygulaması, NestJS + Prisma API ve admin paneli. Pazar araştırması ve 16 haftalık MVP takvimi [reports/](reports/) altında. Haftalık durum için [docs/ilerleme.md](docs/ilerleme.md).
+Türkiye pazarı için bitki mağazası: Expo mobil uygulaması, NestJS + Prisma API ve admin paneli. Pazar araştırması ve 16 haftalık MVP takvimi [reports/](reports/) altında. Haftalık durum için [docs/ilerleme.md](docs/ilerleme.md), donmuş MVP kapsamı için [docs/kapsam.md](docs/kapsam.md).
 
 | Klasör | İçerik |
 |---|---|
@@ -19,12 +19,12 @@ Gereksinimler: Node 20.19+ (prod ve CI için 22 LTS), pnpm 9, yarn 1, PostgreSQL
 pnpm install
 pnpm mock            # yalnızca mock API: http://localhost:4010
 pnpm api:dev         # NestJS API: http://localhost:4100 (önce apps/api/README.md)
-pnpm mock:api        # mock + API birlikte: katalog API'den, kalanı mock'tan
+pnpm mock:api        # mock + API birlikte: sipariş oluşturma dışında her şey API'den
 pnpm mobile          # Expo/Metro (apps/mobile, yarn)
 pnpm test            # sözleşme + API testleri
 ```
 
-Mobil uygulamanın hangi adrese bağlanacağı `apps/mobile/.env.local` içindeki `EXPO_PUBLIC_API_URL` ile seçiliyor (örnek: `apps/mobile/.env.example`). Varsayılan mock sunucu (4010). API henüz bütün uçları sunmadığı için (OTP, yorum, sipariş oluşturma 4–5. haftada) uygulama mock'a bağlı kalır; `pnpm mock:api` hazır uçları (katalog, oturum, kullanıcı, sipariş geçmişi) API'ye yönlendirir. Test hesabı hem mock'ta hem API seed'inde `demo@everbloom.test` / `demo1234`, mock'ta OTP `12345`.
+Mobil uygulamanın hangi adrese bağlanacağı `apps/mobile/.env.local` içindeki `EXPO_PUBLIC_API_URL` ile seçiliyor (örnek: `apps/mobile/.env.example`). Varsayılan mock sunucu (4010). Sipariş oluşturma ucu 5. haftada API'ye gelene kadar uygulama mock'a bağlı kalır; `pnpm mock:api` diğer 24 ucu API'ye yönlendirir. Test hesabı hem mock'ta hem API seed'inde `demo@everbloom.test` / `demo1234`. Mock'ta OTP her zaman `12345`; API'de geliştirmede kod gönderilmez, API logunda görünür (`SMS_DRIVER=log`, `EMAIL_DRIVER=log`).
 
 Mobil uygulama yarn 1 kullanıyor (`apps/mobile/package.json` içinde `packageManager`); kökteki pnpm workspace'inin dışında.
 
@@ -37,3 +37,4 @@ Mobil uygulama yarn 1 kullanıyor (`apps/mobile/package.json` içinde `packageMa
 - [0005 Expo SDK yükseltmesi](docs/adr/0005-expo-sdk-yukseltmesi.md) (ertelendi)
 - [0006 Şema v1, katalog uçları ve API iskeleti](docs/adr/0006-sema-v1-ve-katalog.md)
 - [0007 Oturumlar, yetkilendirme ve mobil token saklama](docs/adr/0007-oturum-ve-yetkilendirme.md)
+- [0008 Doğrulama kodları, şifre sıfırlama, yorumlar, promosyonlar, Türkçe uyarlama](docs/adr/0008-otp-yorum-promosyon.md)

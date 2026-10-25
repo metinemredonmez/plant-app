@@ -9,7 +9,8 @@ Takvim: [reports/Bitki mağazası pazar ve MVP planı.md](../reports/Bitki%20ma�
 | 1 | 26 Eki–1 Kas | Teknik işler tamam; dış işler sahipte |
 | 2 | 2–8 Kas | Şema v1 ve katalog tamam; CI yazıldı ama çalıştırılmadı; staging ve Sentry hesap bekliyor |
 | 3 | 9–15 Kas | Tamam: oturumlar, IDOR düzeltmesi, rate limit, mobil güvenli token; kabul kriterleri sağlandı |
-| 4 | 16–22 Kas | Sırada: OTP (e-posta, SMS), şifre sıfırlama, yorumlar, promosyon doğrulama, Türkçe uyarlama; sonunda kapsam dondurma |
+| 4 | 16–22 Kas | Tamam: OTP, şifre sıfırlama, yorumlar, promosyon doğrulama, Türkçe uyarlama; kapsam donduruldu ([kapsam.md](kapsam.md)); Netgsm canlı hesapla doğrulanmadı |
+| 5 | 23–29 Kas | Sırada: sipariş (sunucu tarafı fiyatlama, promosyon, stok), iyzico sandbox Checkout Form |
 
 ## 1. hafta
 
@@ -63,3 +64,30 @@ Simülatörde doğrulanan: API'ye giriş, yeniden açılışta Keychain'den otur
 Açık:
 - OTP, şifre sıfırlama, yorumlar ve promosyon sorgulama hâlâ mock'ta (4. hafta). Uygulamada e-posta/telefon doğrulaması mock'ta yapılırsa API'deki kullanıcıyı güncellemez; demo hesabın ikisi de zaten doğrulanmış.
 - CI ve staging durumu 2. haftadaki gibi.
+
+## 4. hafta
+
+Tamamlanan ([ADR 0008](adr/0008-otp-yorum-promosyon.md)):
+- Doğrulama kodları: e-posta ve SMS, 5 hane, yalnızca HMAC özeti saklanıyor, 10 dakika geçerli, 60 saniyede bir yeniden gönderim, 5 yanlış denemeden sonra kilit
+- Şifre sıfırlama: doğrulanmış koddan tek kullanımlık `resetToken`; `change/password` token olmadan 401; şifre değişince bütün oturumlar kapanıyor
+- Gönderim: Netgsm OTP (REST v2) ve sağlayıcıdan bağımsız SMTP sürücüleri; geliştirme ve testte `log` sürücüsü, üretimde yasak
+- Yorumlar: yalnızca teslim almış müşteri, bitki başına tek yorum, maskeli ad, e-posta yok, puan yorumlardan hesaplanıyor
+- Promosyon: süre, sahiplik ve kullanım limiti kontrolü; kişisel kodlar yalnızca sahibine görünüyor
+- Mobil: ₺ fiyatlar, Türkçe harf kabul eden doğrulamalar, Türkçe büyük harf, sunucu hata mesajları, şifre sıfırlamada token zinciri, filtre ekranındaki şablon hatası
+- Seed: 4 örnek müşteri, 12 yorum, kişisel ve limiti dolmuş promosyon kodları
+- Güvenlik: `multer` 2.5.0'a çekildi (yüksek önem dereceli açık), kullanılmayan `@nestjs/mau` kaldırıldı; `pnpm audit` temiz
+- Mock'ta yalnızca sipariş oluşturma kaldı; diğer 24 uç API'den geliyor
+- Testler: API birim 29, API e2e 76, sözleşme ve mock 49; mobil `tsc` 0 hata
+- İlk push: https://github.com/metinemredonmez/plant-app (public, sahibin kararıyla); CI `api` ve `mobile` işleri yeşil
+
+Kabul kriterleri:
+- 6. yanlış denemede kilitleniyor: e2e testinde 5 kez 401, 6. denemede doğru kodla bile 429 ✔
+- Token'sız `change/password` 401 dönüyor ✔
+- Süresi geçmiş kod indirim uygulamıyor: `YAZ15` listede yok ve `promocode/show` 404 dönüyor ✔
+- Türk hattına SMS 3 dakika içinde ulaşıyor: **doğrulanmadı.** Netgsm hesabı ve OTP paketi gerekiyor; istemci topluluk kaynaklarından yazıldı ve resmi dokümanla karşılaştırılmalı
+
+Simülatörde doğrulanan: şifremi unuttum → e-postaya kod (API logunda) → kod → yeni şifre → yeni şifreyle giriş; ₺ fiyatlar; API'den gelen yorumlar ve maskeli adlar; Türkçe karakter ve rakam içeren yorumun eklenmesi ve puanın güncellenmesi; Türkçe büyük harfli filtre çipleri.
+
+Kapsam: 25 Ekim 2026'da donduruldu ([kapsam.md](kapsam.md)).
+
+Sahipte bekleyenler: Netgsm hesabı, OTP paketi ve SMS başlığı; e-posta sağlayıcısı seçimi (SMTP bilgileri).

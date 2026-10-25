@@ -142,7 +142,6 @@ const Categories: React.FC = () => {
                     style={{
                       fontSize: Platform.OS === 'ios' ? 14 : 12,
                       color: theme.colors.mainColor,
-                      textTransform: 'capitalize',
                       ...theme.fonts.DM_Sans_400Regular,
                     }}
                   >

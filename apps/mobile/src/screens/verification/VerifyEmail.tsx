@@ -92,11 +92,9 @@ const Verification: React.FC<VerifyEmailScreenProps> = ({route}) => {
       const err = error as AxiosError;
 
       if (
-        (err.response && err.response?.status === 422) ||
-        (err.response && err.response?.status === 404) ||
-        (err.response && err.response?.status === 401)
+        typeof (err.response?.data as any)?.message === 'string'
       ) {
-        const message = (err.response.data as any).message;
+        const message = (err.response?.data as any).message;
 
         Alert.alert(
           'Error',

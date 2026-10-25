@@ -54,8 +54,8 @@ const SendPhoneOtp: React.FC = () => {
       }
 
       alert.somethingWentWrong();
-    } catch (error: any) {
-      alert.somethingWentWrong();
+    } catch (error) {
+      alert.serverError(error);
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 import {showMessage} from 'react-native-flash-message';
+import {LETTERS} from '../utils/turkish';
 
 export const validateComment = (comment: string) => {
   if (!comment.trim()) {
@@ -31,7 +32,7 @@ export const validateComment = (comment: string) => {
     return false;
   }
 
-  const regex = /^[a-zA-Zа-яА-Я\s!,.]*$/;
+  const regex = new RegExp(`^[${LETTERS}0-9\\s!?,.:;'()%&+\\-]*$`);
   if (!regex.test(comment)) {
     showMessage({
       message: 'Error',

@@ -1,4 +1,5 @@
 import {showMessage} from 'react-native-flash-message';
+import {LETTERS} from '../utils/turkish';
 
 export const validateName = (name: string, iconValidation = false) => {
   if (!name.trim()) {
@@ -27,7 +28,7 @@ export const validateName = (name: string, iconValidation = false) => {
     return false;
   }
 
-  const regex = /^[a-zA-Zа-яА-Я\s]*$/;
+  const regex = new RegExp(`^[${LETTERS}\\s]*$`);
   if (!regex.test(name)) {
     if (!iconValidation) {
       showMessage({

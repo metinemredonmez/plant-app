@@ -153,7 +153,8 @@ export const responseSchemas = {
   SEND_EMAIL_OTP: messageSchema,
   SEND_PHONE_OTP: messageSchema,
   VERIFY_PHONE_OTP: z.looseObject({user: userSchema}),
-  VERIFY_EMAIL_OTP: z.looseObject({user: userSchema}),
+  // resetToken only in the signed-out (forgot password) flow
+  VERIFY_EMAIL_OTP: z.looseObject({user: userSchema, resetToken: z.string().min(1).optional()}),
   AUTH_REFRESH: tokenPairSchema,
   AUTH_LOGOUT: messageSchema,
 } as const;
@@ -183,7 +184,8 @@ export const requestSchemas = {
     email: z.string().optional(),
   }),
   GET_PROMOCODE: z.object({voucher: z.string().min(1)}),
-  CHANGE_PASSWORD: z.object({email: z.string(), password}),
+  // resetToken comes from verify/otp/email; without it the API answers 401
+  CHANGE_PASSWORD: z.object({email: z.string(), password, resetToken: z.string().min(1)}),
   UPDATE_USER: z.object({name: z.string().trim().min(2), location: z.string()}),
   SEND_EMAIL_OTP: z.looseObject({email: z.string()}),
   SEND_PHONE_OTP: z.object({email: z.string().optional(), phoneNumber: z.string().regex(/^\+\d{10,}$/)}),

@@ -2,6 +2,7 @@ import React, {PropsWithChildren} from 'react';
 import {View, Text, ViewStyle, Platform} from 'react-native';
 
 import {theme} from '../constants';
+import {utils} from '../utils';
 import {ProductType} from '../types';
 
 type Props = PropsWithChildren<{item: ProductType; containerStyle?: ViewStyle}>;
@@ -27,7 +28,7 @@ const ProductPrice: React.FC<Props> = ({item, containerStyle}): JSX.Element => {
           }}
           numberOfLines={1}
         >
-          ${item.oldPrice}
+          {utils.formatPrice(item.oldPrice)}
         </Text>
       )}
       <Text
@@ -39,7 +40,7 @@ const ProductPrice: React.FC<Props> = ({item, containerStyle}): JSX.Element => {
         }}
         numberOfLines={1}
       >
-        ${item.price}
+        {utils.formatPrice(item.price)}
       </Text>
     </View>
   );

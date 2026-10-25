@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {text} from '../text';
+import {alert} from '../alert';
 import {utils} from '../utils';
 import {custom} from '../custom';
 import {hooks} from '../hooks';
@@ -52,8 +53,7 @@ const LeaveAReview: React.FC<LeaveAReviewScreenProps> = ({route}) => {
       }
       Alert.alert('Failed to create review');
     } catch (error) {
-      console.error(error);
-      Alert.alert('Failed to create review');
+      alert.serverError(error);
     } finally {
       setLoading(false);
     }

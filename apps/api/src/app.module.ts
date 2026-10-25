@@ -13,8 +13,12 @@ import { CatalogModule } from './catalog/catalog.module.js';
 import { LegacyErrorFilter } from './common/legacy-error.filter.js';
 import { type Env, validateEnv } from './config/env.js';
 import { HealthController } from './health/health.controller.js';
+import { MessagingModule } from './messaging/messaging.module.js';
 import { OrdersModule } from './orders/orders.module.js';
+import { OtpModule } from './otp/otp.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
+import { PromocodesModule } from './promocodes/promocodes.module.js';
+import { ReviewsModule } from './reviews/reviews.module.js';
 import { UsersModule } from './users/users.module.js';
 
 const isAuthRateLimited = (context: ExecutionContext) =>
@@ -49,7 +53,7 @@ const isAuthRateLimited = (context: ExecutionContext) =>
         secret: config.get('JWT_SECRET', { infer: true }),
       }),
     }),
-    // Login, sign-up and refresh only (@AuthRateLimited): slows down
+    // Login, sign-up, refresh and the OTP routes (@AuthRateLimited): slows down
     // password guessing and credential stuffing per IP.
     ThrottlerModule.forRootAsync({
       inject: [ConfigService],
@@ -67,10 +71,14 @@ const isAuthRateLimited = (context: ExecutionContext) =>
       }),
     }),
     PrismaModule,
+    MessagingModule,
     AuthModule,
     CatalogModule,
     UsersModule,
     OrdersModule,
+    OtpModule,
+    ReviewsModule,
+    PromocodesModule,
   ],
   controllers: [HealthController],
   providers: [

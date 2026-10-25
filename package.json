@@ -14,5 +14,10 @@
     "api:test": "pnpm --filter @everbloom/api test",
     "mobile": "cd apps/mobile && yarn start",
     "test": "pnpm -r test"
+  },
+  "pnpm": {
+    "overrides": {
+      "multer@<2.5.0": "^2.5.0"
+    }
   }
 }

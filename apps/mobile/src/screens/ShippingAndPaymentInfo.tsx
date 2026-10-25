@@ -1,4 +1,5 @@
 import React, {useEffect, useRef} from 'react';
+import {LETTERS} from '../utils/turkish';
 import {ScrollView, TextInput, View} from 'react-native';
 
 import {hooks} from '../hooks';
@@ -103,7 +104,7 @@ const ShippingAndPaymentInfo: React.FC = () => {
   };
 
   const renderContent = (): JSX.Element => {
-    const regex = /^[a-zA-Zа-яА-Я\s]*$/;
+    const regex = new RegExp(`^[${LETTERS}\\s]*$`);
 
     return (
       <ScrollView

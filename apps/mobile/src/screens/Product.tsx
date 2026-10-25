@@ -244,7 +244,7 @@ const Product: React.FC<ProductScreenProps> = ({route}) => {
             color: theme.colors.mainColor,
           }}
         >
-          ${item.price}
+          {utils.formatPrice(item.price)}
         </Text>
         <product.ProductCounterInner item={modifedItem} />
       </View>

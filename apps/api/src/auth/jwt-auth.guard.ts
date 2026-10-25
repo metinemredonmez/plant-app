@@ -6,12 +6,17 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
-import { type AuthenticatedRequest, IS_PUBLIC } from './auth.decorators.js';
+import {
+  type AuthenticatedRequest,
+  IS_OPTIONAL_AUTH,
+  IS_PUBLIC,
+} from './auth.decorators.js';
 import { TokenService } from './token.service.js';
 
 /**
  * Global guard: every route needs a valid access token unless it is marked
- * @Public(). Deny by default, so a new endpoint cannot leak data by accident.
+ * @Public() or @OptionalAuth(). Deny by default, so a new endpoint cannot
+ * leak data by accident.
  */
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
@@ -21,14 +26,20 @@ export class JwtAuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext) {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
-    if (isPublic) return true;
+    const targets = [context.getHandler(), context.getClass()];
+    if (this.reflector.getAllAndOverride<boolean>(IS_PUBLIC, targets)) {
+      return true;
+    }
+    const optional = this.reflector.getAllAndOverride<boolean>(
+      IS_OPTIONAL_AUTH,
+      targets,
+    );
 
     const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
-    const [scheme, token] = request.headers.authorization?.split(' ') ?? [];
+    const header = request.headers.authorization;
+    if (!header && optional) return true;
+
+    const [scheme, token] = header?.split(' ') ?? [];
     if (scheme !== 'Bearer' || !token) {
       throw new UnauthorizedException('Bu işlem için giriş yapmalısınız');
     }

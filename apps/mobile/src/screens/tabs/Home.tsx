@@ -158,10 +158,10 @@ const Home: React.FC = () => {
           imageStyle={{backgroundColor: theme.colors.imageBackground}}
         >
           <View style={{marginBottom: 30}}>
-            <text.H1 style={{textTransform: 'capitalize'}}>
+            <text.H1>
               {item.title_line_1}
             </text.H1>
-            <text.H1 style={{textTransform: 'capitalize'}}>
+            <text.H1>
               {item.title_line_2}
             </text.H1>
             <View

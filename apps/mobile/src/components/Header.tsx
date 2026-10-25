@@ -184,7 +184,6 @@ const Header: React.FC<HeaderType> = ({
                     color: theme.colors.mainColor,
                     ...theme.fonts.Inter_600SemiBold,
                     fontSize: Platform.OS === 'ios' ? 14 : 12,
-                    textTransform: 'capitalize',
                     marginBottom: 4,
                   }}
                   numberOfLines={1}
@@ -385,7 +384,7 @@ const Header: React.FC<HeaderType> = ({
               }}
               numberOfLines={1}
             >
-              {cart.length > 0 ? `$${subtotal.toFixed(2)}` : '$0'}
+              {utils.formatPrice(cart.length > 0 ? subtotal : 0)}
             </Text>
           </View>
           <svg.BasketSvg />

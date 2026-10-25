@@ -96,7 +96,7 @@ const Checkout: React.FC = () => {
             My order
           </text.H4>
           <text.H4 numberOfLines={1} style={{textTransform: 'capitalize'}}>
-            ${total.toFixed(2)}
+            {utils.formatPrice(total)}
           </text.H4>
         </View>
         {cart.map((item, index) => {
@@ -111,7 +111,7 @@ const Checkout: React.FC = () => {
               <text.T14 style={{textTransform: 'capitalize'}}>
                 {item.name}
               </text.T14>
-              <text.T14>${item.price}</text.T14>
+              <text.T14>{utils.formatPrice(item.price)}</text.T14>
             </View>
           );
         })}
@@ -133,7 +133,7 @@ const Checkout: React.FC = () => {
             Delivery
           </text.T14>
           <text.T14 style={{textTransform: 'capitalize'}} numberOfLines={1}>
-            ${delivery}
+            {utils.formatPrice(delivery)}
           </text.T14>
         </View>
       </View>

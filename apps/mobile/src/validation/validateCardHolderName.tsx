@@ -1,4 +1,5 @@
 import {showMessage} from 'react-native-flash-message';
+import {LETTERS} from '../utils/turkish';
 
 export const validateCardHolderName = (cardHolder: string) => {
   if (!cardHolder.trim()) {
@@ -21,7 +22,7 @@ export const validateCardHolderName = (cardHolder: string) => {
     return false;
   }
 
-  const regex = /^[a-zA-Zа-яА-Я\s]*$/;
+  const regex = new RegExp(`^[${LETTERS}\\s]*$`);
   if (!regex.test(cardHolder)) {
     showMessage({
       message: 'Error',

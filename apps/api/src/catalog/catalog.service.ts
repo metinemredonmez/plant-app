@@ -12,7 +12,6 @@ import {
   toLegacyColor,
   toLegacyLookup,
   toLegacyPlant,
-  toLegacyPromocode,
   toLegacySlide,
 } from './legacy.mapper.js';
 
@@ -84,25 +83,5 @@ export class CatalogService {
       orderBy: [{ sort: 'asc' }, { id: 'asc' }],
     });
     return banners.map((banner) => toLegacyBanner(banner, this.assetUrl));
-  }
-
-  /**
-   * Public codes only (no owner), still valid and not used up. The cart tab
-   * still validates codes on the device; server-side validation is week 4.
-   */
-  async promocodes() {
-    const promocodes = await this.prisma.promocode.findMany({
-      where: {
-        active: true,
-        userId: null,
-        expiresAt: { gt: new Date() },
-        OR: [
-          { usageLimit: null },
-          { usedCount: { lt: this.prisma.promocode.fields.usageLimit } },
-        ],
-      },
-      orderBy: { id: 'asc' },
-    });
-    return promocodes.map(toLegacyPromocode);
   }
 }

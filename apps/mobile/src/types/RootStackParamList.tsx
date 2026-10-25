@@ -15,7 +15,7 @@ export type RootStackParamList = {
   Web: {url: string; title: string};
   UserCreationProcess: {user: UserType};
   MyAddress: undefined;
-  NewPassword: {email?: string};
+  NewPassword: {email?: string; resetToken?: string};
   Onboarding: undefined;
   EditProfile: undefined;
   OrderFailed: undefined;

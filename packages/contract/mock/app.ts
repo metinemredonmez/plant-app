@@ -190,10 +190,12 @@ const handlers: Record<string, Handler> = {
     return promocode ? ok({promocode}) : fail(404, 'Promosyon kodu bulunamadı');
   },
 
+  // Like the API: no reset token from verify/otp/email → 401.
   CHANGE_PASSWORD: (_p, body, state) => {
+    if (!(body as {resetToken?: unknown})?.resetToken) return fail(401, 'Önce e-postanıza gelen kodu doğrulayın');
     const data = parse('CHANGE_PASSWORD', body);
     const user = findUserByEmail(state, data.email);
-    if (!user) return fail(404, 'Kullanıcı bulunamadı');
+    if (!user || data.resetToken !== `mock-reset-${user.id}`) return fail(401, 'Şifre sıfırlama süresi doldu');
     state.passwords.set(user.email, data.password);
     return ok({message: 'Parola güncellendi'});
   },
@@ -281,7 +283,7 @@ async function readBody(req: IncomingMessage): Promise<unknown> {
   }
 }
 
-/** Endpoints the NestJS API serves: the catalog (week 2), sessions, users and order history (week 3). */
+/** Endpoints the NestJS API serves: catalog (week 2), sessions, users and order history (week 3), OTP, password reset, reviews and promocodes (week 4). Only ORDER_CREATE is still mocked. */
 export const API_ENDPOINTS = [
   'GET_PLANTS',
   'GET_CATEGORIES',
@@ -299,6 +301,15 @@ export const API_ENDPOINTS = [
   'GET_ORDERS',
   'AUTH_REFRESH',
   'AUTH_LOGOUT',
+  // week 4
+  'SEND_EMAIL_OTP',
+  'VERIFY_EMAIL_OTP',
+  'SEND_PHONE_OTP',
+  'VERIFY_PHONE_OTP',
+  'CHANGE_PASSWORD',
+  'GET_REVIEWS',
+  'CREATE_REVIEW',
+  'GET_PROMOCODE',
 ];
 
 export interface UpstreamOptions {

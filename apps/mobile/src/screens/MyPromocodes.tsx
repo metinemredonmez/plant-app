@@ -62,11 +62,7 @@ const MyPromocodes: React.FC = () => {
         alert.somethingWentWrong();
       }
     } catch (error: any) {
-      if (error.response?.status === 404) {
-        return Alert.alert('Error', 'Promocode not found');
-      }
-
-      alert.somethingWentWrong();
+      alert.serverError(error);
     } finally {
       setLoading(false);
     }

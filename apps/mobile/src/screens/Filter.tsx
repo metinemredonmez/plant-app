@@ -343,7 +343,6 @@ const Filter: React.FC = () => {
               >
                 <Text
                   style={{
-                    textTransform: 'uppercase',
                     ...theme.fonts.DM_Sans_700Bold,
                     color: selectedPotTypes.includes(item.name)
                       ? theme.colors.steelTeal
@@ -353,7 +352,7 @@ const Filter: React.FC = () => {
                   }}
                   numberOfLines={1}
                 >
-                  {item.name}
+                  {utils.trUpper(item.name)}
                 </Text>
               </TouchableOpacity>
             );
@@ -403,9 +402,8 @@ const Filter: React.FC = () => {
               >
                 <Text
                   style={{
-                    textTransform: 'uppercase',
                     ...theme.fonts.DM_Sans_700Bold,
-                    color: selectedPotTypes.includes(item.name)
+                    color: selectedPlantTypes.includes(item.name)
                       ? theme.colors.steelTeal
                       : theme.colors.textColor,
                     fontSize: Platform.OS === 'ios' ? 12 : 10,
@@ -413,7 +411,7 @@ const Filter: React.FC = () => {
                   }}
                   numberOfLines={1}
                 >
-                  {item.name}
+                  {utils.trUpper(item.name)}
                 </Text>
               </TouchableOpacity>
             );

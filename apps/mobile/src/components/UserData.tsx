@@ -31,7 +31,6 @@ const UserData: React.FC<Props> = ({containerStyle, onPress}) => {
         <Text
           style={{
             ...theme.fonts.Inter_600SemiBold,
-            textTransform: 'capitalize',
             color: theme.colors.mainColor,
             fontSize: Platform.OS === 'ios' ? 14 : 12,
             marginBottom: utils.responsiveHeight(6),

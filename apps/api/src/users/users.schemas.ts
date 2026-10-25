@@ -1,16 +1,17 @@
 import { z } from 'zod';
 
 // Server-side rules for the legacy user endpoints. Names accept Turkish
-// letters (the app's own regex does not yet, see week 4).
+// letters, as the app's own validation does since week 4.
 
-const email = z.string().trim().toLowerCase().pipe(z.email().max(254));
+export const email = z.string().trim().toLowerCase().pipe(z.email().max(254));
 const name = z.string().trim().min(2).max(80);
+/** NIST SP 800-63B: at least 8 characters, long passphrases allowed. */
+export const newPassword = z.string().min(8).max(128);
 
 export const signUpSchema = z.object({
   name,
   email,
-  // NIST SP 800-63B: at least 8 characters, long passphrases allowed.
-  password: z.string().min(8).max(128),
+  password: newPassword,
 });
 
 export const loginSchema = z.object({

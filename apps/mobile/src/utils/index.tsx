@@ -1,5 +1,6 @@
 import {Alert} from 'react-native';
 import {handleTextChange} from '../utils/handleTextChange';
+import {formatPrice, trUpper} from './turkish';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {responsiveWidth as rw} from 'react-native-responsive-dimensions';
 import {responsiveHeight as rh} from 'react-native-responsive-dimensions';
@@ -57,7 +58,9 @@ const homeIndicatorSettings = () => {
 };
 
 export const utils = {
+  trUpper,
   rsHeight,
+  formatPrice,
   responsiveWidth,
   statusBarHeight,
   handleTextChange,

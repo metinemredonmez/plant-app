@@ -74,7 +74,7 @@ describe('catalog contract (e2e)', () => {
     expect(monstera).toMatchObject({
       price: 749,
       oldPrice: 899,
-      rating: 4.6,
+      rating: 4.7, // (5 + 4 + 5) / 3 from the seeded reviews
       image: 'http://assets.test/images/monstera.jpg',
       categories: ['Salon Bitkileri'],
       colors: ['Beyaz', 'Terrakota'],

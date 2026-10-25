@@ -46,9 +46,4 @@ export class CatalogController {
   banners() {
     return this.catalog.banners();
   }
-
-  @Get('promocodes')
-  promocodes() {
-    return this.catalog.promocodes();
-  }
 }

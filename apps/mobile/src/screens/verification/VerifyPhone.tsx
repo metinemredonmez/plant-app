@@ -91,7 +91,7 @@ const Verification: React.FC<VerifyPhoneScreenProps> = ({route}) => {
         return alert.invalidOtp();
       }
 
-      alert.somethingWentWrong();
+      alert.serverError(err);
     } finally {
       setLoading(false);
     }
@@ -113,7 +113,7 @@ const Verification: React.FC<VerifyPhoneScreenProps> = ({route}) => {
 
       alert.somethingWentWrong();
     } catch (error) {
-      alert.somethingWentWrong();
+      alert.serverError(error);
     } finally {
       setLoading(false);
     }

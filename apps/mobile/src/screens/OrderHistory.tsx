@@ -59,7 +59,7 @@ const OrderHistory: React.FC = () => {
           }}
         >
           <text.H5 numberOfLines={1}>#{section.id}</text.H5>
-          <text.H5 numberOfLines={1}>${section.total}</text.H5>
+          <text.H5 numberOfLines={1}>{utils.formatPrice(section.total)}</text.H5>
         </View>
         <View style={{...theme.flex.rowCenterSpaceBetween}}>
           {section.orderStatus === 'shipping' && (
@@ -111,7 +111,7 @@ const OrderHistory: React.FC = () => {
               >
                 <text.T14 numberOfLines={1}>{item.name}</text.T14>
                 <text.T14 numberOfLines={1}>
-                  {item.quantity} x ${item.price}
+                  {item.quantity} x {utils.formatPrice(item.price)}
                 </text.T14>
               </View>
             );
@@ -129,7 +129,7 @@ const OrderHistory: React.FC = () => {
               Delivery
             </text.T14>
             <text.T14 style={{textTransform: 'capitalize'}} numberOfLines={1}>
-              {section.delivery}$
+              {utils.formatPrice(section.delivery)}
             </text.T14>
           </View>
           <View style={{...theme.flex.rowCenterSpaceBetween}}>
@@ -143,7 +143,7 @@ const OrderHistory: React.FC = () => {
               Total
             </text.T14>
             <text.T14 style={{textTransform: 'capitalize'}} numberOfLines={1}>
-              {section.total}$
+              {utils.formatPrice(section.total)}
             </text.T14>
           </View>
         </components.Container>

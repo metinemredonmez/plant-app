@@ -15,7 +15,7 @@ import {handleTextChange} from '../utils/handleTextChange';
 import {NewPasswordScreenProps} from '../types/ScreenProps';
 
 const NewPassword: React.FC<NewPasswordScreenProps> = ({route}) => {
-  const {email} = route.params;
+  const {email, resetToken} = route.params;
 
   const navigation = hooks.useAppNavigation();
 
@@ -45,7 +45,7 @@ const NewPassword: React.FC<NewPasswordScreenProps> = ({route}) => {
     try {
       const response = await api({
         method: 'post',
-        data: {email, password},
+        data: {email, password, resetToken},
         url: ENDPOINTS.CHANGE_PASSWORD,
       });
 
@@ -56,7 +56,7 @@ const NewPassword: React.FC<NewPasswordScreenProps> = ({route}) => {
 
       alert.somethingWentWrong();
     } catch (error) {
-      alert.somethingWentWrong();
+      alert.serverError(error);
     } finally {
       setLoading(false);
     }

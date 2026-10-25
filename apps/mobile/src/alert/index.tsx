@@ -52,8 +52,23 @@ const userWithThisNameOrEmailAlreadyExists = () => {
   );
 };
 
+/**
+ * Shows the API's own message (e.g. "Yeni kod istemeden önce 60 saniye
+ * bekleyin", "Bu kodun süresi dolmuş") or the generic one when there is
+ * none, such as on a network error.
+ */
+const serverError = (error: unknown) => {
+  const message = (error as {response?: {data?: {message?: unknown}}})
+    ?.response?.data?.message;
+  if (typeof message === 'string' && message) {
+    return Alert.alert('Error', message);
+  }
+  return somethingWentWrong();
+};
+
 export const alert = {
   invalidOtp,
+  serverError,
   userDeleted,
   alreadyAdded,
   somethingWentWrong,
