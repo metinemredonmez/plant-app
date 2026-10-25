@@ -27,6 +27,18 @@ const SPOT: Record<string, string> = {
   BALCONY: 'balkon',
   GARDEN: 'bahçe',
 };
+const LIGHT: Record<string, string> = {
+  LOW: 'az ışık',
+  PARTIAL: 'orta ışık',
+  BRIGHT_INDIRECT: 'parlak, dolaylı ışık',
+  DIRECT: 'doğrudan güneş',
+};
+const POT: Record<string, string> = {
+  PLASTIC: 'plastik saksı',
+  TERRACOTTA: 'pişmiş toprak saksı',
+  GLAZED: 'sırlı seramik saksı',
+  SELF_WATERING: 'kendinden sulamalı saksı',
+};
 
 @Injectable()
 export class AssistantService {
@@ -57,7 +69,13 @@ export class AssistantService {
       nickname: plant.nickname,
       species: plant.species?.name,
       scientificName: plant.scientificName ?? undefined,
-      spot: SPOT[plant.spot],
+      spot: [
+        SPOT[plant.spot],
+        plant.light && LIGHT[plant.light],
+        plant.pot && POT[plant.pot],
+      ]
+        .filter(Boolean)
+        .join(', '),
       wateringIntervalDays: plant.wateringIntervalDays,
       lastWateredAt:
         plant.watering.lastWateredAt?.toISOString().slice(0, 10) ?? null,

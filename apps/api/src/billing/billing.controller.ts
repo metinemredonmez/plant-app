@@ -7,12 +7,15 @@ import {
   Headers,
   HttpCode,
   NotFoundException,
+  Patch,
   Post,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { z } from 'zod';
 
 import { type AuthUser, CurrentUser, Public } from '../auth/auth.decorators.js';
+import { CITIES } from '../care/cities.js';
 import { ZodBody } from '../common/zod-body.pipe.js';
 import type { Env } from '../config/env.js';
 import { ConsentsService } from '../consents/consents.service.js';
@@ -23,6 +26,14 @@ import {
   type RevenueCatWebhook,
 } from './revenuecat.service.js';
 import { UsageService } from './usage.service.js';
+
+const preferencesSchema = z
+  .object({
+    city: z.enum(CITIES, { error: 'Şehir 81 ilden biri olmalı' }).nullable(),
+    // Minutes after local midnight; the app offers whole hours.
+    reminderMinute: z.number().int().min(0).max(1439),
+  })
+  .partial();
 
 const sameSecret = (given: string, expected: string) => {
   const a = Buffer.from(given);
@@ -85,6 +96,23 @@ export class BillingController {
       limits,
       used,
       aiConsent,
+      city: user.city,
+      reminderMinute: user.reminderMinute,
     };
+  }
+
+  /** City (weather alerts later) and the time of the daily reminder. */
+  @Patch('me')
+  async preferences(
+    @CurrentUser() caller: AuthUser,
+    @Body(new ZodBody(preferencesSchema))
+    body: z.output<typeof preferencesSchema>,
+  ) {
+    const user = await this.prisma.user.update({
+      where: { id: caller.id },
+      data: body,
+      select: { city: true, reminderMinute: true },
+    });
+    return user;
   }
 }

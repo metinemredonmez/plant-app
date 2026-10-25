@@ -10,14 +10,18 @@ import {
   Query,
 } from '@nestjs/common';
 
+import { z } from 'zod';
+
 import { type AuthUser, CurrentUser, Public } from '../auth/auth.decorators.js';
 import { ZodBody } from '../common/zod-body.pipe.js';
+import { CITIES } from './cities.js';
 import {
   type CareEventBody,
   careEventSchema,
   type CreatePlantBody,
   createPlantSchema,
   MyPlantsService,
+  scheduleQuerySchema,
   type UpdatePlantBody,
   updatePlantSchema,
 } from './my-plants.service.js';
@@ -39,6 +43,15 @@ export class SpeciesController {
   }
 }
 
+@Public()
+@Controller('v1/cities')
+export class CitiesController {
+  @Get()
+  list() {
+    return CITIES;
+  }
+}
+
 @Controller('v1/my')
 export class MyPlantsController {
   constructor(private readonly plants: MyPlantsService) {}
@@ -51,6 +64,16 @@ export class MyPlantsController {
   @Get('today')
   today(@CurrentUser() caller: AuthUser) {
     return this.plants.today(caller);
+  }
+
+  /** Next waterings by day, for the reminders the phone schedules. */
+  @Get('schedule')
+  schedule(
+    @CurrentUser() caller: AuthUser,
+    @Query(new ZodBody(scheduleQuerySchema))
+    query: z.output<typeof scheduleQuerySchema>,
+  ) {
+    return this.plants.schedule(caller, query.days);
   }
 
   @Post('plants')

@@ -157,6 +157,136 @@ describe('my plants', () => {
       .expect(422);
   });
 
+  it('fits the interval to the pot and gives placement tips', async () => {
+    const user = await signUp(app);
+    const created = await http()
+      .post('/api/v1/my/plants')
+      .set(bearer(user.token))
+      .send({
+        speciesId: await speciesId('Monstera deliciosa'),
+        nickname: 'Balkondaki',
+        spot: 'BALCONY',
+        light: 'LOW',
+        pot: 'TERRACOTTA',
+      })
+      .expect(201);
+    // Winter in Istanbul (October-March) or summer, terracotta dries faster.
+    const winter = ![3, 4, 5, 6, 7, 8].includes(
+      new Date(Date.now() + 3 * 3_600_000).getUTCMonth(),
+    );
+    expect(created.body).toMatchObject({
+      light: 'LOW',
+      pot: 'TERRACOTTA',
+      wateringIntervalCustom: false,
+      wateringIntervalDays: winter ? 11 : 4,
+    });
+
+    const detail = await http()
+      .get(`/api/v1/my/plants/${created.body.id}`)
+      .set(bearer(user.token))
+      .expect(200);
+    expect(detail.body.tips).toEqual([
+      expect.stringContaining('parlak, dolaylı ışık ister'),
+      expect.stringContaining('iç mekân için önerilir'),
+      expect.stringContaining("15 °C'nin altına düşmeden içeri al"),
+    ]);
+
+    const custom = await http()
+      .patch(`/api/v1/my/plants/${created.body.id}`)
+      .set(bearer(user.token))
+      .send({ wateringIntervalDays: 5, light: 'BRIGHT_INDIRECT' })
+      .expect(200);
+    expect(custom.body).toMatchObject({
+      wateringIntervalDays: 5,
+      wateringIntervalCustom: true,
+    });
+    const automatic = await http()
+      .patch(`/api/v1/my/plants/${created.body.id}`)
+      .set(bearer(user.token))
+      .send({ wateringIntervalDays: null })
+      .expect(200);
+    expect(automatic.body).toMatchObject({
+      wateringIntervalDays: created.body.wateringIntervalDays,
+      wateringIntervalCustom: false,
+    });
+  });
+
+  it('schedules waterings by day, overdue ones today', async () => {
+    const user = await signUp(app);
+    const thirsty = await http()
+      .post('/api/v1/my/plants')
+      .set(bearer(user.token))
+      .send({ nickname: 'Susuz', wateringIntervalDays: 3 })
+      .expect(201);
+    await http()
+      .post(`/api/v1/my/plants/${thirsty.body.id}/care`)
+      .set(bearer(user.token))
+      .send({
+        kind: 'WATER',
+        at: new Date(Date.now() - 5 * 86_400_000).toISOString(),
+      })
+      .expect(201);
+    await http()
+      .post('/api/v1/my/plants')
+      .set(bearer(user.token))
+      .send({ nickname: 'Yeni', wateringIntervalDays: 3 })
+      .expect(201);
+
+    const res = await http()
+      .get('/api/v1/my/schedule?days=7')
+      .set(bearer(user.token))
+      .expect(200);
+    expect(res.body.reminderMinute).toBe(540);
+    const dates = res.body.days.map((d: { date: string }) => d.date);
+    expect(new Set(dates).size).toBe(dates.length);
+    const todayIstanbul = new Date(Date.now() + 3 * 3_600_000)
+      .toISOString()
+      .slice(0, 10);
+    expect(res.body.days[0]).toMatchObject({
+      date: todayIstanbul,
+      plants: [{ id: thirsty.body.id, nickname: 'Susuz', overdue: true }],
+    });
+    const visits = res.body.days.flatMap(
+      (d: { plants: { nickname: string }[] }) =>
+        d.plants.map((p) => p.nickname),
+    );
+    // Today, +3 and +6 for the overdue one; +3 and +6 for the new one.
+    expect(visits.filter((n: string) => n === 'Susuz')).toHaveLength(3);
+    expect(visits.filter((n: string) => n === 'Yeni')).toHaveLength(2);
+
+    await http()
+      .get('/api/v1/my/schedule?days=40')
+      .set(bearer(user.token))
+      .expect(422);
+  });
+
+  it('keeps the city and the reminder time', async () => {
+    const cities = await http().get('/api/v1/cities').expect(200);
+    expect(cities.body).toHaveLength(81);
+    expect(cities.body).toContain('Şanlıurfa');
+
+    const user = await signUp(app);
+    await http()
+      .patch('/api/v1/me')
+      .set(bearer(user.token))
+      .send({ city: 'İzmir', reminderMinute: 480 })
+      .expect(200);
+    expect(await profile(user)).toMatchObject({
+      city: 'İzmir',
+      reminderMinute: 480,
+    });
+    await http()
+      .patch('/api/v1/me')
+      .set(bearer(user.token))
+      .send({ city: 'Atlantis' })
+      .expect(422);
+    await http()
+      .patch('/api/v1/me')
+      .set(bearer(user.token))
+      .send({ reminderMinute: 1440 })
+      .expect(422);
+  });
+
   it('limits the free plan to five plants', async () => {
     const user = await signUp(app);
     for (let i = 1; i <= 5; i++) {

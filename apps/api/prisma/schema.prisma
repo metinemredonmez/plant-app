@@ -38,29 +38,33 @@ enum Difficulty {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  name          String
-  email         String         @unique
-  passwordHash  String         @map("password_hash") // Argon2id
-  phoneNumber   String?        @unique @map("phone_number")
-  location      String?
-  emailVerified Boolean        @default(false) @map("email_verified")
-  phoneVerified Boolean        @default(false) @map("phone_verified")
-  role          Role           @default(CUSTOMER)
-  createdAt     DateTime       @default(now()) @map("created_at")
+  id             Int            @id @default(autoincrement())
+  name           String
+  email          String         @unique
+  passwordHash   String         @map("password_hash") // Argon2id
+  phoneNumber    String?        @unique @map("phone_number")
+  location       String?
+  emailVerified  Boolean        @default(false) @map("email_verified")
+  phoneVerified  Boolean        @default(false) @map("phone_verified")
+  role           Role           @default(CUSTOMER)
+  createdAt      DateTime       @default(now()) @map("created_at")
   // Account deletion blanks personal fields and deletes the user's plants,
   // scans, photos and chats.
-  anonymizedAt  DateTime?      @map("anonymized_at")
-  refreshTokens RefreshToken[]
-  otpCodes      OtpCode[]
-  consents      Consent[]
+  anonymizedAt   DateTime?      @map("anonymized_at")
+  refreshTokens  RefreshToken[]
+  otpCodes       OtpCode[]
+  consents       Consent[]
   // AI plant app (from week 5 of the new plan)
   // Stable id for third parties (RevenueCat app_user_id); never the row id.
-  publicId      String         @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
-  userPlants    UserPlant[]
-  scans         Scan[]
-  chatMessages  ChatMessage[]
-  entitlement   Entitlement?
+  publicId       String         @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  // One of the 81 provinces (care/cities.ts); optional, for weather alerts.
+  city           String?
+  // Daily watering reminder, minutes after local midnight (09:00).
+  reminderMinute Int            @default(540) @map("reminder_minute")
+  userPlants     UserPlant[]
+  scans          Scan[]
+  chatMessages   ChatMessage[]
+  entitlement    Entitlement?
 
   @@map("users")
 }
@@ -246,6 +250,14 @@ enum PlantSpot {
   GARDEN
 }
 
+// Pot material changes how fast the soil dries.
+enum PotKind {
+  PLASTIC
+  TERRACOTTA // pişmiş toprak: dries faster
+  GLAZED // sırlı seramik
+  SELF_WATERING // kendinden sulamalı: lasts longer
+}
+
 enum CareKind {
   WATER
   FERTILIZE
@@ -334,24 +346,30 @@ model PlantName {
 }
 
 model UserPlant {
-  id                   Int           @id @default(autoincrement())
-  userId               Int           @map("user_id")
-  user                 User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  speciesId            Int?          @map("species_id")
-  species              PlantSpecies? @relation(fields: [speciesId], references: [id])
+  id                     Int           @id @default(autoincrement())
+  userId                 Int           @map("user_id")
+  user                   User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  speciesId              Int?          @map("species_id")
+  species                PlantSpecies? @relation(fields: [speciesId], references: [id])
   // Name from identification when the species has no care card yet.
-  scientificName       String?       @map("scientific_name")
-  nickname             String
-  spot                 PlantSpot     @default(INDOOR)
-  photoKey             String?       @map("photo_key")
-  wateringIntervalDays Int           @map("watering_interval_days")
-  lastWateredAt        DateTime?     @map("last_watered_at")
-  archivedAt           DateTime?     @map("archived_at")
-  careEvents           CareEvent[]
-  scans                Scan[]
-  chatMessages         ChatMessage[]
-  createdAt            DateTime      @default(now()) @map("created_at")
-  updatedAt            DateTime      @updatedAt @map("updated_at")
+  scientificName         String?       @map("scientific_name")
+  nickname               String
+  spot                   PlantSpot     @default(INDOOR)
+  // Where it stands; null when the user has not said.
+  light                  LightLevel?
+  pot                    PotKind?
+  photoKey               String?       @map("photo_key")
+  // With a care card and no interval of the user's own, the interval
+  // follows the card, the season, the spot and the pot (my-plants.service).
+  wateringIntervalDays   Int           @map("watering_interval_days")
+  wateringIntervalCustom Boolean       @default(false) @map("watering_interval_custom")
+  lastWateredAt          DateTime?     @map("last_watered_at")
+  archivedAt             DateTime?     @map("archived_at")
+  careEvents             CareEvent[]
+  scans                  Scan[]
+  chatMessages           ChatMessage[]
+  createdAt              DateTime      @default(now()) @map("created_at")
+  updatedAt              DateTime      @updatedAt @map("updated_at")
 
   @@index([userId])
   @@map("user_plants")

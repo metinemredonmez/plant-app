@@ -15,6 +15,11 @@ export function istanbulMonthStart(now = new Date()) {
   return new Date(local.getTime() - ISTANBUL_OFFSET_MS);
 }
 
+/** "2026-10-25": the Istanbul calendar day of an instant. */
+export function istanbulDate(at: Date) {
+  return new Date(at.getTime() + ISTANBUL_OFFSET_MS).toISOString().slice(0, 10);
+}
+
 /** April–September waters like summer, October–March like winter. */
 export function isSummer(now = new Date()) {
   const month = new Date(now.getTime() + ISTANBUL_OFFSET_MS).getUTCMonth();

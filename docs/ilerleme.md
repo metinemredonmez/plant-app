@@ -9,6 +9,7 @@
 | 1 | 26 Eki–1 Kas | Teknik işler başladı (aşağıda); dış işler sahipte |
 | 2 | 2–8 Kas | Öne çekildi: şablon temizliği, Expo 57, iOS ve Android derlemesi tamam; staging, Sentry ve EAS hesap bekliyor |
 | 3 | 9–15 Kas | Öne çekildi: fotoğraf temizleme, tekrar önleme, güven eşikleri, R2 sürücüsü ve Wikidata adları tamam; R2 hesabı ve sağlayıcı anahtarları bekliyor |
+| 4 | 16–22 Kas | Öne çekildi: yerleşim, mevsimlik sulama, 14 günlük takvim, günde tek hatırlatıcı, elle ekleme tamam; kapsam dondurma sahibin onayında |
 
 ### 1. hafta (yeni plan)
 
@@ -141,6 +142,38 @@ Bekleyen (sahipte):
 - R2 hesabı ve kova.
 - Sağlayıcı anahtarları: Kindwise deneme kredisi, Pl@ntNet.
 - Ev bitkilerinin Türkçe adları için ziraat mühendisi.
+
+### 4. hafta (yeni plan)
+
+Tamamlanan ([ADR 0011](adr/0011-bakim-takvimi-ve-hatirlaticilar.md)):
+- Bitkinin yeri: konum tipi, ışık ve saksı. Şehir kullanıcıda (81 il, isteğe bağlı, konum izni yok).
+- Yerleşim önerileri: ışık, yer, gece sıcaklığı ve saksı, bakım kartıyla karşılaştırılarak.
+- Sulama aralığı mevsime (yaz/kış), dış mekâna ve saksıya göre her gün yeniden hesaplanıyor. Kullanıcı kendi aralığını verebiliyor ve otomatiğe geri dönebiliyor.
+- `GET /v1/my/schedule`: 14 günlük sulama takvimi, günlere göre; geciken bitki bugüne yazılıyor.
+- `PATCH /v1/me`: şehir ve hatırlatma saati. `GET /v1/cities`: 81 il.
+- Uygulama:
+  - "Bitki ekle / düzenle" ekranı: tür arama, ad, yer, ışık, saksı, sulama aralığı. Tanıma sonucundan, ansiklopediden ve Bitkilerim'deki "Ekle"den açılıyor.
+  - Günde tek toplu yerel bildirim; 14 gün ve en fazla 50 bekleyen istek. Açılışta, öne gelişte ve her bakım değişikliğinde yeniden kuruluyor. Çıkışta siliniyor.
+  - İzin, ilk bitkiden sonra kısa açıklamayla bir kez isteniyor. Android'de önce bildirim kanalı açılıyor; tam zamanlı alarm izni yok.
+  - Bildirimler kapalıysa Bitkilerim'de not ve izin bağlantısı var; "Bugün su bekleyenler" listesi ve "Hepsini suladım" çalışıyor.
+  - Profil: hatırlatma saati (08:00–21:00), sıradaki hatırlatma, şehir.
+- Testler: API birim 31, API e2e 83 (yeni: yerleşim ve aralık, takvim, tercihler). Lint, tip kontrolü ve expo-doctor temiz.
+
+Kabul kriterleri:
+- 10 bitki eklenince günde tek bildirim geliyor: takvim günlere göre gruplanıyor ve her gün için tek bildirim kuruluyor (e2e ve kod). 10 bitkili hesapla cihazda denenmedi; ücretsiz planda sınır 5 bitki.
+- iOS'ta bekleyen istek sayısı 50'yi geçmiyor ✔ (kodda sınır; simülatörde sıradaki hatırlatma doğru: 30 Ekim 09:00, 1 bitki).
+- İzin reddedilince uygulama içi görev listesi çalışıyor ✔ ("Bildirimler kapalı" notu ve liste, iOS simülatöründe).
+- Android'de yeniden başlatmadan sonra hatırlatıcılar korunuyor: expo-notifications'ın açılış alıcısı manifestte ✔. Emülatörde yeniden başlatma denenmedi; emülatör bu turda dışarıdan kapandı.
+- Kapsam v2 onaylandı: **sahibin onayı bekleniyor.** [kapsam.md](kapsam.md) dondurmaya hazır.
+
+iOS simülatöründe doğrulanan:
+- Bildirim izni ve sıradaki hatırlatma.
+- Hatırlatma saati ve şehir seçimi (Antalya).
+- Bitki düzenleme: az ışık ve pişmiş toprak seçilince aralık 14 günden 11 güne indi ve ışık önerisi çıktı.
+
+Android emülatöründe doğrulanan: yeni hesapla kayıt, "Ekle" düğmesi, elle ekleme ekranı ve tür arama (sardunya). Bitkiyi kaydederken emülatör dışarıdan kapandı.
+
+Gelen istek: açılış animasyonu ve fal-app düzeninde giriş, kayıt ve üyelik akışı (Apple, Google, telefon, e-posta). Kapsama alındı ([kapsam.md](kapsam.md)); 5. haftanın önüne geçiyor.
 
 ## Bitki mağazası dönemi (1–4. haftalar)
 
