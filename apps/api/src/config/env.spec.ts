@@ -48,8 +48,47 @@ describe('validateEnv', () => {
         R2_SECRET_ACCESS_KEY: 'gizli',
         R2_BUCKET: 'everbloom-scans',
         REVENUECAT_WEBHOOK_SECRET: 'x'.repeat(24),
+        KVKK_TRANSFER_APPROVED: 'kindwise, anthropic,Cloudflare',
+        WEATHER_DRIVER: 'open-meteo',
       }),
     ).not.toThrow();
+  });
+
+  it('keeps providers without a KVKK standard contract out of production', () => {
+    const production = {
+      ...base,
+      NODE_ENV: 'production',
+      SMS_DRIVER: 'netgsm',
+      NETGSM_USERCODE: '8501112233',
+      NETGSM_PASSWORD: 'sifre',
+      NETGSM_MSGHEADER: 'EVERBLOOM',
+      EMAIL_DRIVER: 'smtp',
+      SMTP_URL: 'smtps://u:p@smtp.example.com:465',
+      VISION_DRIVER: 'kindwise',
+      KINDWISE_API_KEY: 'kw-key',
+      ASSISTANT_DRIVER: 'anthropic',
+      ANTHROPIC_API_KEY: 'sk-ant-test',
+      STORAGE_DRIVER: 'r2',
+      R2_ACCOUNT_ID: 'hesap',
+      R2_ACCESS_KEY_ID: 'anahtar',
+      R2_SECRET_ACCESS_KEY: 'gizli',
+      R2_BUCKET: 'everbloom-scans',
+      REVENUECAT_WEBHOOK_SECRET: 'x'.repeat(24),
+    };
+    expect(() =>
+      validateEnv({ ...production, KVKK_TRANSFER_APPROVED: 'kindwise' }),
+    ).toThrow(/anthropic receives personal data abroad[\s\S]*cloudflare/);
+    expect(() =>
+      validateEnv({ ...production, WEATHER_DRIVER: 'fake' }),
+    ).toThrow(/fake driver is not allowed/);
+    // Development keeps working without contracts.
+    expect(
+      validateEnv({
+        ...base,
+        ASSISTANT_DRIVER: 'anthropic',
+        ANTHROPIC_API_KEY: 'k',
+      }),
+    ).toMatchObject({ KVKK_TRANSFER_APPROVED: [], WEATHER_DRIVER: 'none' });
   });
 
   it('requires R2 credentials and refuses local photos in production', () => {

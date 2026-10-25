@@ -22,6 +22,7 @@ export default defineConfig({
       AUTH_RATE_LIMIT: '1000',
       VISION_DRIVER: 'fake',
       ASSISTANT_DRIVER: 'fake',
+      WEATHER_DRIVER: 'fake',
       UPLOAD_DIR: join(tmpdir(), 'everbloom-e2e-uploads'),
       FREE_IDENTIFY_PER_WEEK: '3',
       FREE_DIAGNOSES: '1',

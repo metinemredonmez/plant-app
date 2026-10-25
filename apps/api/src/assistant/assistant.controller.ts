@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  Param,
   ParseIntPipe,
   Post,
   Query,
@@ -13,6 +15,8 @@ import {
   type AskBody,
   askSchema,
   AssistantService,
+  type ReportBody,
+  reportSchema,
 } from './assistant.service.js';
 
 @Controller('v1/assistant')
@@ -34,5 +38,15 @@ export class AssistantController {
     @Body(new ZodBody(askSchema)) body: AskBody,
   ) {
     return this.assistant.ask(caller, body);
+  }
+
+  @Post('messages/:id/report')
+  @HttpCode(200)
+  report(
+    @CurrentUser() caller: AuthUser,
+    @Param('id', ParseIntPipe) id: number,
+    @Body(new ZodBody(reportSchema)) body: ReportBody,
+  ) {
+    return this.assistant.report(caller, id, body);
   }
 }

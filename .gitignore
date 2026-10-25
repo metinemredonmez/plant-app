@@ -26,3 +26,5 @@ platform-master/
 
 # Scan photos in development (personal data)
 apps/api/uploads/
+# Model evaluation answers and score sheets (test/assistant-eval-live.ts)
+apps/api/eval-results/

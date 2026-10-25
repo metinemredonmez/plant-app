@@ -341,6 +341,14 @@ enum Recovery {
   WORSE
 }
 
+// Why an assistant answer was reported.
+enum ReportReason {
+  WRONG // incorrect information
+  UNSAFE // risky advice (chemicals, toxicity)
+  OFF_TOPIC
+  OTHER
+}
+
 enum ChatRole {
   USER
   ASSISTANT
@@ -487,16 +495,22 @@ model Scan {
 }
 
 model ChatMessage {
-  id          Int        @id @default(autoincrement())
-  userId      Int        @map("user_id")
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userPlantId Int?       @map("user_plant_id")
-  userPlant   UserPlant? @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
-  role        ChatRole
-  content     String
-  createdAt   DateTime   @default(now()) @map("created_at")
+  id           Int           @id @default(autoincrement())
+  userId       Int           @map("user_id")
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userPlantId  Int?          @map("user_plant_id")
+  userPlant    UserPlant?    @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+  role         ChatRole
+  content      String
+  // "Bu yanıtı bildir" on an assistant answer; the admin queue (week 8)
+  // reads these. Gone with the account.
+  reportReason ReportReason? @map("report_reason")
+  reportNote   String?       @map("report_note")
+  reportedAt   DateTime?     @map("reported_at")
+  createdAt    DateTime      @default(now()) @map("created_at")
 
   @@index([userId, userPlantId, createdAt])
+  @@index([reportedAt])
   @@map("chat_messages")
 }
 

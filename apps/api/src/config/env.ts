@@ -40,6 +40,23 @@ const fields = z.object({
   ASSISTANT_DRIVER: z.enum(['fake', 'anthropic']).default('fake'),
   ANTHROPIC_API_KEY: z.string().min(1).optional(),
   ASSISTANT_MODEL: z.string().min(1).default('claude-opus-5-5'),
+  // City weather in the assistant's context (ADR 0014). `none` until the
+  // provider and its licence are chosen; `fake` for development and tests.
+  WEATHER_DRIVER: z.enum(['none', 'fake', 'open-meteo']).default('none'),
+  // Open-Meteo's commercial plan; without it the free, non-commercial API.
+  WEATHER_API_KEY: z.string().min(1).optional(),
+  // KVKK: providers abroad that receive personal data and have a signed and
+  // notified standard contract (or a written alternative), comma separated:
+  // kindwise, anthropic, cloudflare. Production refuses the rest.
+  KVKK_TRANSFER_APPROVED: z
+    .string()
+    .default('')
+    .transform((list) =>
+      list
+        .split(',')
+        .map((name) => name.trim().toLowerCase())
+        .filter(Boolean),
+    ),
   // Scan photos (personal data): a local folder in development, a private
   // Cloudflare R2 bucket in production.
   STORAGE_DRIVER: z.enum(['local', 'r2']).default('local'),
@@ -172,12 +189,35 @@ export const envSchema = fields.superRefine((env, ctx) => {
         });
       }
     }
-    for (const key of ['VISION_DRIVER', 'ASSISTANT_DRIVER'] as const) {
+    for (const key of [
+      'VISION_DRIVER',
+      'ASSISTANT_DRIVER',
+      'WEATHER_DRIVER',
+    ] as const) {
       if (env[key] === 'fake') {
         ctx.addIssue({
           code: 'custom',
           path: [key],
           message: 'fake driver is not allowed in production',
+        });
+      }
+    }
+    // KVKK provider gate (plan, week 6): no personal data abroad without a
+    // standard contract. The weather provider only gets a city name.
+    const transfers = [
+      ['VISION_DRIVER', 'kindwise', 'kindwise'],
+      ['ASSISTANT_DRIVER', 'anthropic', 'anthropic'],
+      ['STORAGE_DRIVER', 'r2', 'cloudflare'],
+    ] as const;
+    for (const [key, driver, provider] of transfers) {
+      if (
+        env[key] === driver &&
+        !env.KVKK_TRANSFER_APPROVED.includes(provider)
+      ) {
+        ctx.addIssue({
+          code: 'custom',
+          path: [key],
+          message: `${provider} receives personal data abroad; add it to KVKK_TRANSFER_APPROVED once its KVKK standard contract is signed and notified`,
         });
       }
     }

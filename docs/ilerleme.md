@@ -11,6 +11,7 @@
 | 3 | 9–15 Kas | Öne çekildi: fotoğraf temizleme, tekrar önleme, güven eşikleri, R2 sürücüsü ve Wikidata adları tamam; R2 hesabı ve sağlayıcı anahtarları bekliyor |
 | 4 | 16–22 Kas | Öne çekildi: yerleşim, mevsimlik sulama, 14 günlük takvim, günde tek hatırlatıcı, elle ekleme tamam; kapsam dondurma sahibin onayında |
 | 5 | 23–29 Kas | Öne çekildi: teşhis güvenlik süzgeci, uzman yönlendirmesi, ikinci fotoğraf, iyileşme takibi, doğruluk sorusu ve 50 istemlik kırmızı takım seti tamam; canlı model ve Kindwise denemesi anahtar ve kredi bekliyor |
+| 6 | 30 Kas–6 Ara | Öne çekildi: bitkiyi, takibi, şehri ve havayı bilen bağlam, "Bildir" ve yapay zekâ etiketi, KVKK sağlayıcı kapısı, anahtar taraması ve 50 soruluk model değerlendirmesi tamam; model seçimi, sözleşmeler ve hava lisansı sahipte |
 
 ### 1. hafta (yeni plan)
 
@@ -251,6 +252,42 @@ Denenmeyenler:
 - Kindwise'ın gerçek metinleri: kredi bekliyor.
 
 Açık kalanlar: canlı kırmızı takım çalıştırması, Kindwise kredisi, yönlendirme metninin hukuki teyidi, eşiklerin kendi verimizle ayarlanması. Ayrıntı ADR 0013'te.
+
+### 6. hafta (yeni plan)
+
+[ADR 0014](adr/0014-asistan-baglam-bildirme-ve-model-secimi.md), [KVKK sağlayıcı listesi](kvkk-saglayicilar.md).
+
+Tamamlanan:
+- Bağlam kurucu:
+  - Bitkinin adı, yeri, ışığı, saksısı ve son sulaması.
+  - Son teşhis ve takibi ("fotoğrafa göre daha iyi, sahibine göre aynı").
+  - Kullanıcının şehri ve şehrin hava özeti.
+  - Bitkisiz sohbetler de şehri, havayı ve onboarding cevaplarını alıyor.
+- Hava sürücüsü: `none` (varsayılan), `fake` ve `open-meteo`. Open-Meteo il merkezini adıyla buluyor, 3 günlük tahmini bir saat önbelleğe alıyor, don ve aşırı sıcak riskini yazıyor. Sağlayıcıya yalnız il adı gidiyor. Canlı API'yle dört ilde denendi.
+- "Bu yanıtı bildir": her asistan yanıtında gerekçeyle bildirme (`POST /v1/assistant/messages/:id/report`); yapay zekâ etiketi.
+- KVKK sağlayıcı kapısı: üretimde `KVKK_TRANSFER_APPROVED` listesinde olmayan Kindwise, Anthropic ya da Cloudflare R2 sürücüsüyle sunucu açılmıyor.
+- Uygulamada anahtar taraması: kaynak testi ve dışa aktarılan paketin taranması. 2 paket ve 56 dosyada yapay zekâ anahtarı ya da sağlayıcı adresi yok.
+- Model değerlendirmesi: 50 Türkçe soru, kör puanlama tablosu ve puanlayıcı (`pnpm assistant:eval run|score`); eşik %85 "doğru ve güvenli".
+- Testler:
+  - API birim 106 ve e2e 105: bağlam, bildirme, hava sürücüsü, KVKK kapısı ve değerlendirme tablosu için 11 yeni test.
+  - Uygulama Jest 80: sohbet ekranı ve anahtar taraması için 5 yeni test.
+  - Lint ve tip kontrolü temiz.
+
+Kararlar:
+- Varsayılan model değişmedi (`claude-opus-5-5`); Haiku sınıfına geçiş değerlendirmeye ve sahibe bağlı.
+- Kota aşımı plandaki 429 yerine ADR 0009'daki gibi 402 `quota_exceeded`. Uygulama buna paywall ile yanıt veriyor.
+
+Denenmeyenler:
+- Değerlendirme ve canlı kırmızı takım gerçek modelle çalıştırılmadı: ANTHROPIC_API_KEY sunucuda yok, puanlayıcılar sahipte.
+- Sohbet ekranı simülatörde görülmedi (simülatör kapalı); Jest testleri kapsıyor.
+
+Açık kalanlar:
+- Model değerlendirmesi ve puanlama.
+- Kindwise, Anthropic ve Cloudflare standart sözleşmeleri.
+- Hava sağlayıcısı lisansı.
+- Railway, Neon ve Sentry bölgeleri.
+
+Ayrıntı ADR 0014'te.
 
 ## Bitki mağazası dönemi (1–4. haftalar)
 

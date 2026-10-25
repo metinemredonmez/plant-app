@@ -14,7 +14,7 @@ Uygulama bakım ve bilgi üzerine kurulu. Ürün ya da bitki satışı yok. Geli
 | Türkçe bakım bilgisi | Bütün bakım kartları: ışık, sulama, zorluk, evcil hayvan, balkon notu | Aynı | 24 tür taslak (uzman kontrolü bekliyor); hedef ~500 tür. Kartı olmayan 260 türün Türkçe adı Wikidata'dan; ev bitkilerinde kapsam %11 |
 | Bitkilerim ve hatırlatıcılar | 5 bitkiye kadar; tanımadan, ansiklopediden ya da elle ekleme; konum, ışık, saksı; günde tek toplu hatırlatma | Sınırsız bitki, bakım günlüğü | Hazır ([ADR 0011](adr/0011-bakim-takvimi-ve-hatirlaticilar.md)); mevsime ve saksıya göre sulama aralığı, yerleşim önerileri |
 | Hastalık ve zararlı teşhisi | 1 deneme teşhisi | Teşhis ve 5–7 günlük iyileşme takibi | Tamam: ürün adı, doz ve zaman süzülüyor; ikinci fotoğraf ve iki takip kotadan düşmüyor ([ADR 0013](adr/0013-teshis-guvenligi-ve-iyilesme-takibi.md)) |
-| Yapay zekâ bakım asistanı | Ayda 10 mesaj | Ayda 300 mesaj (adil kullanım) | API hazır (sahte sürücüyle) |
+| Yapay zekâ bakım asistanı | Ayda 10 mesaj | Ayda 300 mesaj (adil kullanım) | Tamam: bitkiyi, takibi, şehri ve havayı bilen bağlam; her yanıtta yapay zekâ etiketi ve "Bildir"; model seçimi 50 soruluk değerlendirmeyi bekliyor ([ADR 0014](adr/0014-asistan-baglam-bildirme-ve-model-secimi.md)) |
 | Hava uyarıları | Şehre göre don ve sıcak uyarısı | Aynı | 10. hafta |
 | Hesap | Apple, Google, telefon (+90 SMS kodu) ya da e-posta; uygulama içi ve web üzerinden silme | Aynı | Akış hazır ([ADR 0012](adr/0012-giris-kayit-ve-uyelik-akisi.md)); Apple, Google ve telefon sağlayıcı hesapları gelince açılır. Silme Apple erişimini de iptal ediyor |
 

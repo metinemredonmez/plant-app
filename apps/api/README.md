@@ -39,6 +39,9 @@ Uygulama açılışta hepsini doğrular ([src/config/env.ts](src/config/env.ts))
 | `ASSISTANT_DRIVER` | hayır | `fake` (varsayılan) ya da `anthropic`; üretimde `fake` yasak |
 | `ANTHROPIC_API_KEY` | `anthropic` ise | Claude API anahtarı; yalnızca sunucuda |
 | `ASSISTANT_MODEL` | hayır | Varsayılan `claude-opus-5-5`; daha ucuz seçenek `claude-haiku-5-5` |
+| `WEATHER_DRIVER` | hayır | Asistan bağlamındaki şehir havası: `none` (varsayılan), `fake` ya da `open-meteo`; üretimde `fake` yasak. Sağlayıcıya yalnız şehir adı gider |
+| `WEATHER_API_KEY` | hayır | Open-Meteo'nun ticari planı; yoksa ücretsiz, ticari olmayan uç kullanılır |
+| `KVKK_TRANSFER_APPROVED` | üretimde evet | Standart sözleşmesi imzalanıp KVKK'ya bildirilmiş yurt dışı sağlayıcılar, virgülle: `kindwise`, `anthropic`, `cloudflare`. Listede olmayan sağlayıcının sürücüsüyle üretim açılmaz ([liste](../../docs/kvkk-saglayicilar.md)) |
 | `STORAGE_DRIVER` | hayır | Tarama fotoğrafları (kişisel veri): `local` (varsayılan) ya da `r2`; üretimde `local` yasak |
 | `UPLOAD_DIR` | hayır | `local` için klasör, varsayılan `./uploads` (git dışında) |
 | `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET` | `r2` ile evet | Gizli Cloudflare R2 kovası; herkese açık bağlantı yok |
@@ -99,7 +102,8 @@ Ayrıntı ve tasarım kararları [ADR 0009](../../docs/adr/0009-yapay-zekali-bak
 | `POST /api/v1/auth/apple`, `/api/v1/auth/google` | açık, hız sınırlı | Kimlik jetonuyla giriş ya da hesap açma; `isNew` döner |
 | `POST /api/v1/auth/phone/code`, `/api/v1/auth/phone/verify` | açık, hız sınırlı | +90 numaraya 6 haneli SMS kodu; kodla giriş ya da hesap açma |
 | `PUT /api/v1/me/care-profile`, `POST /api/v1/me/paywall-offered` | oturum | İlk soruların cevapları; tek seferlik üyelik ekranının gösterildiği |
-| `GET`, `POST /api/v1/assistant/messages` | oturum, onay, kota | Bitkiyi bilen bakım asistanı. Yanıttaki ürün adı, doz ve uygulama zamanı içeren cümleler çıkarılır; gerekirse uzman yönlendirmesi eklenir |
+| `GET`, `POST /api/v1/assistant/messages` | oturum, onay, kota | Bitkiyi bilen bakım asistanı: bitkinin yeri, son sulaması, son teşhisi ve takibi, kullanıcının şehri ve havası bağlama girer. Yanıttaki ürün adı, doz ve uygulama zamanı içeren cümleler çıkarılır; gerekirse uzman yönlendirmesi eklenir |
+| `POST /api/v1/assistant/messages/:id/report` | oturum | "Bu yanıtı bildir": `{reason: WRONG\|UNSAFE\|OFF_TOPIC\|OTHER, note?}`; yalnız kendi asistan yanıtları |
 | `GET /api/v1/me` | oturum | Profil, `publicId`, plan, limitler, kullanım |
 | `POST /api/v1/billing/revenuecat` | paylaşılan sır | RevenueCat webhook'u |
 
@@ -113,6 +117,8 @@ Eski mağaza uygulaması kökten `pnpm mock:api` ile çalışır: kimlik, kullan
 pnpm test        # birim testleri + e2e
 pnpm test:e2e    # yalnızca e2e
 pnpm red-team    # 50 istemlik kırmızı takım seti gerçek modele (ANTHROPIC_API_KEY gerekir, ücretli)
+pnpm assistant:eval run      # 50 Türkçe soruyu aday modellere sorar, kör puanlama tablosu yazar (ücretli)
+pnpm assistant:eval score <klasör>   # doldurulmuş tabloyu puanlar (eşik %85 doğru ve güvenli)
 ```
 
 Kırmızı takım seti `test/fixtures/red-team.ts` dosyasında. e2e testi bu istemleri kasıtlı olarak kurala aykırı yanıt veren bir modelle çalıştırır ve kullanıcıya hiçbir ürün adı, doz ya da uygulama zamanının ulaşmadığını doğrular. `pnpm red-team` aynı istemleri yapılandırılmış modele gönderir ve her istem için ham yanıtın neyi ihlal ettiğini, süzgeçten sonra neyin kaldığını yazar.
