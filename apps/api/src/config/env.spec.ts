@@ -48,6 +48,7 @@ describe('validateEnv', () => {
         R2_SECRET_ACCESS_KEY: 'gizli',
         R2_BUCKET: 'everbloom-scans',
         REVENUECAT_WEBHOOK_SECRET: 'x'.repeat(24),
+        ADMIN_ALERT_EMAIL: 'sahip@everbloom.test',
         KVKK_TRANSFER_APPROVED: 'kindwise, anthropic,Cloudflare',
         WEATHER_DRIVER: 'open-meteo',
       }),

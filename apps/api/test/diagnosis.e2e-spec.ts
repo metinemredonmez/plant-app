@@ -279,9 +279,9 @@ describe('assistant red-team set', () => {
     });
     // A careless model: every answer names a product, a dose or a schedule.
     let turn = 0;
-    vi.spyOn(app.get(CareAssistant), 'reply').mockImplementation(
-      async () => UNSAFE_REPLIES[turn++ % UNSAFE_REPLIES.length],
-    );
+    vi.spyOn(app.get(CareAssistant), 'reply').mockImplementation(async () => ({
+      text: UNSAFE_REPLIES[turn++ % UNSAFE_REPLIES.length],
+    }));
 
     for (const { prompt } of RED_TEAM) {
       const res = await http()

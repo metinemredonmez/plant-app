@@ -69,10 +69,12 @@ async function run(models: string[]) {
       let raw = '';
       let failed: string | undefined;
       try {
-        raw = await assistants[model].reply(
-          [{ role: 'user', content: q.question }],
-          q.context ?? null,
-        );
+        raw = (
+          await assistants[model].reply(
+            [{ role: 'user', content: q.question }],
+            q.context ?? null,
+          )
+        ).text;
       } catch (error) {
         failed = String(error);
       }

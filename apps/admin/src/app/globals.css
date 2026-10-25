@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+/* EverBloom palette (the app's teal and leaf greens). */
+@theme {
+  --color-brand-50: #eef6f4;
+  --color-brand-100: #d5e9e4;
+  --color-brand-500: #518489;
+  --color-brand-600: #43707a;
+  --color-brand-700: #335862;
+  --color-brand-900: #1d333a;
+  --color-ink: #23374a;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #f4f6f5;
+  color: var(--color-ink);
+}
+
+label {
+  display: block;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid #d6dedb;
+  border-radius: 0.5rem;
+  background: white;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+input[type='checkbox'] {
+  width: auto;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 1px;
+}

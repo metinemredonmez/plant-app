@@ -16,6 +16,7 @@ Uygulama bakım ve bilgi üzerine kurulu. Ürün ya da bitki satışı yok. Geli
 | Hastalık ve zararlı teşhisi | 1 deneme teşhisi | Teşhis ve 5–7 günlük iyileşme takibi | Tamam: ürün adı, doz ve zaman süzülüyor; ikinci fotoğraf ve iki takip kotadan düşmüyor ([ADR 0013](adr/0013-teshis-guvenligi-ve-iyilesme-takibi.md)) |
 | Yapay zekâ bakım asistanı | Ayda 10 mesaj | Ayda 300 mesaj (adil kullanım) | Tamam: bitkiyi, takibi, şehri ve havayı bilen bağlam; her yanıtta yapay zekâ etiketi ve "Bildir"; model seçimi 50 soruluk değerlendirmeyi bekliyor ([ADR 0014](adr/0014-asistan-baglam-bildirme-ve-model-secimi.md)) |
 | Hava uyarıları | Şehre göre don ve sıcak uyarısı | Aynı | 10. hafta |
+| Admin paneli (ekip) | — | — | Tamam: bakım kartları ve yapay zekâ taslağı, uzman onayı, bildirilen yanıtlar, kullanıcılar, salt okunur abonelik, maliyet ve harcama alarmı, denetim kaydı ([ADR 0015](adr/0015-admin-paneli.md)) |
 | Hesap | Apple, Google, telefon (+90 SMS kodu) ya da e-posta; uygulama içi ve web üzerinden silme | Aynı | Akış hazır ([ADR 0012](adr/0012-giris-kayit-ve-uyelik-akisi.md)); Apple, Google ve telefon sağlayıcı hesapları gelince açılır. Silme Apple erişimini de iptal ediyor |
 
 **Fiyat:** aylık ₺149,99 (denemesiz) ve 7 gün denemeli yıllık ₺599,99. Haftalık ve ömür boyu plan yok. Fiyatlar üç ayda bir enflasyona göre gözden geçirilecek.

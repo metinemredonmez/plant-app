@@ -360,43 +360,53 @@ enum EntitlementStatus {
   EXPIRED
 }
 
+enum SpeciesStatus {
+  DRAFT
+  PUBLISHED
+}
+
 // Care card per species, in Turkish. Draft data must be checked by a
 // horticulturist before launch (see seed `reviewed`).
 model PlantSpecies {
-  id              Int         @id @default(autoincrement())
-  scientificName  String      @unique @map("scientific_name")
-  turkishName     String      @map("turkish_name")
-  otherNames      String[]    @map("other_names")
+  id              Int           @id @default(autoincrement())
+  scientificName  String        @unique @map("scientific_name")
+  turkishName     String        @map("turkish_name")
+  otherNames      String[]      @map("other_names")
   // Scientific synonyms and genus-level matches for identification results
   // ("Sansevieria trifasciata" for Dracaena trifasciata, "Calathea").
-  synonyms        String[]    @default([])
+  synonyms        String[]      @default([])
   family          String?
   light           LightLevel
   difficulty      Difficulty
   // Days between waterings; the app shortens it in summer, lengthens it in
   // winter and for balcony plants by weather (later weeks).
-  waterSummerDays Int         @map("water_summer_days")
-  waterWinterDays Int         @map("water_winter_days")
+  waterSummerDays Int           @map("water_summer_days")
+  waterWinterDays Int           @map("water_winter_days")
   humidity        String // "düşük" | "orta" | "yüksek"
-  tempMinC        Int         @map("temp_min_c")
-  tempMaxC        Int         @map("temp_max_c")
-  toxicToPets     Boolean?    @map("toxic_to_pets") // null = unknown
-  toxicityNote    String?     @map("toxicity_note")
+  tempMinC        Int           @map("temp_min_c")
+  tempMaxC        Int           @map("temp_max_c")
+  toxicToPets     Boolean?      @map("toxic_to_pets") // null = unknown
+  toxicityNote    String?       @map("toxicity_note")
   summary         String
-  wateringTip     String      @map("watering_tip")
-  lightTip        String      @map("light_tip")
-  fertilizingTip  String      @map("fertilizing_tip")
-  commonProblems  String[]    @map("common_problems")
+  wateringTip     String        @map("watering_tip")
+  lightTip        String        @map("light_tip")
+  fertilizingTip  String        @map("fertilizing_tip")
+  commonProblems  String[]      @map("common_problems")
   spots           PlantSpot[] // where it does well
   source          String // where the facts come from
-  reviewed        Boolean     @default(false) // checked by an expert
+  reviewed        Boolean       @default(false) // checked by an expert
+  // DRAFT cards (written by the language model) stay out of the app until
+  // someone approves them in the admin panel (ADR 0015).
+  status          SpeciesStatus @default(PUBLISHED)
+  reviewedAt      DateTime?     @map("reviewed_at")
+  reviewedById    Int?          @map("reviewed_by_id")
   // Identifiers in the reference databases, from Wikidata.
-  wikidataId      String?     @map("wikidata_id")
-  gbifId          String?     @map("gbif_id")
-  powoId          String?     @map("powo_id")
+  wikidataId      String?       @map("wikidata_id")
+  gbifId          String?       @map("gbif_id")
+  powoId          String?       @map("powo_id")
   userPlants      UserPlant[]
-  createdAt       DateTime    @default(now()) @map("created_at")
-  updatedAt       DateTime    @updatedAt @map("updated_at")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
 
   @@map("plant_species")
 }
@@ -495,19 +505,22 @@ model Scan {
 }
 
 model ChatMessage {
-  id           Int           @id @default(autoincrement())
-  userId       Int           @map("user_id")
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userPlantId  Int?          @map("user_plant_id")
-  userPlant    UserPlant?    @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
-  role         ChatRole
-  content      String
+  id               Int           @id @default(autoincrement())
+  userId           Int           @map("user_id")
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userPlantId      Int?          @map("user_plant_id")
+  userPlant        UserPlant?    @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+  role             ChatRole
+  content          String
   // "Bu yanıtı bildir" on an assistant answer; the admin queue (week 8)
   // reads these. Gone with the account.
-  reportReason ReportReason? @map("report_reason")
-  reportNote   String?       @map("report_note")
-  reportedAt   DateTime?     @map("reported_at")
-  createdAt    DateTime      @default(now()) @map("created_at")
+  reportReason     ReportReason? @map("report_reason")
+  reportNote       String?       @map("report_note")
+  reportedAt       DateTime?     @map("reported_at")
+  // Closed in the admin queue, with what was done about it.
+  reportResolvedAt DateTime?     @map("report_resolved_at")
+  reportResolution String?       @map("report_resolution")
+  createdAt        DateTime      @default(now()) @map("created_at")
 
   @@index([userId, userPlantId, createdAt])
   @@index([reportedAt])
@@ -545,4 +558,57 @@ model BillingEvent {
 
   @@unique([provider, eventId])
   @@map("billing_events")
+}
+
+// What each paid provider call cost, priced when it was made (ADR 0015).
+enum AiTask {
+  IDENTIFY
+  DIAGNOSE
+  ASSISTANT
+  CARD_DRAFT
+}
+
+model AiUsage {
+  id               Int      @id @default(autoincrement())
+  task             AiTask
+  provider         String // "kindwise" | "anthropic"
+  model            String?
+  inputTokens      Int      @default(0) @map("input_tokens")
+  outputTokens     Int      @default(0) @map("output_tokens")
+  cacheReadTokens  Int      @default(0) @map("cache_read_tokens")
+  cacheWriteTokens Int      @default(0) @map("cache_write_tokens")
+  costUsd          Float    @map("cost_usd")
+  // Kept after account deletion for the cost history, without the person.
+  userId           Int?     @map("user_id")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@map("ai_usage")
+}
+
+// Every admin write: who, what, on which record (ADR 0015).
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  actorId    Int      @map("actor_id")
+  // The admin's e-mail at the time, so the entry survives a later change.
+  actorEmail String   @map("actor_email")
+  action     String // "species.create", "report.resolve", "user.anonymize" …
+  targetType String   @map("target_type")
+  targetId   String   @map("target_id")
+  details    Json?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([targetType, targetId])
+  @@map("audit_logs")
+}
+
+// The daily spend alarm, sent at most once per Istanbul day.
+model SpendAlert {
+  id        Int      @id @default(autoincrement())
+  day       String   @unique // "2026-10-26"
+  totalUsd  Float    @map("total_usd")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("spend_alerts")
 }

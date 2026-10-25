@@ -23,6 +23,9 @@ export default defineConfig({
       VISION_DRIVER: 'fake',
       ASSISTANT_DRIVER: 'fake',
       WEATHER_DRIVER: 'fake',
+      // The alarm is checked by the tests themselves, not on a timer.
+      SPEND_CHECK_MINUTES: '0',
+      ADMIN_ALERT_EMAIL: 'sahip@everbloom.test',
       UPLOAD_DIR: join(tmpdir(), 'everbloom-e2e-uploads'),
       FREE_IDENTIFY_PER_WEEK: '3',
       FREE_DIAGNOSES: '1',

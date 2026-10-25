@@ -10,6 +10,7 @@ import type { AuthUser } from '../auth/auth.decorators.js';
 import { UsageService } from '../billing/usage.service.js';
 import { MyPlantsService } from '../care/my-plants.service.js';
 import { ConsentsService } from '../consents/consents.service.js';
+import { AiUsageService } from '../costs/ai-usage.service.js';
 import { ownerContext } from '../care/profile.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { guardReply } from '../safety/plant-protection.js';
@@ -124,6 +125,7 @@ export class AssistantService {
     private readonly usage: UsageService,
     private readonly consents: ConsentsService,
     private readonly weather: WeatherProvider,
+    private readonly aiUsage: AiUsageService,
   ) {}
 
   /** The owner's city, its weather and their answers; for every chat. */
@@ -217,7 +219,15 @@ export class AssistantService {
 
     let answer: string;
     try {
-      answer = await this.assistant.reply(history, context);
+      const reply = await this.assistant.reply(history, context);
+      answer = reply.text;
+      await this.aiUsage.record({
+        task: 'ASSISTANT',
+        provider: this.assistant.name,
+        model: reply.model,
+        usage: reply.usage,
+        userId: caller.id,
+      });
     } catch (error) {
       if (!(error instanceof AssistantUnavailableError)) throw error;
       this.logger.error(`assistant: ${error.message}`);

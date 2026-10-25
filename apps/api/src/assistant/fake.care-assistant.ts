@@ -11,6 +11,8 @@ export class FakeCareAssistant extends CareAssistant {
   async reply(history: ChatTurn[], context: PlantContext | null) {
     const question = history.at(-1)?.content ?? '';
     const plant = context?.nickname ?? context?.species ?? 'bitkiniz';
-    return `(Test yanıtı) ${plant} için: "${question.slice(0, 80)}" sorusunu aldım. Toprağın üst kısmı kuruyunca sulayın ve parlak, dolaylı ışıkta tutun.`;
+    return {
+      text: `(Test yanıtı) ${plant} için: "${question.slice(0, 80)}" sorusunu aldım. Toprağın üst kısmı kuruyunca sulayın ve parlak, dolaylı ışıkta tutun.`,
+    };
   }
 }

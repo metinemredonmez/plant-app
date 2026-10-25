@@ -31,6 +31,9 @@ export const toCard = (species: PlantSpecies) => ({
 
 export type CareCard = ReturnType<typeof toCard>;
 
+/** Drafts from the language model stay out of the app until approved. */
+const PUBLISHED = { status: 'PUBLISHED' } as const;
+
 @Injectable()
 export class SpeciesService {
   constructor(private readonly prisma: PrismaService) {}
@@ -39,13 +42,14 @@ export class SpeciesService {
     const term = q?.trim();
     const where: Prisma.PlantSpeciesWhereInput = term
       ? {
+          ...PUBLISHED,
           OR: [
             { turkishName: { contains: term, mode: 'insensitive' } },
             { scientificName: { contains: term, mode: 'insensitive' } },
             { otherNames: { has: term } },
           ],
         }
-      : {};
+      : PUBLISHED;
     const rows = await this.prisma.plantSpecies.findMany({
       where,
       orderBy: { turkishName: 'asc' },
@@ -54,8 +58,8 @@ export class SpeciesService {
   }
 
   async card(id: number) {
-    const species = await this.prisma.plantSpecies.findUnique({
-      where: { id },
+    const species = await this.prisma.plantSpecies.findFirst({
+      where: { id, ...PUBLISHED },
     });
     if (!species) throw new NotFoundException('Bitki bulunamadı');
     return toCard(species);
@@ -68,7 +72,7 @@ export class SpeciesService {
   async match(scientificName: string): Promise<PlantSpecies | null> {
     const name = scientificKey(scientificName);
     const genus = name.split(' ')[0];
-    const all = await this.prisma.plantSpecies.findMany();
+    const all = await this.prisma.plantSpecies.findMany({ where: PUBLISHED });
     const names = (s: PlantSpecies) =>
       [s.scientificName, ...s.synonyms].map(scientificKey);
     return (

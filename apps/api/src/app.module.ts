@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
+import { AdminModule } from './admin/admin.module.js';
 import { AssistantModule } from './assistant/assistant.module.js';
 import { AUTH_RATE_LIMITED } from './auth/auth.decorators.js';
 import { AuthModule } from './auth/auth.module.js';
@@ -18,6 +19,7 @@ import { type Env, validateEnv } from './config/env.js';
 import { ConsentsModule } from './consents/consents.module.js';
 import { HealthController } from './health/health.controller.js';
 import { IdentityModule } from './identity/identity.module.js';
+import { CostsModule } from './costs/costs.module.js';
 import { MessagingModule } from './messaging/messaging.module.js';
 import { OtpModule } from './otp/otp.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
@@ -76,6 +78,7 @@ const isAuthRateLimited = (context: ExecutionContext) =>
     }),
     PrismaModule,
     MessagingModule,
+    CostsModule,
     AuthModule,
     CatalogModule,
     UsersModule,
@@ -88,6 +91,7 @@ const isAuthRateLimited = (context: ExecutionContext) =>
     BillingModule,
     ScansModule,
     AssistantModule,
+    AdminModule,
   ],
   controllers: [HealthController],
   providers: [

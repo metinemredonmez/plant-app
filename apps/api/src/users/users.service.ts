@@ -96,6 +96,14 @@ export class UsersService {
    */
   async deleteAccount(caller: AuthUser, id: number) {
     assertSelf(caller, id);
+    return this.anonymize(id);
+  }
+
+  /**
+   * The account's personal data and content gone, the row kept anonymous
+   * (orders, audit). Also used by the admin panel (ADR 0015).
+   */
+  async anonymize(id: number) {
     const apple = await this.prisma.authIdentity.findMany({
       where: {
         userId: id,
@@ -131,6 +139,11 @@ export class UsersService {
       this.prisma.scan.deleteMany({ where: { userId: id } }),
       this.prisma.userPlant.deleteMany({ where: { userId: id } }),
       this.prisma.entitlement.deleteMany({ where: { userId: id } }),
+      // The cost history stays, without the person.
+      this.prisma.aiUsage.updateMany({
+        where: { userId: id },
+        data: { userId: null },
+      }),
     ]);
     const { publicId } = await this.prisma.user.findUniqueOrThrow({
       where: { id },

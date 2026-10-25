@@ -2,4 +2,5 @@
 # node_modules klasörüyle çalışıyor (bkz. docs/adr/0001-monorepo-yapisi.md).
 packages:
   - apps/api
+  - apps/admin
   - packages/*

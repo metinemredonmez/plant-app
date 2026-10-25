@@ -40,6 +40,16 @@ const fields = z.object({
   ASSISTANT_DRIVER: z.enum(['fake', 'anthropic']).default('fake'),
   ANTHROPIC_API_KEY: z.string().min(1).optional(),
   ASSISTANT_MODEL: z.string().min(1).default('claude-opus-5-5'),
+  // Admin panel (ADR 0015). Care card drafts by the language model, then
+  // checked by an expert; the driver follows ASSISTANT_DRIVER.
+  CARD_DRAFT_MODEL: z.string().min(1).default('claude-opus-5-5'),
+  // Cost estimates and the daily spend alarm: Kindwise per call (credits
+  // are 0.01–0.05 EUR by volume; the dear end), an e-mail when today's
+  // estimate passes the limit, checked every few minutes (0 = off).
+  KINDWISE_USD_PER_CALL: z.coerce.number().nonnegative().default(0.055),
+  DAILY_SPEND_ALERT_USD: z.coerce.number().positive().default(20),
+  ADMIN_ALERT_EMAIL: z.string().min(3).optional(),
+  SPEND_CHECK_MINUTES: z.coerce.number().int().nonnegative().default(30),
   // City weather in the assistant's context (ADR 0014). `none` until the
   // provider and its licence are chosen; `fake` for development and tests.
   WEATHER_DRIVER: z.enum(['none', 'fake', 'open-meteo']).default('none'),
@@ -238,6 +248,8 @@ export const envSchema = fields.superRefine((env, ctx) => {
       });
     }
     require('REVENUECAT_WEBHOOK_SECRET', 'NODE_ENV=production');
+    // Someone has to hear about a runaway AI bill.
+    require('ADMIN_ALERT_EMAIL', 'NODE_ENV=production');
   }
 });
 

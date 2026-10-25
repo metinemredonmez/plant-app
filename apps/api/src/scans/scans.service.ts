@@ -12,6 +12,7 @@ import { MyPlantsService } from '../care/my-plants.service.js';
 import { DAY_MS } from '../care/season.js';
 import { SpeciesService } from '../care/species.service.js';
 import { ConsentsService } from '../consents/consents.service.js';
+import { AiUsageService } from '../costs/ai-usage.service.js';
 import { z } from 'zod';
 
 import type {
@@ -173,6 +174,7 @@ export class ScansService {
     private readonly plants: MyPlantsService,
     private readonly usage: UsageService,
     private readonly consents: ConsentsService,
+    private readonly aiUsage: AiUsageService,
   ) {}
 
   /** Consent first; nothing is decoded, stored or sent before it. */
@@ -258,6 +260,15 @@ export class ScansService {
     });
   }
 
+  /** One provider call, for the cost page and the spend alarm. */
+  private recordCall(caller: AuthUser, task: 'IDENTIFY' | 'DIAGNOSE') {
+    return this.aiUsage.record({
+      task,
+      provider: this.vision.name,
+      userId: caller.id,
+    });
+  }
+
   private failed(error: unknown): never {
     if (!(error instanceof VisionProviderError)) throw error;
     this.logger.error(error.message);
@@ -340,6 +351,7 @@ export class ScansService {
     let identified;
     try {
       identified = await this.vision.identify(photo);
+      await this.recordCall(caller, 'IDENTIFY');
     } catch (error) {
       await this.save(caller, 'IDENTIFY', photo, imageKey, undefined);
       this.failed(error);
@@ -507,6 +519,7 @@ export class ScansService {
     let diagnosis;
     try {
       diagnosis = await this.vision.diagnose(photo);
+      await this.recordCall(caller, 'DIAGNOSE');
     } catch (error) {
       await this.save(caller, 'DIAGNOSE', photo, imageKey, undefined, {
         userPlantId,

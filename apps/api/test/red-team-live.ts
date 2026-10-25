@@ -31,7 +31,7 @@ let raw = 0;
 let shown = 0;
 let noReferral = 0;
 for (const [index, { kind, prompt }] of RED_TEAM.entries()) {
-  const answer = await assistant.reply(
+  const { text: answer } = await assistant.reply(
     [{ role: 'user', content: prompt }],
     null,
   );

@@ -41,6 +41,11 @@ Uygulama açılışta hepsini doğrular ([src/config/env.ts](src/config/env.ts))
 | `ASSISTANT_MODEL` | hayır | Varsayılan `claude-opus-5-5`; daha ucuz seçenek `claude-haiku-5-5` |
 | `WEATHER_DRIVER` | hayır | Asistan bağlamındaki şehir havası: `none` (varsayılan), `fake` ya da `open-meteo`; üretimde `fake` yasak. Sağlayıcıya yalnız şehir adı gider |
 | `WEATHER_API_KEY` | hayır | Open-Meteo'nun ticari planı; yoksa ücretsiz, ticari olmayan uç kullanılır |
+| `CARD_DRAFT_MODEL` | hayır | Admin panelindeki bakım kartı taslakları için model (varsayılan `claude-opus-5-5`); sürücü `ASSISTANT_DRIVER`'a uyar |
+| `KINDWISE_USD_PER_CALL` | hayır | Maliyet tahmini için Kindwise çağrı fiyatı, varsayılan 0,055 dolar |
+| `DAILY_SPEND_ALERT_USD` | hayır | Bugünkü tahmini yapay zekâ harcaması bunu geçince alarm e-postası, varsayılan 20 |
+| `ADMIN_ALERT_EMAIL` | üretimde evet | Harcama alarmının gideceği adres(ler), virgülle |
+| `SPEND_CHECK_MINUTES` | hayır | Alarmın kontrol aralığı, varsayılan 30; 0 kapatır |
 | `KVKK_TRANSFER_APPROVED` | üretimde evet | Standart sözleşmesi imzalanıp KVKK'ya bildirilmiş yurt dışı sağlayıcılar, virgülle: `kindwise`, `anthropic`, `cloudflare`. Listede olmayan sağlayıcının sürücüsüyle üretim açılmaz ([liste](../../docs/kvkk-saglayicilar.md)) |
 | `STORAGE_DRIVER` | hayır | Tarama fotoğrafları (kişisel veri): `local` (varsayılan) ya da `r2`; üretimde `local` yasak |
 | `UPLOAD_DIR` | hayır | `local` için klasör, varsayılan `./uploads` (git dışında) |
@@ -98,6 +103,7 @@ Ayrıntı ve tasarım kararları [ADR 0009](../../docs/adr/0009-yapay-zekali-bak
 | `POST /api/v1/scans/identify`, `/api/v1/scans/diagnose` | oturum, onay, kota | Çok parçalı `image` (JPEG, PNG, WebP; 8 MB). Sunucu EXIF'i siler, 1280 piksele küçültür; aynı fotoğraf önceki sonucu döndürür. Tanımada `outcome`: `identified`, `possible` ya da `not_recognized`. Teşhiste ürün adı, doz ve uygulama zamanı süzülür, her sonuçta `referral` var ([ADR 0013](../../docs/adr/0013-teshis-guvenligi-ve-iyilesme-takibi.md)). Teşhiste `secondPhotoOf` (emin olunamayan sonuçtan sonra bir kez, 24 saat içinde) ya da `followUpOf` (en çok iki takip) alanı fotoğrafı ilk teşhise bağlar; bu fotoğraflar kotadan düşmez |
 | `POST /api/v1/scans/:id/feedback` | oturum | `{correct}` teşhiste ("Bu teşhis doğru muydu?"), `{recovery: BETTER\|SAME\|WORSE}` takip fotoğrafında |
 | `GET /api/v1/scans`, `/api/v1/scans/:id` | oturum | Tarama geçmişi; `parentId`, `link`, `correct`, `recovery` ile |
+| `/api/v1/admin/*` | `ADMIN` ya da `STAFF` | Admin paneli ([ADR 0015](../../docs/adr/0015-admin-paneli.md)): `me`, `overview`; `species` (liste, ayrıntı, ekleme, `PATCH`, `:id/approve`, `drafts`); `reports` ve `reports/:id/resolve`. Yalnız `ADMIN`: `users`, `users/:id`, `users/:id/anonymize`, `costs`, `audit`. Müşteri token'ı 403 |
 | `GET /api/v1/app-config` | açık | Açık giriş yolları, Google istemci kimlikleri, en düşük uygulama sürümü |
 | `POST /api/v1/auth/apple`, `/api/v1/auth/google` | açık, hız sınırlı | Kimlik jetonuyla giriş ya da hesap açma; `isNew` döner |
 | `POST /api/v1/auth/phone/code`, `/api/v1/auth/phone/verify` | açık, hız sınırlı | +90 numaraya 6 haneli SMS kodu; kodla giriş ya da hesap açma |

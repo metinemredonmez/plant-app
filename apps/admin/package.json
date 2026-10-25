@@ -1,0 +1,28 @@
+{
+  "name": "@everbloom/admin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "EverBloom admin paneli: bakım kartları, bildirilen yanıtlar, kullanıcılar, maliyet ve denetim kaydı",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 4200",
+    "build": "next build",
+    "start": "next start --port 4200",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "^6.0.2",
+    "vitest": "^5.0.5"
+  }
+}

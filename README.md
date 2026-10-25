@@ -11,7 +11,7 @@ Türkiye için yapay zekâlı bitki bakım uygulaması: fotoğrafla tanıma, Tü
 |---|---|
 | [apps/mobile](apps/mobile) | Eski Expo 50 mağaza uygulaması (EverBloom şablonu). Yeni uygulama (Expo 57, Picaso şablonu) şablon lisansı teyit edilene kadar bu repoda değil |
 | [apps/api](apps/api) | NestJS 12 + Prisma 7.10 REST API |
-| [apps/admin](apps/admin) | Admin paneli (9. hafta) |
+| [apps/admin](apps/admin) | Next.js admin paneli: bakım kartları, bildirilen yanıtlar, kullanıcılar, maliyet, denetim kaydı |
 | [packages/contract](packages/contract) | API sözleşmesi, fikstürler ve mock sunucu |
 | [docs/adr](docs/adr) | Mimari karar kayıtları |
 | [docs/template](docs/template) | Şablonun Figma dosyası ve dokümanı |
@@ -24,6 +24,7 @@ Gereksinimler: Node 20.19+ (prod ve CI için 22 LTS), pnpm 9, yarn 1, PostgreSQL
 pnpm install
 pnpm mock            # yalnızca mock API: http://localhost:4010
 pnpm api:dev         # NestJS API: http://localhost:4100 (önce apps/api/README.md)
+pnpm --filter @everbloom/admin dev   # admin paneli: http://localhost:4200
 pnpm mock:api        # eski uygulama için: kalan uçlar API'den, sipariş, yorum ve promosyon mock'tan
 pnpm mobile          # Expo/Metro (apps/mobile, yarn)
 pnpm test            # sözleşme + API testleri
@@ -44,3 +45,9 @@ Mobil uygulama yarn 1 kullanıyor (`apps/mobile/package.json` içinde `packageMa
 - [0007 Oturumlar, yetkilendirme ve mobil token saklama](docs/adr/0007-oturum-ve-yetkilendirme.md)
 - [0008 Doğrulama kodları, şifre sıfırlama, yorumlar, promosyonlar, Türkçe uyarlama](docs/adr/0008-otp-yorum-promosyon.md)
 - [0009 Ürün yönü yapay zekâlı bitki bakımı; arka uçta ilk dilim](docs/adr/0009-yapay-zekali-bakim-uygulamasi.md)
+- [0010 Fotoğraf hattı ve Türkçe adlar](docs/adr/0010-fotograf-hatti-ve-turkce-adlar.md)
+- [0011 Bakım takvimi ve hatırlatıcılar](docs/adr/0011-bakim-takvimi-ve-hatirlaticilar.md)
+- [0012 Açılış, giriş, kayıt ve üyelik akışı](docs/adr/0012-giris-kayit-ve-uyelik-akisi.md)
+- [0013 Teşhis güvenliği ve iyileşme takibi](docs/adr/0013-teshis-guvenligi-ve-iyilesme-takibi.md)
+- [0014 Asistan bağlamı, yanıt bildirme ve model seçimi](docs/adr/0014-asistan-baglam-bildirme-ve-model-secimi.md)
+- [0015 Admin paneli](docs/adr/0015-admin-paneli.md)

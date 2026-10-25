@@ -968,6 +968,16 @@ export const demoUser = {
   location: 'Kadıköy, İstanbul',
 };
 
+/**
+ * Admin panel account for development (ADR 0015); never seeded in
+ * production, where the owner sets a role on a real account.
+ */
+export const adminUser = {
+  name: 'EverBloom Yönetici',
+  email: 'admin@everbloom.test',
+  password: 'admin1234',
+};
+
 /** Seeded only while the demo user has no orders. */
 /** The demo account's own plants (see seedDemoGarden). */
 export const demoPlants = [

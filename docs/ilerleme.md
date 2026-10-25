@@ -12,6 +12,8 @@
 | 4 | 16–22 Kas | Öne çekildi: yerleşim, mevsimlik sulama, 14 günlük takvim, günde tek hatırlatıcı, elle ekleme tamam; kapsam dondurma sahibin onayında |
 | 5 | 23–29 Kas | Öne çekildi: teşhis güvenlik süzgeci, uzman yönlendirmesi, ikinci fotoğraf, iyileşme takibi, doğruluk sorusu ve 50 istemlik kırmızı takım seti tamam; canlı model ve Kindwise denemesi anahtar ve kredi bekliyor |
 | 6 | 30 Kas–6 Ara | Öne çekildi: bitkiyi, takibi, şehri ve havayı bilen bağlam, "Bildir" ve yapay zekâ etiketi, KVKK sağlayıcı kapısı, anahtar taraması ve 50 soruluk model değerlendirmesi tamam; model seçimi, sözleşmeler ve hava lisansı sahipte |
+| 7 | 7–13 Ara | Mağaza hesapları hazır olmadığı için plan gereği 8. haftayla yer değiştirdi; abonelik (RevenueCat, mağaza ürünleri) hesaplar gelince |
+| 8 | 14–20 Ara | Öne çekildi: Next.js admin paneli; bakım kartları ve yapay zekâ taslağı, uzman onayı, bildirimler, kullanıcılar, maliyet ve harcama alarmı, denetim kaydı tamam; rol atama ve yayın adresi sahipte |
 
 ### 1. hafta (yeni plan)
 
@@ -288,6 +290,39 @@ Açık kalanlar:
 - Railway, Neon ve Sentry bölgeleri.
 
 Ayrıntı ADR 0014'te.
+
+### 8. hafta (yeni plan; 7. haftanın önüne alındı)
+
+[ADR 0015](adr/0015-admin-paneli.md). Plan, mağaza hesapları hazır değilse 7. ve 8. haftaların yer değiştirmesini söylüyor; hesaplar hazır değil.
+
+Tamamlanan:
+- Next.js 16 admin paneli (`apps/admin`):
+  - Bakım kartları: ekleme, düzenleme, yapay zekâ taslağı, uzman onayı, yayından kaldırma.
+  - Bildirilen yanıtlar, kullanıcılar (abonelik salt okunur, anonimleştirme), maliyet, denetim kaydı.
+  - Oturum HttpOnly, SameSite=Strict ve üretimde Secure çerezlerde; süresi biten token panelin proxy'sinde yenileniyor.
+- API'de `/api/v1/admin/*` uçları:
+  - Müşteriye 403; uzman (`STAFF`) kartları ve bildirimleri yönetiyor, kullanıcılar, maliyet ve denetim yalnız `ADMIN`.
+  - Her yazma işlemi denetim kaydı üretiyor.
+- Taslak kartlar onaylanana kadar uygulamada görünmüyor. Elle ya da modelle yazılan kartta ürün adı, doz ve ilaçlama zamanı olamıyor.
+- Maliyet: her ücretli çağrı fiyatıyla kaydediliyor. Günlük eşik aşılınca sahibe bir kez e-posta gidiyor.
+- 6. haftadan düzeltme: Haiku 5.5 sunucu tarafı yedek modeli ve konuşma ortası sistem mesajını kabul etmiyor. Asistan sürücüsü artık ikisini de Haiku'ya göndermiyor; bu düzeltme olmadan Haiku'ya geçiş ya da değerlendirme her istekte hata verirdi.
+- Testler:
+  - API birim 109 ve e2e 114: 9 admin, 3 sürücü ve fiyat testi.
+  - Panel birim 3: çerez bayrakları, token yenileme, güvenli yönlendirme.
+  - Panelin üretim derlemesi temiz.
+- Tarayıcıda yerel doğrulama:
+  - Müşteri reddedildi, yönetici girdi.
+  - Ürün adı içeren kart reddedildi ve form doldurulmuş hâlde geri geldi.
+  - Düzeltilen kart kaydedildi ve uygulamanın aramasında çıktı. Onay ve taslak çalıştı.
+  - Denetim kaydı ve maliyet sayfaları açıldı; çıkış çalıştı.
+  - Üretim sunucusunda çerezler `Secure; HttpOnly; SameSite=strict`.
+
+Açık kalanlar (sahipte):
+- Kendi hesabına `ADMIN`, ziraat mühendisine `STAFF` rolü.
+- Panelin barındırması ve adresi.
+- `ADMIN_ALERT_EMAIL` ve SMTP.
+- Kindwise birim fiyatı.
+- 24 taslak kartın uzman incelemesi.
 
 ## Bitki mağazası dönemi (1–4. haftalar)
 

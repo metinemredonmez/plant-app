@@ -38,6 +38,8 @@ jobs:
       - run: pnpm --filter @everbloom/contract typecheck
       - run: pnpm --filter @everbloom/api typecheck
       - run: pnpm --filter @everbloom/api lint
+      - run: pnpm --filter @everbloom/admin typecheck
+      - run: pnpm --filter @everbloom/admin build
       - run: pnpm test
 
   mobile:

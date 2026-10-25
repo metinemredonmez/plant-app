@@ -128,6 +128,21 @@ async function seedPlants() {
   }
 }
 
+async function seedAdminAccount() {
+  if (process.env.NODE_ENV === 'production') return;
+  const { password, ...profile } = data.adminUser;
+  await prisma.user.upsert({
+    where: { email: profile.email },
+    create: {
+      ...profile,
+      role: 'ADMIN',
+      passwordHash: await hash(password),
+      emailVerified: true,
+    },
+    update: { role: 'ADMIN' },
+  });
+}
+
 async function seedDemoAccount() {
   const { password, ...profile } = data.demoUser;
   const user = await prisma.user.upsert({
@@ -224,6 +239,7 @@ await seedPlantNames(names);
 await seedMarketing();
 await seedPlants();
 const demoUser = await seedDemoAccount();
+await seedAdminAccount();
 await seedDemoGarden(demoUser);
 // Reviews left with the plant store; nothing rates plants any more.
 await prisma.plant.updateMany({ data: { ratingAvg: 0, ratingCount: 0 } });
