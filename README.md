@@ -9,7 +9,7 @@ Türkiye için yapay zekâlı bitki bakım uygulaması: fotoğrafla tanıma, Tü
 
 | Klasör | İçerik |
 |---|---|
-| [apps/mobile](apps/mobile) | Eski Expo 50 mağaza uygulaması (EverBloom şablonu); yeni uygulama Expo 54 şablonlarından kuruluyor |
+| [apps/mobile](apps/mobile) | Eski Expo 50 mağaza uygulaması (EverBloom şablonu). Yeni uygulama (Expo 57, Picaso şablonu) şablon lisansı teyit edilene kadar bu repoda değil |
 | [apps/api](apps/api) | NestJS 12 + Prisma 7.10 REST API |
 | [apps/admin](apps/admin) | Admin paneli (9. hafta) |
 | [packages/contract](packages/contract) | API sözleşmesi, fikstürler ve mock sunucu |

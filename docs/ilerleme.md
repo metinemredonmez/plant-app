@@ -7,6 +7,7 @@
 | Hafta | Tarih | Durum |
 |---|---|---|
 | 1 | 26 Eki–1 Kas | Teknik işler başladı (aşağıda); dış işler sahipte |
+| 2 | 2–8 Kas | Öne çekildi: şablon temizliği, Expo 57, iOS ve Android derlemesi tamam; staging, Sentry ve EAS hesap bekliyor |
 
 ### 1. hafta (yeni plan)
 
@@ -47,13 +48,49 @@ Doğrulanmayan:
 - Profil sekmesi, yeni hesapla kayıt, hatırlatma bildiriminin gelmesi.
 - Android derlemesi.
 
-Şablondan kalan, kullanılmayan üç bileşen (`Calendar`, `ConfirmationModal`, `forms/Slider`) `tsc` hatası veriyor. SDK yükseltmesinde (2. hafta) temizlenecek.
+Şablondan kalan, kullanılmayan üç bileşen (`Calendar`, `ConfirmationModal`, `forms/Slider`) `tsc` hatası veriyordu. 2. haftada silindi.
 
 Bekleyen (1. hafta):
 - Sahibin dış işleri: limited şirket, D-U-N-S, kurumsal mağaza hesapları, KVKK standart sözleşme talepleri, avukat, ziraat mühendisi.
 - Pl@ntNet ve Kindwise'ın 50 fotoğraflık Türkiye denemesi (anahtar ve deneme kredisi gerekiyor).
 - Şablonların SDK 54'te yeni mimariyle derlenmesi; hava sağlayıcısı adayları.
 - Node 22'ye geçiş.
+
+### 2. hafta (yeni plan)
+
+Tamamlanan:
+- Şablon temizliği:
+  - Kullanılmayan ekranlar, bileşenler ve paketler silindi.
+  - `(drawer)` grubu `(app)` oldu.
+  - Şablonun ikon ve açılış görselleri EverBloom'unkilerle değişti.
+  - Uygulama adı EverBloom, paket kimliği `com.everbloom.care`.
+- Expo SDK 54 → 55 → 56 → 57. Her adımda `npx expo install --fix`, `expo-doctor` ve derleme yapıldı.
+  - Sonuç: React Native 0.86, React 19.2, expo-router 57, Reanimated 4.5, NativeWind 4.2.
+  - `expo-doctor` 21/21, `tsc --noEmit` 0 hata. Bağımlılıklarda expo-av yok.
+- Prebuild ile `ios/` ve `android/` üretildi (git dışında). iOS en düşük sürüm 16.4, Android targetSdk 36.
+- Debug derlemeleri: iOS simülatör (iPhone 16 Pro) ve Android emülatör (Pixel 8a, arm64).
+
+Android emülatörde doğrulanan (sahte sürücülerle):
+- Demo hesapla giriş; kayıt ve "Şifremi unuttum" bağlantıları.
+- Bitkilerim, bitki detayı ve bakım kartı, Ansiklopedi.
+- Asistan; galeriden tanıma (Monstera, %94).
+- Profil (plan, kullanım, yapay zekâ onayı) ve çıkış.
+
+iOS simülatörde doğrulanan (SDK 57): oturumun Keychain'den dönmesi, Bitkilerim, galeriden fotoğraf yükleme, haftalık tanıma sınırında 402 ve paywall.
+
+Bulunan ve düzeltilen:
+- SDK 57'de global `fetch` Expo'nun kendi uygulaması ve React Native'in `{ uri, name, type }` FormData parçasını reddediyor ("Unsupported FormDataPart implementation"). Fotoğraf artık `expo-file-system` `File` nesnesi olarak gidiyor.
+- NativeWind, `onPress` verilen `Text`'in `className`'ini uygulamıyor; giriş ekranındaki bağlantılar Android'de stilsizdi. Bağlantılar `Pressable` içine alındı.
+- `ThemedText`'in varsayılan `text-text` rengi diğer renk sınıflarını eziyor; renk sınıfları `!` ile yazılmalı (`!text-highlight`).
+- Kök düzen fontlar yüklenirken boş döndüğü için expo-router "mount olmamış bileşende state güncellemesi" hatası veriyordu. Açılış ekranı fontlar gelene kadar açık kalıyor, navigator hemen kuruluyor.
+- `legacy-peer-deps` ayarı zorunlu eşleri (`react-refresh`) atlıyordu ve Android paketi oluşmuyordu. `.npmrc` kaldırıldı, `react-dom` `expo install` ile sabitlendi.
+- Geliştirme notu: `CI=1 npx expo start` dosya izlemeyi kapatıyor, değişiklikler uygulamaya gelmiyor.
+
+Doğrulanmayan:
+- Fiziksel iPhone ve Android cihaz; EAS dev build (EAS hesabı gerekiyor). "Bir iPhone'da ve bir Android cihazda açılıyor" kriteri bu yüzden yalnızca simülatör ve emülatörde sağlandı.
+- Kamera, hatırlatma bildiriminin gelmesi, yeni hesapla kayıt; teşhis akışı SDK 57'de tekrar denenmedi.
+
+Bekleyen (2. hafta, sahipte): Railway + Neon staging, Sentry ve EAS hesapları. Staging `/health` ve staging'de giriş, yenileme ve çıkış bunlara bağlı.
 
 ## Bitki mağazası dönemi (1–4. haftalar)
 
