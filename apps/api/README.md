@@ -1,6 +1,6 @@
 # @everbloom/api
 
-NestJS 12 + Prisma 7.10 REST API. Eski Expo sözleşmesini (`/api/...`) birebir uyguluyor. 4. hafta itibarıyla sipariş oluşturma dışında 24 ucun hepsi hazır: katalog, oturumlar, kullanıcı uçları, sipariş geçmişi, doğrulama kodları, şifre sıfırlama, yorumlar ve promosyonlar. Kararlar için [ADR 0002](../../docs/adr/0002-nestjs-12-ve-prisma-7.md), [0006](../../docs/adr/0006-sema-v1-ve-katalog.md), [0007](../../docs/adr/0007-oturum-ve-yetkilendirme.md) ve [0008](../../docs/adr/0008-otp-yorum-promosyon.md).
+NestJS 12 + Prisma 7.10 REST API of the AI plant care app. Yeni uygulamanın uçları `/api/v1` altında: bakım kartları, Bitkilerim, bakım kayıtları, tanıma ve teşhis, yapay zekâ onayı, bakım asistanı, plan ve kota, RevenueCat webhook'u ([ADR 0009](../../docs/adr/0009-yapay-zekali-bakim-uygulamasi.md)). Eski Expo uygulamasının kimlik, kullanıcı ve katalog uçları (`/api/...`) yerinde duruyor; sipariş, yorum ve promosyon uçları mağazayla birlikte kaldırıldı. Diğer kararlar: [ADR 0002](../../docs/adr/0002-nestjs-12-ve-prisma-7.md), [0006](../../docs/adr/0006-sema-v1-ve-katalog.md), [0007](../../docs/adr/0007-oturum-ve-yetkilendirme.md), [0008](../../docs/adr/0008-otp-yorum-promosyon.md).
 
 ## Kurulum
 
@@ -10,11 +10,11 @@ createdb -h localhost everbloom_dev
 createdb -h localhost everbloom_test
 pnpm install                    # postinstall Prisma istemcisini üretir
 pnpm db:migrate                 # prisma migrate dev
-pnpm db:seed                    # katalog, demo hesap, örnek yorumlar, promosyonlar
+pnpm db:seed                    # bakım kartları, katalog, demo hesap ve bahçesi
 pnpm start:dev                  # http://localhost:4100
 ```
 
-Seed tekrar tekrar çalıştırılabilir. Kayıtları doğal anahtarlarıyla (isim, slug, kod, e-posta) günceller, hiçbir şey silmez. Slayt ve banner yalnızca tablo boşsa, demo siparişler yalnızca demo hesabın hiç siparişi yoksa eklenir; demo hesabın parolası da sonradan değiştirildiyse sıfırlanmaz. Veriler [prisma/seed-data.ts](prisma/seed-data.ts) içinde. Demo hesap: `demo@everbloom.test` / `demo1234`, e-postası ve telefonu doğrulanmış; teslim edilmiş siparişindeki Monstera ve Pothos için yorum yazabilir, kişisel kodu `AYSE15`. 4 örnek müşteri (`*@example.com`, giriş yapamaz) 12 yorum yazmış durumda; puanlar bu yorumlardan hesaplanıyor. Promosyonlar: `HOSGELDIN10`, `BITKI20` (geçerli), `YAZ15` (süresi dolmuş), `ILK100` (limiti dolmuş).
+Seed tekrar tekrar çalıştırılabilir. Kayıtları doğal anahtarlarıyla (bilimsel ad, isim, slug, e-posta) günceller, hiçbir şey silmez. Veriler [prisma/species-data.ts](prisma/species-data.ts) (24 Türkçe bakım kartı, uzman kontrolü bekliyor) ve [prisma/seed-data.ts](prisma/seed-data.ts) içinde. Demo hesap `demo@everbloom.test` / `demo1234`. E-postası ve telefonu doğrulanmış; bahçesinde üç bitki var, biri sulama günü geçmiş. Yapay zekâ onayı verilmemiş durumda, uygulama ilk taramada soruyor.
 
 ## Ortam değişkenleri
 
@@ -34,6 +34,16 @@ Uygulama açılışta hepsini doğrular ([src/config/env.ts](src/config/env.ts))
 | `EMAIL_DRIVER` | hayır | `log` (varsayılan) ya da `smtp`; üretimde `log` yasak |
 | `SMTP_URL` | `smtp` ise | Örnek: `smtps://kullanici:parola@smtp.saglayici.com:465` |
 | `EMAIL_FROM` | hayır | Gönderen adresi |
+| `VISION_DRIVER` | hayır | `fake` (varsayılan; sabit bir Monstera sonucu) ya da `kindwise`; üretimde `fake` yasak |
+| `KINDWISE_API_KEY` | `kindwise` ise | plant.id / plant.health anahtarı |
+| `ASSISTANT_DRIVER` | hayır | `fake` (varsayılan) ya da `anthropic`; üretimde `fake` yasak |
+| `ANTHROPIC_API_KEY` | `anthropic` ise | Claude API anahtarı; yalnızca sunucuda |
+| `ASSISTANT_MODEL` | hayır | Varsayılan `claude-opus-5-5`; daha ucuz seçenek `claude-haiku-5-5` |
+| `UPLOAD_DIR` | hayır | Tarama fotoğrafları (kişisel veri), varsayılan `./uploads` (git dışında) |
+| `FREE_IDENTIFY_PER_WEEK`, `FREE_DIAGNOSES`, `FREE_MESSAGES_PER_MONTH`, `FREE_PLANTS` | hayır | Ücretsiz plan: 3, 1, 10, 5 |
+| `PREMIUM_SCANS_PER_DAY`, `PREMIUM_MESSAGES_PER_MONTH` | hayır | Premium adil kullanım: 50, 300 |
+| `REVENUECAT_WEBHOOK_SECRET` | üretimde evet | RevenueCat'te webhook yetki başlığına `Bearer <sır>` olarak girilir |
+| `AI_CONSENT_VERSION` | hayır | Yapay zekâ işleme onay metninin sürümü; değişince yeniden onay istenir |
 | `PORT` | hayır | Varsayılan 4100 |
 | `NODE_ENV` | hayır | `development` ise loglar okunaklı tek satır; `production` ise `trust proxy` açık |
 | `LOG_LEVEL` | hayır | Varsayılan `info` |
@@ -46,33 +56,40 @@ Her uç varsayılan olarak oturum (`Authorization: Bearer <token>`) ister. Açı
 |---|---|---|
 | `GET /health` | açık | Prisma üzerinden veritabanını yoklar; veritabanı yoksa 503 |
 | `GET /api/plants`, `/categories`, `/colors`, `/pot/types`, `/plant/types`, `/slides`, `/banners` | açık | Katalog; çıplak diziler. Bitkiler yalnızca aktif ve stokta olanlar |
-| `GET /api/promocodes` | isteğe bağlı oturum | Geçerli herkese açık kodlar, oturum varsa kişisel kodlar da |
 | `POST /api/user/create` | açık, rate limit | Kayıt → `{user, token, refreshToken}`; 409 kayıtlı e-posta, 422 geçersiz gövde |
 | `POST /api/user/login` | açık, rate limit | Giriş → `{user, token, refreshToken}`; 401 |
 | `POST /api/auth/refresh` | açık, rate limit | Yenileme token'ını yeni bir çiftle değiştirir; tekrar kullanılan token bütün oturumu iptal eder |
 | `POST /api/auth/logout` | açık | Yenileme token'ını iptal eder, her zaman 200 |
 | `GET /api/user/:id` | yalnızca kendi hesabı | Çıplak kullanıcı nesnesi; başka id 403, silinmiş hesap 404 |
 | `PUT /api/user/update/:id` | yalnızca kendi hesabı | `{name, location}` → `{user}` |
-| `DELETE /api/user/delete/:id` | yalnızca kendi hesabı | Kişisel verileri siler, oturumları kapatır |
-| `GET /api/order/:userId` | yalnızca kendi hesabı | `{orders}`; satır `id`'si bitki id'si |
+| `DELETE /api/user/delete/:id` | yalnızca kendi hesabı | Kişisel verileri, bitkileri, taramaları ve fotoğrafları, sohbetleri siler; oturumları kapatır |
 | `POST /api/send/otp/email` | isteğe bağlı oturum | Oturumla e-posta doğrulama kodu, oturumsuz şifre sıfırlama kodu (kayıtlı olmayan adrese de aynı yanıt) |
 | `POST /api/verify/otp/email` | isteğe bağlı oturum | Oturumla `{user}`, oturumsuz `{user, resetToken}` |
 | `POST /api/send/otp/phone`, `/verify/otp/phone` | oturum | Türkiye cep numarası; doğrulanınca numara hesaba yazılır |
 | `POST /api/change/password` | açık, rate limit | `resetToken` zorunlu (yoksa 401); bütün oturumlar kapanır |
-| `GET /api/reviews/:plantId` | açık | Maskeli adlarla yorumlar, eskiden yeniye |
-| `POST /api/review/create` | oturum | Yalnızca teslim almış müşteri, bitki başına bir yorum |
-| `POST /api/promocode/show` | isteğe bağlı oturum | Kodu doğrular: süre, sahiplik, kullanım limiti |
 
-Liste uçlarının hepsi çıplak JSON dizisi döndürür. Eski POST uçları 200 döner (`@LegacyPost`). Her hata `{message}` biçimindedir.
+Eski uçlarda liste uçları çıplak JSON dizisi döndürür ve POST uçları 200 döner (`@LegacyPost`). Her hata `{message}` biçimindedir; yeni uçlar buna `code` ekleyebilir (`consent_required`, `quota_exceeded`).
+
+### Yeni uygulamanın uçları (`/api/v1`)
+
+Ayrıntı ve tasarım kararları [ADR 0009](../../docs/adr/0009-yapay-zekali-bakim-uygulamasi.md) içinde.
+
+| Uç | Erişim | Açıklama |
+|---|---|---|
+| `GET /api/v1/species?q=`, `/api/v1/species/:id` | açık | Türkçe bakım kartları |
+| `GET`, `POST /api/v1/my/plants`; `GET`, `PATCH`, `DELETE /api/v1/my/plants/:id` | oturum | Bitkilerim; ücretsiz planda 5 bitki |
+| `POST /api/v1/my/plants/:id/care` | oturum | Bakım kaydı; sulama sonraki sulama gününü günceller |
+| `GET /api/v1/my/today` | oturum | Sulanacaklar ve yaklaşanlar |
+| `GET /api/v1/my/consents/ai`, `POST /api/v1/my/consents` | oturum | Yapay zekâ işleme onayı |
+| `POST /api/v1/scans/identify`, `/api/v1/scans/diagnose` | oturum, onay, kota | Çok parçalı `image`; teşhis ilaç önermez |
+| `GET /api/v1/scans`, `/api/v1/scans/:id` | oturum | Tarama geçmişi |
+| `GET`, `POST /api/v1/assistant/messages` | oturum, onay, kota | Bitkiyi bilen bakım asistanı |
+| `GET /api/v1/me` | oturum | Profil, `publicId`, plan, limitler, kullanım |
+| `POST /api/v1/billing/revenuecat` | paylaşılan sır | RevenueCat webhook'u |
 
 ## Uygulamayı API'ye bağlamak
 
-Sipariş oluşturma ucu henüz yok (5. hafta). O zamana kadar uygulama mock sunucuya bağlı kalır ve mock, hazır uçları API'ye yönlendirir:
-
-```bash
-pnpm api:dev        # kökten: API, 4100
-pnpm mock:api       # kökten: mock 4010, hazır uçlar API'ye
-```
+Eski mağaza uygulaması kökten `pnpm mock:api` ile çalışır: kimlik, kullanıcı ve katalog uçları API'ye gider, sipariş, yorum ve promosyon uçlarını mock yanıtlar. Yeni uygulama doğrudan `http://localhost:4100/api/v1` adresine bağlanır.
 
 ## Testler
 

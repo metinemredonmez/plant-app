@@ -74,16 +74,6 @@ exports[`catalog contract (e2e) > /api/pot/types > keeps its field layout 1`] = 
 }
 `;
 
-exports[`catalog contract (e2e) > /api/promocodes > keeps its field layout 1`] = `
-{
-  "code": "string",
-  "discount": "number",
-  "expires_at": "string",
-  "id": "number",
-  "userId": "null",
-}
-`;
-
 exports[`catalog contract (e2e) > /api/slides > keeps its field layout 1`] = `
 {
   "id": "number",

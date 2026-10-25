@@ -11,6 +11,7 @@ import { PasswordService } from '../auth/password.service.js';
 import { TokenService } from '../auth/token.service.js';
 import { Prisma } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { ImageStorage } from '../storage/image-storage.js';
 import { toLegacyUser } from './legacy-user.mapper.js';
 import type {
   LoginBody,
@@ -26,6 +27,7 @@ export class UsersService {
     private readonly prisma: PrismaService,
     private readonly passwords: PasswordService,
     private readonly tokens: TokenService,
+    private readonly images: ImageStorage,
   ) {}
 
   async signUp({ name, email, password }: SignUpBody) {
@@ -78,9 +80,10 @@ export class UsersService {
   }
 
   /**
-   * Account deletion (Apple 5.1.1(v), Google Play): personal data is blanked
-   * and every session ends. The row stays because invoiced orders must be
-   * kept for tax law; see the MVP report, KVKK section.
+   * Account deletion (Apple 5.1.1(v), Google Play, KVKK): plants, care log,
+   * scans and their photos, chats and the entitlement are deleted, personal
+   * fields blanked and every session ends. The anonymized row stays so
+   * billing events from the stores still have something to point at.
    */
   async deleteAccount(caller: AuthUser, id: number) {
     assertSelf(caller, id);
@@ -100,7 +103,16 @@ export class UsersService {
       }),
       this.prisma.refreshToken.deleteMany({ where: { userId: id } }),
       this.prisma.otpCode.deleteMany({ where: { userId: id } }),
+      this.prisma.chatMessage.deleteMany({ where: { userId: id } }),
+      this.prisma.scan.deleteMany({ where: { userId: id } }),
+      this.prisma.userPlant.deleteMany({ where: { userId: id } }),
+      this.prisma.entitlement.deleteMany({ where: { userId: id } }),
     ]);
+    const { publicId } = await this.prisma.user.findUniqueOrThrow({
+      where: { id },
+      select: { publicId: true },
+    });
+    await this.images.removeAll(publicId);
     return { message: 'Hesap silindi' };
   }
 }

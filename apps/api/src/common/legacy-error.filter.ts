@@ -12,7 +12,8 @@ const UNEXPECTED = 'Beklenmeyen bir hata oluştu';
 
 /**
  * Every error leaves the API as `{message}`: the only error shape the app
- * reads (`err.response.data.message`). Unexpected errors are logged and
+ * reads (`err.response.data.message`). The new app's routes may add a
+ * machine-readable `code` (e.g. `quota_exceeded`, `consent_required`). Unexpected errors are logged and
  * answered with a generic message so internals never reach the client.
  */
 @Catch()
@@ -30,9 +31,10 @@ export class LegacyErrorFilter implements ExceptionFilter {
       this.logger.error(exception);
     }
     const message = isHttp ? messageOf(exception) : UNEXPECTED;
+    const code = isHttp ? codeOf(exception) : undefined;
     this.adapterHost.httpAdapter.reply(
       host.switchToHttp().getResponse(),
-      { message },
+      code ? { message, code } : { message },
       status,
     );
   }
@@ -44,4 +46,12 @@ function messageOf(exception: HttpException): string {
     typeof body === 'string' ? body : (body as { message?: unknown }).message;
   if (Array.isArray(message)) return message.join(', ');
   return typeof message === 'string' ? message : exception.message;
+}
+
+/** `new HttpException({ message, code }, status)` → `code`. */
+function codeOf(exception: HttpException): string | undefined {
+  const body = exception.getResponse();
+  const code =
+    typeof body === 'object' ? (body as { code?: unknown }).code : undefined;
+  return typeof code === 'string' ? code : undefined;
 }

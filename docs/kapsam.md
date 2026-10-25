@@ -1,50 +1,49 @@
-# MVP kapsamı (donduruldu)
+# MVP kapsamı v2: yapay zekâlı bitki bakımı
 
-- Dondurma tarihi: 25 Ekim 2026 (takvimin 4. hafta sonu karar kapısı)
-- Kaynak: raporun "MVP'de olacaklar, sonraya kalanlar" tablosu ve 1–4. haftada alınan kararlar
+- Tarih: 25 Ekim 2026 (taslak; planın 4. hafta sonunda dondurulacak)
+- Kaynak: [reports/Yapay zekâlı bitki uygulaması MVP planı.md](../reports/Yapay%20zekâl%C4%B1%20bitki%20uygulamas%C4%B1%20MVP%20plan%C4%B1.md) ve [ADR 0009](adr/0009-yapay-zekali-bakim-uygulamasi.md)
+- Önceki kapsam (bitki mağazası) `v0-ticaret` etiketinde
 
-Bundan sonra gelen her yeni istek aşağıdaki **Faz 2 listesine** yazılır ve pilottan (25 Ocak 2027 haftası) önce yapılmaz. İstisna yalnızca hukuki zorunluluklar ve güvenlik açıklarıdır. Bir maddeyi MVP'ye almak için eşit büyüklükte bir maddenin çıkarılması gerekir.
+Uygulama bakım ve bilgi üzerine kurulu. Ürün ya da bitki satışı yok. Gelir yalnızca aylık ve yıllık mağaza aboneliğinden geliyor.
 
-## MVP (pilot)
+## Ücretsiz ve premium
 
-| Alan | Kapsam | Durum |
-|---|---|---|
-| Katalog | 30–60 SKU, her boy ayrı kayıt, bakım alanları, gerçek fotoğraf | Veri modeli ve uçlar hazır; geliştirme kataloğu 41 bitki; gerçek fotoğraflar 10. hafta |
-| Hesap | E-posta ve telefon doğrulama, JWT oturumları, uygulama içi ve web üzerinden hesap silme | API ve uygulama hazır; web silme formu 10. hafta |
-| Şifre | Doğrulama koduyla sıfırlama | Hazır |
-| Yorum | Yalnızca teslim almış müşteri, puan ortalaması | Hazır |
-| Promosyon | Kod; süre, sahiplik ve kullanım limiti kontrolü | Hazır; siparişte sunucu tarafı uygulama 5. hafta |
-| Ödeme | iyzico Checkout Form, kart ve taksit | 5–6. hafta |
-| Sipariş | Sunucu tarafı fiyatlama, koşullu stok düşümü | 5. hafta |
-| Teslimat | İstanbul, ücretsiz kargo (fiyata dahil), etiket ve takip SMS'i elle | 9–10. hafta |
-| Fatura | Paraşüt panelinden elle e-Arşiv, link siparişe kaydediliyor | 10. hafta |
-| Hukuk | Ön bilgilendirme, mesafeli satış onayı ve kaydı, KVKK metinleri | 7. hafta |
-| Bildirim | İşlem SMS'i ve e-postası | Altyapı hazır (Netgsm, SMTP); sipariş mesajları 7. hafta |
-| Bakım | Ürün sayfasında Türkçe bakım kartı | Veri API'de; ekranda gösterim 10. hafta |
-| Garanti | Canlı teslim garantisi, WhatsApp/e-posta ile fotoğraflı talep | Operasyon (13. hafta) |
-| Hediye | Hediye notu | 6. hafta |
-| Admin | Bitki, lookup, banner, slayt, promosyon, yorum gizleme, sipariş durumu, kullanıcı | 8–9. hafta |
-| Türkçe | ₺, Türkçe harfler, büyük harf | Hazır; arayüz metinleri İngilizce (Faz 2) |
+| Alan | Ücretsiz | Premium | Durum |
+|---|---|---|---|
+| Fotoğrafla tanıma | Haftada 3 tanıma, ilk üç aday ve güven skoru | Adil kullanım (günde 50 tarama) | API hazır (sahte sürücüyle); sağlayıcı denemesi 1. hafta |
+| Türkçe bakım bilgisi | Bütün bakım kartları: ışık, sulama, zorluk, evcil hayvan, balkon notu | Aynı | 24 tür taslak (uzman kontrolü bekliyor); hedef ~500 tür |
+| Bitkilerim ve hatırlatıcılar | 5 bitkiye kadar, günlük toplu hatırlatma | Sınırsız bitki, bakım günlüğü | API hazır; mobil bildirimler 4. hafta |
+| Hastalık ve zararlı teşhisi | 1 deneme teşhisi | Teşhis ve 5–7 günlük iyileşme takibi | API hazır; ilaç adı ve dozu yok |
+| Yapay zekâ bakım asistanı | Ayda 10 mesaj | Ayda 300 mesaj (adil kullanım) | API hazır (sahte sürücüyle) |
+| Hava uyarıları | Şehre göre don ve sıcak uyarısı | Aynı | 10. hafta |
+| Hesap | E-posta ve OTP, uygulama içi ve web üzerinden silme | Aynı | Hazır; silme bitkileri, taramaları ve fotoğrafları da siliyor |
 
-## Faz 2 ve sonrası
+**Fiyat:** aylık ₺149,99 (denemesiz) ve 7 gün denemeli yıllık ₺599,99. Haftalık ve ömür boyu plan yok. Fiyatlar üç ayda bir enflasyona göre gözden geçirilecek.
 
-- Expo SDK 56 yükseltmesi ([ADR 0005](adr/0005-expo-sdk-yukseltmesi.md)): MVP içinde **zorunlu**, en geç 11. hafta. Faz 2 değil, ama takvimde ayrıca yer açılmalı.
-- Arayüz metinlerinin Türkçeleştirilmesi (şablon İngilizce)
-- Boy ve saksı varyantı arayüzü, geniş katalog
-- Apple ve Google ile giriş
-- Havale/EFT, kayıtlı kart
-- Ülke geneli kargo, Geliver API, aynı gün kurye API'si
-- Paraşüt API otomasyonu
-- Expo push, İYS kaydından sonra pazarlama mesajları
-- "Bitkilerim" ve sulama hatırlatıcıları
-- Uygulama içi fotoğraflı garanti talebi
-- Hediye paketi, ayrı alıcı adresi, özel gün hatırlatıcıları, kurumsal hediye
-- Puan, referans, kullanıcı içeriği kredisi, hediye kartı
-- Bitki tanıma ve hastalık teşhisi (üçüncü taraf API), abonelik, pazaryeri kanalları, B2B
-- Her uç için genel rate limit (şimdilik yalnızca kimlik doğrulama ve OTP uçları sınırlı)
+**Kapsam dışı:** bitki ya da ürün satışı, satış bağlantısı, reklam, çiftçi ve tarla segmenti, ilaç adı ve dozu.
 
-## Dondurmadan sonra gelen istekler
+## Kırmızı çizgiler
+
+- Teşhis ve asistan bitki koruma ürünü (zirai ilaç) adı, dozu ya da uygulama talimatı vermez. Gerekirse ziraat mühendisine yönlendirir.
+- Fotoğraf ya da soru, açık ve sürümlü onay olmadan hiçbir yapay zekâ sağlayıcısına gönderilmez.
+- Yapay zekâ anahtarları yalnızca sunucuda durur; uygulama paketine girmez.
+- Paywall'da faturalanan tutar en belirgin fiyattır. Deneme koşulları açık yazılır, deneme bitmeden hatırlatma yapılır, iptal kolaydır.
+
+## Faz 2
+
+- Apple ve Google ile giriş (birlikte)
+- Sesli soru
+- Fotoğraflı büyüme zaman çizelgesi
+- Saatlik ve mikro iklim uyarıları
+- İnsan uzman danışmanlığı
+- Işık ölçer, AR, çevrimdışı model
+- Tek seferlik teşhis paketi
+- Web'de arama motoruna açık bakım sayfaları
+
+## Gelen istekler
 
 | Tarih | İstek | Karar |
 |---|---|---|
-| — | — | — |
+| 25 Eki 2026 | Mağaza değil, yapay zekâlı bitki uygulaması; ürün satışı yok, abonelik var | Kabul; kapsam v2 ([ADR 0009](adr/0009-yapay-zekali-bakim-uygulamasi.md)) |
+| 25 Eki 2026 | Odak bakım ve bilgi | Kabul; bakım kartları ücretsiz, tanıma bilgiye giriş kapısı |
+| 25 Eki 2026 | Tasarım için yedekteki Expo 54 şablonları (Luna, Picaso, Caloria) | Kabul; Picaso ana kabuk, EverBloom'un bitki teması. Şablon lisansı mağazadan önce teyit edilecek |

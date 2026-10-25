@@ -113,22 +113,16 @@ describe('IDOR: a token only opens its own account', () => {
     bob = await signUp('Bob');
   });
 
-  it('reads its own profile and orders', async () => {
+  it('reads its own profile', async () => {
     const user = await http()
       .get(`/api/user/${alice.user.id}`)
       .set(bearer(alice.token))
       .expect(200);
     responseSchemas.GET_USER.parse(user.body);
-    const orders = await http()
-      .get(`/api/order/${alice.user.id}`)
-      .set(bearer(alice.token))
-      .expect(200);
-    expect(orders.body).toEqual({ orders: [] });
   });
 
   it.each([
     ['GET', (id: number) => `/api/user/${id}`],
-    ['GET', (id: number) => `/api/order/${id}`],
     ['PUT', (id: number) => `/api/user/update/${id}`],
     ['DELETE', (id: number) => `/api/user/delete/${id}`],
   ] as const)('%s %s of another user → 403', async (method, path) => {
@@ -182,7 +176,7 @@ describe('IDOR: a token only opens its own account', () => {
   });
 });
 
-describe('profile and orders', () => {
+describe('profile', () => {
   it('updates its own profile and accepts Turkish letters', async () => {
     const { user, token } = await signUp();
     const res = await http()
@@ -194,31 +188,6 @@ describe('profile and orders', () => {
     expect(res.body.user).toMatchObject({
       name: 'Gülşen Çağlar',
       location: 'Üsküdar, İstanbul',
-    });
-  });
-
-  it("lists the demo user's seeded orders with plant ids as line ids", async () => {
-    const login = await http()
-      .post('/api/user/login')
-      .send({ email: 'demo@everbloom.test', password: 'demo1234' })
-      .expect(200);
-    const res = await http()
-      .get(`/api/order/${login.body.user.id}`)
-      .set(bearer(login.body.token))
-      .expect(200);
-    responseSchemas.GET_ORDERS.parse(res.body);
-    expect(
-      res.body.orders.map((o: { orderStatus: string }) => o.orderStatus),
-    ).toEqual(['shipping', 'delivered']);
-    const plants = await http().get('/api/plants').expect(200);
-    const monstera = plants.body.find(
-      (p: { name: string }) => p.name === 'Monstera Deliciosa 40-50 cm',
-    );
-    expect(res.body.orders[1].products[0]).toMatchObject({
-      id: monstera.id,
-      name: 'Monstera Deliciosa 40-50 cm',
-      price: 749,
-      quantity: 1,
     });
   });
 });

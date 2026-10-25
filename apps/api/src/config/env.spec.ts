@@ -38,7 +38,29 @@ describe('validateEnv', () => {
         NETGSM_MSGHEADER: 'EVERBLOOM',
         EMAIL_DRIVER: 'smtp',
         SMTP_URL: 'smtps://u:p@smtp.example.com:465',
+        VISION_DRIVER: 'kindwise',
+        KINDWISE_API_KEY: 'kw-key',
+        ASSISTANT_DRIVER: 'anthropic',
+        ANTHROPIC_API_KEY: 'sk-ant-test',
+        REVENUECAT_WEBHOOK_SECRET: 'x'.repeat(24),
       }),
     ).not.toThrow();
+  });
+
+  it('refuses fake AI drivers in production', () => {
+    expect(() =>
+      validateEnv({
+        ...base,
+        NODE_ENV: 'production',
+        SMS_DRIVER: 'netgsm',
+        NETGSM_USERCODE: '8501112233',
+        NETGSM_PASSWORD: 'sifre',
+        NETGSM_MSGHEADER: 'EVERBLOOM',
+        EMAIL_DRIVER: 'smtp',
+        SMTP_URL: 'smtps://u:p@smtp.example.com:465',
+      }),
+    ).toThrow(
+      /VISION_DRIVER[\s\S]*ASSISTANT_DRIVER[\s\S]*REVENUECAT_WEBHOOK_SECRET/,
+    );
   });
 });

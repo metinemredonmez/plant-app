@@ -17,7 +17,6 @@ const endpoints = [
   { name: 'GET_PLANT_TYPES', path: '/api/plant/types' },
   { name: 'GET_CAROUSEL', path: '/api/slides' },
   { name: 'GET_BANNERS', path: '/api/banners' },
-  { name: 'GET_PROMOCODES', path: '/api/promocodes' },
 ] as const;
 
 const typeName = (value: unknown) =>
@@ -74,7 +73,7 @@ describe('catalog contract (e2e)', () => {
     expect(monstera).toMatchObject({
       price: 749,
       oldPrice: 899,
-      rating: 4.7, // (5 + 4 + 5) / 3 from the seeded reviews
+      rating: 0, // reviews left with the plant store
       image: 'http://assets.test/images/monstera.jpg',
       categories: ['Salon Bitkileri'],
       colors: ['Beyaz', 'Terrakota'],
@@ -133,13 +132,5 @@ describe('catalog contract (e2e)', () => {
     for (const { promotion } of [...slides.body, ...banners.body]) {
       expect(promotions.has(promotion), promotion).toBe(true);
     }
-  });
-
-  it('lists only public, unexpired promocodes', async () => {
-    const res = await get('/api/promocodes').expect(200);
-    expect(res.body.map((promo: { code: string }) => promo.code)).toEqual([
-      'HOSGELDIN10',
-      'BITKI20',
-    ]);
   });
 });

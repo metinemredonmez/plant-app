@@ -1,4 +1,3 @@
-import { displayDate } from '../common/display-date.js';
 import type {
   Banner,
   Category,
@@ -8,7 +7,6 @@ import type {
   PlantType,
   PotType,
   Prisma,
-  Promocode,
   Slide,
 } from '../generated/prisma/client.js';
 
@@ -158,12 +156,4 @@ export const toLegacyBanner = (banner: Banner, assetUrl: AssetUrl) => ({
   promotion: banner.promotion ?? '',
   description1: banner.description1 ?? '',
   description2: banner.description2 ?? '',
-});
-
-export const toLegacyPromocode = (promo: Promocode) => ({
-  id: promo.id,
-  code: promo.code,
-  userId: promo.userId,
-  discount: promo.discountPercent,
-  expires_at: displayDate(promo.expiresAt),
 });

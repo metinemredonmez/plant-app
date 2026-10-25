@@ -3,7 +3,6 @@ import {
   type PlantWithRelations,
   toLegacyCategory,
   toLegacyPlant,
-  toLegacyPromocode,
 } from './legacy.mapper.js';
 
 const assetUrl = assetUrlBuilder('https://cdn.test/images');
@@ -107,29 +106,6 @@ describe('toLegacyCategory', () => {
     expect(toLegacyCategory({ ...category, image: null }, assetUrl)).toEqual({
       id: 1,
       name: 'Kolay Bakım',
-    });
-  });
-});
-
-describe('toLegacyPromocode', () => {
-  it('formats expires_at as GG.AA.YYYY in Istanbul time', () => {
-    const promo = toLegacyPromocode({
-      id: 1,
-      code: 'HOSGELDIN10',
-      discountPercent: 10,
-      // 22:30 UTC is already the next day in Istanbul (UTC+3).
-      expiresAt: new Date('2027-06-29T22:30:00Z'),
-      userId: null,
-      usageLimit: null,
-      usedCount: 0,
-      active: true,
-    });
-    expect(promo).toEqual({
-      id: 1,
-      code: 'HOSGELDIN10',
-      userId: null,
-      discount: 10,
-      expires_at: '30.06.2027',
     });
   });
 });

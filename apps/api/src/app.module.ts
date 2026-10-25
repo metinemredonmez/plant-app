@@ -5,20 +5,23 @@ import { JwtModule } from '@nestjs/jwt';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { LoggerModule } from 'nestjs-pino';
 
+import { AssistantModule } from './assistant/assistant.module.js';
 import { AUTH_RATE_LIMITED } from './auth/auth.decorators.js';
 import { AuthModule } from './auth/auth.module.js';
 import { JwtAuthGuard } from './auth/jwt-auth.guard.js';
 import { RolesGuard } from './auth/roles.guard.js';
+import { BillingModule } from './billing/billing.module.js';
+import { CareModule } from './care/care.module.js';
 import { CatalogModule } from './catalog/catalog.module.js';
 import { LegacyErrorFilter } from './common/legacy-error.filter.js';
 import { type Env, validateEnv } from './config/env.js';
+import { ConsentsModule } from './consents/consents.module.js';
 import { HealthController } from './health/health.controller.js';
 import { MessagingModule } from './messaging/messaging.module.js';
-import { OrdersModule } from './orders/orders.module.js';
 import { OtpModule } from './otp/otp.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
-import { PromocodesModule } from './promocodes/promocodes.module.js';
-import { ReviewsModule } from './reviews/reviews.module.js';
+import { ScansModule } from './scans/scans.module.js';
+import { StorageModule } from './storage/storage.module.js';
 import { UsersModule } from './users/users.module.js';
 
 const isAuthRateLimited = (context: ExecutionContext) =>
@@ -75,10 +78,14 @@ const isAuthRateLimited = (context: ExecutionContext) =>
     AuthModule,
     CatalogModule,
     UsersModule,
-    OrdersModule,
     OtpModule,
-    ReviewsModule,
-    PromocodesModule,
+    // AI plant care app
+    StorageModule,
+    CareModule,
+    ConsentsModule,
+    BillingModule,
+    ScansModule,
+    AssistantModule,
   ],
   controllers: [HealthController],
   providers: [

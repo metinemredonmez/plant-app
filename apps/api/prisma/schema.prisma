@@ -18,22 +18,6 @@ enum Role {
   ADMIN
 }
 
-// Values are the exact strings the app reads.
-enum OrderStatus {
-  pending
-  processing
-  shipping
-  delivered
-  canceled
-}
-
-enum PaymentStatus {
-  PENDING
-  PAID
-  FAILED
-  REFUNDED
-}
-
 enum OtpPurpose {
   EMAIL_VERIFY
   PHONE_VERIFY
@@ -64,13 +48,19 @@ model User {
   phoneVerified Boolean        @default(false) @map("phone_verified")
   role          Role           @default(CUSTOMER)
   createdAt     DateTime       @default(now()) @map("created_at")
-  // Account deletion blanks personal fields; invoiced orders are kept.
+  // Account deletion blanks personal fields and deletes the user's plants,
+  // scans, photos and chats.
   anonymizedAt  DateTime?      @map("anonymized_at")
-  orders        Order[]
-  reviews       Review[]
   refreshTokens RefreshToken[]
   otpCodes      OtpCode[]
   consents      Consent[]
+  // AI plant app (from week 5 of the new plan)
+  // Stable id for third parties (RevenueCat app_user_id); never the row id.
+  publicId      String         @unique @default(dbgenerated("gen_random_uuid()")) @map("public_id") @db.Uuid
+  userPlants    UserPlant[]
+  scans         Scan[]
+  chatMessages  ChatMessage[]
+  entitlement   Entitlement?
 
   @@map("users")
 }
@@ -149,8 +139,6 @@ model Plant {
   colors        Color[]
   potTypes      PotType[]
   plantTypes    PlantType[]
-  reviews       Review[]
-  orderItems    OrderItem[]
   createdAt     DateTime     @default(now()) @map("created_at")
   updatedAt     DateTime     @updatedAt @map("updated_at")
 
@@ -233,116 +221,6 @@ model Banner {
   @@map("banners")
 }
 
-model Review {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @map("user_id")
-  user      User     @relation(fields: [userId], references: [id])
-  plantId   Int      @map("plant_id")
-  plant     Plant    @relation(fields: [plantId], references: [id])
-  rating    Int // 1-5
-  comment   String
-  hidden    Boolean  @default(false)
-  createdAt DateTime @default(now()) @map("created_at")
-
-  // One review per plant, buyers only.
-  @@unique([userId, plantId])
-  @@index([plantId, hidden])
-  @@map("reviews")
-}
-
-model Promocode {
-  id              Int      @id @default(autoincrement())
-  code            String   @unique
-  discountPercent Int      @map("discount_percent")
-  expiresAt       DateTime @map("expires_at") // expires_at on the wire
-  userId          Int?     @map("user_id") // null = public
-  usageLimit      Int?     @map("usage_limit")
-  usedCount       Int      @default(0) @map("used_count")
-  active          Boolean  @default(true)
-  orders          Order[]
-
-  @@map("promocodes")
-}
-
-model Order {
-  id              Int                  @id @default(autoincrement())
-  userId          Int                  @map("user_id")
-  user            User                 @relation(fields: [userId], references: [id])
-  status          OrderStatus          @default(pending)
-  paymentStatus   PaymentStatus        @default(PENDING) @map("payment_status")
-  recipientName   String               @map("recipient_name")
-  address         String
-  phoneNumber     String               @map("phone_number")
-  email           String
-  giftNote        String?              @map("gift_note")
-  // All money is computed on the server.
-  subtotalKurus   Int                  @map("subtotal_kurus")
-  discountPercent Int                  @default(0) @map("discount_percent")
-  deliveryKurus   Int                  @default(0) @map("delivery_kurus")
-  totalKurus      Int                  @map("total_kurus")
-  promocodeId     Int?                 @map("promocode_id")
-  promocode       Promocode?           @relation(fields: [promocodeId], references: [id])
-  holdUntil       DateTime?            @map("hold_until") // frost/heat shipping hold
-  carrier         String?
-  trackingNumber  String?              @map("tracking_number")
-  invoiceNo       String?              @map("invoice_no") // e-Arşiv number / ETTN
-  invoiceUrl      String?              @map("invoice_url")
-  createdAt       DateTime             @default(now()) @map("created_at")
-  updatedAt       DateTime             @updatedAt @map("updated_at")
-  items           OrderItem[]
-  payments        Payment[]
-  acceptances     ContractAcceptance[]
-
-  @@index([userId, createdAt])
-  @@map("orders")
-}
-
-model OrderItem {
-  id             Int     @id @default(autoincrement())
-  orderId        Int     @map("order_id")
-  order          Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  plantId        Int     @map("plant_id") // serialized as the line "id"
-  plant          Plant   @relation(fields: [plantId], references: [id])
-  nameSnapshot   String  @map("name_snapshot")
-  unitPriceKurus Int     @map("unit_price_kurus")
-  quantity       Int
-  color          String?
-
-  @@index([orderId])
-  @@map("order_items")
-}
-
-model Payment {
-  id          Int           @id @default(autoincrement())
-  orderId     Int           @map("order_id")
-  order       Order         @relation(fields: [orderId], references: [id])
-  provider    String // "iyzico" | "paytr"
-  providerRef String        @map("provider_ref") // checkout token / paymentId / merchant_oid
-  status      PaymentStatus
-  amountKurus Int           @map("amount_kurus")
-  installment Int?
-  rawPayload  Json?         @map("raw_payload")
-  createdAt   DateTime      @default(now()) @map("created_at")
-
-  // Webhook idempotency.
-  @@unique([provider, providerRef])
-  @@map("payments")
-}
-
-model ContractAcceptance {
-  id         Int      @id @default(autoincrement())
-  orderId    Int      @map("order_id")
-  order      Order    @relation(fields: [orderId], references: [id])
-  docType    String   @map("doc_type") // ON_BILGILENDIRME | MESAFELI_SATIS
-  docVersion String   @map("doc_version")
-  docHash    String   @map("doc_hash") // SHA-256 of the text shown
-  ip         String?
-  deviceId   String?  @map("device_id")
-  acceptedAt DateTime @default(now()) @map("accepted_at")
-
-  @@map("contract_acceptances")
-}
-
 model Consent {
   id          Int       @id @default(autoincrement())
   userId      Int       @map("user_id")
@@ -354,4 +232,184 @@ model Consent {
   createdAt   DateTime  @default(now()) @map("created_at")
 
   @@map("consents")
+}
+
+// ---------------------------------------------------------------------------
+// AI plant care app. Care and information first: species care cards, the
+// user's plants, care log, scans (identification, diagnosis), the care
+// assistant and the subscription entitlement. No product sales.
+// ---------------------------------------------------------------------------
+
+enum PlantSpot {
+  INDOOR
+  BALCONY
+  GARDEN
+}
+
+enum CareKind {
+  WATER
+  FERTILIZE
+  REPOT
+  PRUNE
+  MIST
+  NOTE
+}
+
+enum ScanKind {
+  IDENTIFY
+  DIAGNOSE
+}
+
+enum ScanStatus {
+  DONE
+  FAILED
+}
+
+enum ChatRole {
+  USER
+  ASSISTANT
+}
+
+enum EntitlementStatus {
+  ACTIVE
+  GRACE // billing issue, access kept until the store gives up
+  EXPIRED
+}
+
+// Care card per species, in Turkish. Draft data must be checked by a
+// horticulturist before launch (see seed `reviewed`).
+model PlantSpecies {
+  id              Int         @id @default(autoincrement())
+  scientificName  String      @unique @map("scientific_name")
+  turkishName     String      @map("turkish_name")
+  otherNames      String[]    @map("other_names")
+  // Scientific synonyms and genus-level matches for identification results
+  // ("Sansevieria trifasciata" for Dracaena trifasciata, "Calathea").
+  synonyms        String[]    @default([])
+  family          String?
+  light           LightLevel
+  difficulty      Difficulty
+  // Days between waterings; the app shortens it in summer, lengthens it in
+  // winter and for balcony plants by weather (later weeks).
+  waterSummerDays Int         @map("water_summer_days")
+  waterWinterDays Int         @map("water_winter_days")
+  humidity        String // "düşük" | "orta" | "yüksek"
+  tempMinC        Int         @map("temp_min_c")
+  tempMaxC        Int         @map("temp_max_c")
+  toxicToPets     Boolean?    @map("toxic_to_pets") // null = unknown
+  toxicityNote    String?     @map("toxicity_note")
+  summary         String
+  wateringTip     String      @map("watering_tip")
+  lightTip        String      @map("light_tip")
+  fertilizingTip  String      @map("fertilizing_tip")
+  commonProblems  String[]    @map("common_problems")
+  spots           PlantSpot[] // where it does well
+  source          String // where the facts come from
+  reviewed        Boolean     @default(false) // checked by an expert
+  userPlants      UserPlant[]
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  @@map("plant_species")
+}
+
+model UserPlant {
+  id                   Int           @id @default(autoincrement())
+  userId               Int           @map("user_id")
+  user                 User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  speciesId            Int?          @map("species_id")
+  species              PlantSpecies? @relation(fields: [speciesId], references: [id])
+  // Name from identification when the species has no care card yet.
+  scientificName       String?       @map("scientific_name")
+  nickname             String
+  spot                 PlantSpot     @default(INDOOR)
+  photoKey             String?       @map("photo_key")
+  wateringIntervalDays Int           @map("watering_interval_days")
+  lastWateredAt        DateTime?     @map("last_watered_at")
+  archivedAt           DateTime?     @map("archived_at")
+  careEvents           CareEvent[]
+  scans                Scan[]
+  chatMessages         ChatMessage[]
+  createdAt            DateTime      @default(now()) @map("created_at")
+  updatedAt            DateTime      @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@map("user_plants")
+}
+
+model CareEvent {
+  id          Int       @id @default(autoincrement())
+  userPlantId Int       @map("user_plant_id")
+  userPlant   UserPlant @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+  kind        CareKind
+  note        String?
+  at          DateTime  @default(now())
+
+  @@index([userPlantId, at])
+  @@map("care_events")
+}
+
+model Scan {
+  id          Int        @id @default(autoincrement())
+  userId      Int        @map("user_id")
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userPlantId Int?       @map("user_plant_id") // diagnosis of one of my plants
+  userPlant   UserPlant? @relation(fields: [userPlantId], references: [id], onDelete: SetNull)
+  kind        ScanKind
+  status      ScanStatus
+  imageKey    String     @map("image_key")
+  provider    String // "fake" | "kindwise"
+  // Normalized result shown to the user (never chemical treatments).
+  result      Json?
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@index([userId, createdAt])
+  @@map("scans")
+}
+
+model ChatMessage {
+  id          Int        @id @default(autoincrement())
+  userId      Int        @map("user_id")
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userPlantId Int?       @map("user_plant_id")
+  userPlant   UserPlant? @relation(fields: [userPlantId], references: [id], onDelete: Cascade)
+  role        ChatRole
+  content     String
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@index([userId, userPlantId, createdAt])
+  @@map("chat_messages")
+}
+
+// Current access per user, written only from verified billing events.
+model Entitlement {
+  id          Int               @id @default(autoincrement())
+  userId      Int               @unique @map("user_id")
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status      EntitlementStatus
+  productId   String            @map("product_id")
+  store       String // APP_STORE | PLAY_STORE | PROMOTIONAL ...
+  sandbox     Boolean           @default(false)
+  expiresAt   DateTime?         @map("expires_at")
+  willRenew   Boolean           @default(true) @map("will_renew")
+  // Events older than the last applied one are ignored (out-of-order delivery).
+  lastEventAt DateTime          @map("last_event_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+
+  @@map("entitlements")
+}
+
+// Every billing webhook, once (idempotency), with what we did with it.
+model BillingEvent {
+  id         Int      @id @default(autoincrement())
+  provider   String // "revenuecat"
+  eventId    String   @map("event_id")
+  type       String
+  appUserId  String?  @map("app_user_id")
+  outcome    String // applied | ignored_old | unknown_user | skipped
+  payload    Json
+  receivedAt DateTime @default(now()) @map("received_at")
+
+  @@unique([provider, eventId])
+  @@map("billing_events")
 }

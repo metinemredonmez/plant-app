@@ -23,3 +23,6 @@ apps/mobile/ios/.xcode.env.local
 docs/template/
 platform-master/
 .backup/
+
+# Scan photos in development (personal data)
+apps/api/uploads/

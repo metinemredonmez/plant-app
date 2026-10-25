@@ -1,6 +1,38 @@
 # İlerleme
 
-Takvim: [reports/Bitki mağazası pazar ve MVP planı.md](../reports/Bitki%20mağazası%20pazar%20ve%20MVP%20planı.md), "Hafta hafta plan" bölümü. Bu dosya her haftanın sonunda güncellenir.
+**25 Ekim 2026'dan itibaren ürün yapay zekâlı bitki bakım uygulaması.** Bitki mağazası olarak geçen 1–4. haftalar aşağıda kayıtlı; o sürüm `v0-ticaret` etiketinde. Yeni takvim: [reports/Yapay zekâlı bitki uygulaması MVP planı.md](../reports/Yapay%20zekâl%C4%B1%20bitki%20uygulamas%C4%B1%20MVP%20plan%C4%B1.md), "Hafta hafta plan" bölümü. Kapsam: [kapsam.md](kapsam.md). Karar: [ADR 0009](adr/0009-yapay-zekali-bakim-uygulamasi.md).
+
+## Yeni plan
+
+| Hafta | Tarih | Durum |
+|---|---|---|
+| 1 | 26 Eki–1 Kas | Teknik işler başladı (aşağıda); dış işler sahipte |
+
+### 1. hafta (yeni plan)
+
+Tamamlanan:
+- Ticaret sürümü etiketlendi (`v0-ticaret`). API'den sipariş, ödeme, promosyon, yorum ve sözleşme onayı çıkarıldı; kaldırılan uçlar 404 dönüyor.
+- Öne çekilen işler (3–7. haftalar):
+  - Şema v2: tür kartları, Bitkilerim, bakım kayıtları, taramalar, asistan mesajları, abonelik hakkı ve faturalama olayları
+  - 24 türlük Türkçe bakım kartı taslağı
+  - Tanıma ve teşhis uçları (sahte ve Kindwise sürücüleri)
+  - Yapay zekâ işleme onayı
+  - Ücretsiz/premium kotaları
+  - Bitkiyi bilen bakım asistanı (sahte ve Claude sürücüleri)
+  - RevenueCat webhook'u
+  - Hesap silmenin yeni verileri kapsaması
+  - Demo hesap için 3 bitkilik bahçe
+- Testler: API birim 24, API e2e 75 (13'ü yeni bakım, tarama, asistan, abonelik ve silme testi), sözleşme ve mock 49.
+
+Bekleyen (1. hafta):
+- Sahibin dış işleri: limited şirket, D-U-N-S, kurumsal mağaza hesapları, KVKK standart sözleşme talepleri, avukat, ziraat mühendisi.
+- Pl@ntNet ve Kindwise'ın 50 fotoğraflık Türkiye denemesi (anahtar ve deneme kredisi gerekiyor).
+- Şablonların SDK 54'te yeni mimariyle derlenmesi; hava sağlayıcısı adayları.
+- Node 22'ye geçiş.
+
+## Bitki mağazası dönemi (1–4. haftalar)
+
+Takvim: [reports/Bitki mağazası pazar ve MVP planı.md](../reports/Bitki%20mağazası%20pazar%20ve%20MVP%20planı.md).
 
 ## Özet
 

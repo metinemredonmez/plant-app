@@ -75,38 +75,6 @@ export const banners = [
   },
 ];
 
-export interface SeedPromocode {
-  code: string;
-  discountPercent: number;
-  expiresAt: string;
-  /** Personal code of the demo user (seeded after the accounts). */
-  forDemoUser?: boolean;
-  usageLimit?: number;
-  usedCount?: number;
-}
-
-export const promocodes: SeedPromocode[] = [
-  { code: 'HOSGELDIN10', discountPercent: 10, expiresAt: '2027-06-30' },
-  { code: 'BITKI20', discountPercent: 20, expiresAt: '2027-03-31' },
-  // Expired on purpose: must never be listed or accepted.
-  { code: 'YAZ15', discountPercent: 15, expiresAt: '2026-09-30' },
-  // Personal: only the demo user sees and can use it.
-  {
-    code: 'AYSE15',
-    discountPercent: 15,
-    expiresAt: '2027-06-30',
-    forDemoUser: true,
-  },
-  // Used up on purpose.
-  {
-    code: 'ILK100',
-    discountPercent: 25,
-    expiresAt: '2027-06-30',
-    usageLimit: 100,
-    usedCount: 100,
-  },
-];
-
 export interface SeedPlant {
   slug: string;
   name: string;
@@ -1001,121 +969,27 @@ export const demoUser = {
 };
 
 /** Seeded only while the demo user has no orders. */
-export const demoOrders = [
+/** The demo account's own plants (see seedDemoGarden). */
+export const demoPlants = [
   {
-    status: 'delivered' as const,
-    createdAt: '2026-10-12T14:20:00+03:00',
-    lines: [
-      { slug: 'monstera-deliciosa-40-50', quantity: 1, color: 'Beyaz' },
-      { slug: 'pothos-golden-25-30', quantity: 1, color: 'Gri' },
-    ],
+    scientificName: 'Monstera deliciosa',
+    nickname: 'Salondaki Monstera',
+    spot: 'INDOOR' as const,
+    wateringIntervalDays: 7,
+    wateredDaysAgo: 8,
   },
   {
-    status: 'shipping' as const,
-    createdAt: '2026-10-21T10:05:00+03:00',
-    lines: [{ slug: 'sukulent-seti-5li', quantity: 1, color: 'Terrakota' }],
-  },
-];
-
-// Sample customers so plants have real reviews (and ratings computed from
-// them) in development. Each one gets a delivered order with the plants
-// they review, matching the "verified purchase" rule. They cannot log in.
-export const sampleReviewers = [
-  {
-    name: 'Zeynep Kaya',
-    email: 'zeynep.kaya@example.com',
-    reviews: [
-      {
-        slug: 'monstera-deliciosa-40-50',
-        rating: 5,
-        comment: 'Fotoğraftaki boyda geldi, paketleme çok özenliydi.',
-        date: '2026-10-14',
-      },
-      {
-        slug: 'pothos-golden-25-30',
-        rating: 5,
-        comment: 'Bakımı gerçekten kolay, iki haftada yeni yaprak çıkardı.',
-        date: '2026-10-09',
-      },
-      {
-        slug: 'orkide-phalaenopsis-2-dal-beyaz',
-        rating: 4,
-        comment: 'Çiçekleri sağlam geldi, bir tomurcuk yolda düşmüş.',
-        date: '2026-10-03',
-      },
-    ],
+    scientificName: 'Pelargonium',
+    nickname: 'Balkon sardunyası',
+    spot: 'BALCONY' as const,
+    wateringIntervalDays: 3,
+    wateredDaysAgo: 2,
   },
   {
-    name: 'Mert Arslan',
-    email: 'mert.arslan@example.com',
-    reviews: [
-      {
-        slug: 'monstera-deliciosa-40-50',
-        rating: 4,
-        comment: 'Sağlıklı geldi, sadece bir yaprağın ucu kırılmıştı.',
-        date: '2026-10-02',
-      },
-      {
-        slug: 'zamioculcas-40-50',
-        rating: 5,
-        comment: 'Ofiste az ışıkta bile çok iyi duruyor.',
-        date: '2026-09-28',
-      },
-      {
-        slug: 'pasa-kilici-50-60',
-        rating: 5,
-        comment: 'Unutsam da sorun çıkarmıyor, tam bana göre.',
-        date: '2026-09-25',
-      },
-    ],
-  },
-  {
-    name: 'Elif Demir',
-    email: 'elif.demir@example.com',
-    reviews: [
-      {
-        slug: 'kalathea-orbifolia-40-50',
-        rating: 4,
-        comment:
-          'Kedim var, evcil dostu olması önemliydi. Yaprakları çok canlı.',
-        date: '2026-10-11',
-      },
-      {
-        slug: 'sukulent-seti-5li',
-        rating: 4,
-        comment: 'Beşi de canlı geldi, saksılar biraz küçük.',
-        date: '2026-10-19',
-      },
-      {
-        slug: 'monstera-deliciosa-40-50',
-        rating: 5,
-        comment: 'İkinci kez alıyorum, yine çok memnun kaldım.',
-        date: '2026-10-20',
-      },
-    ],
-  },
-  {
-    name: 'Can Yıldız',
-    email: 'can.yildiz@example.com',
-    reviews: [
-      {
-        slug: 'pothos-golden-25-30',
-        rating: 4,
-        comment: 'Güzel bir başlangıç bitkisi, hızlı büyüyor.',
-        date: '2026-10-06',
-      },
-      {
-        slug: 'echeveria-8-cm',
-        rating: 5,
-        comment: 'Hediye notuyla gönderdim, çok beğenildi.',
-        date: '2026-10-15',
-      },
-      {
-        slug: 'ficus-lyrata-60-80',
-        rating: 3,
-        comment: 'Yeri değişince birkaç yaprak döktü, şimdi toparladı.',
-        date: '2026-09-30',
-      },
-    ],
+    scientificName: 'Ocimum basilicum',
+    nickname: 'Mutfak fesleğeni',
+    spot: 'INDOOR' as const,
+    wateringIntervalDays: 2,
+    wateredDaysAgo: 0,
   },
 ];

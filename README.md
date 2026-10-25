@@ -1,10 +1,15 @@
 # EverBloom
 
-Türkiye pazarı için bitki mağazası: Expo mobil uygulaması, NestJS + Prisma API ve admin paneli. Pazar araştırması ve 16 haftalık MVP takvimi [reports/](reports/) altında. Haftalık durum için [docs/ilerleme.md](docs/ilerleme.md), donmuş MVP kapsamı için [docs/kapsam.md](docs/kapsam.md).
+Türkiye için yapay zekâlı bitki bakım uygulaması: fotoğrafla tanıma, Türkçe bakım kartları, teşhis, bitkiyi bilen bakım asistanı ve hatırlatıcılar. Ürün satışı yok; gelir yalnızca abonelikten geliyor. Expo mobil uygulaması, NestJS + Prisma API ve admin paneli.
+
+- Araştırma ve 16 haftalık plan: [reports/Yapay zekâlı bitki uygulaması MVP planı.md](reports/Yapay%20zekâl%C4%B1%20bitki%20uygulamas%C4%B1%20MVP%20plan%C4%B1.md)
+- Kapsam: [docs/kapsam.md](docs/kapsam.md)
+- Haftalık durum: [docs/ilerleme.md](docs/ilerleme.md)
+- Önceki ürün (bitki mağazası) `v0-ticaret` etiketinde.
 
 | Klasör | İçerik |
 |---|---|
-| [apps/mobile](apps/mobile) | Expo 50 / React Native 0.73 uygulaması (şablon) |
+| [apps/mobile](apps/mobile) | Eski Expo 50 mağaza uygulaması (EverBloom şablonu); yeni uygulama Expo 54 şablonlarından kuruluyor |
 | [apps/api](apps/api) | NestJS 12 + Prisma 7.10 REST API |
 | [apps/admin](apps/admin) | Admin paneli (9. hafta) |
 | [packages/contract](packages/contract) | API sözleşmesi, fikstürler ve mock sunucu |
@@ -19,12 +24,12 @@ Gereksinimler: Node 20.19+ (prod ve CI için 22 LTS), pnpm 9, yarn 1, PostgreSQL
 pnpm install
 pnpm mock            # yalnızca mock API: http://localhost:4010
 pnpm api:dev         # NestJS API: http://localhost:4100 (önce apps/api/README.md)
-pnpm mock:api        # mock + API birlikte: sipariş oluşturma dışında her şey API'den
+pnpm mock:api        # eski uygulama için: kalan uçlar API'den, sipariş, yorum ve promosyon mock'tan
 pnpm mobile          # Expo/Metro (apps/mobile, yarn)
 pnpm test            # sözleşme + API testleri
 ```
 
-Mobil uygulamanın hangi adrese bağlanacağı `apps/mobile/.env.local` içindeki `EXPO_PUBLIC_API_URL` ile seçiliyor (örnek: `apps/mobile/.env.example`). Varsayılan mock sunucu (4010). Sipariş oluşturma ucu 5. haftada API'ye gelene kadar uygulama mock'a bağlı kalır; `pnpm mock:api` diğer 24 ucu API'ye yönlendirir. Test hesabı hem mock'ta hem API seed'inde `demo@everbloom.test` / `demo1234`. Mock'ta OTP her zaman `12345`; API'de geliştirmede kod gönderilmez, API logunda görünür (`SMS_DRIVER=log`, `EMAIL_DRIVER=log`).
+Eski mobil uygulama (`apps/mobile`, mağaza şablonu) `pnpm mock:api` ile çalışır: kimlik, kullanıcı ve katalog uçları API'den, sipariş, yorum ve promosyon uçları mock'tan gelir. Adres `apps/mobile/.env.local` içindeki `EXPO_PUBLIC_API_URL` ile seçilir (varsayılan mock, 4010). Yeni uygulamanın uçları `/api/v1` altında ([apps/api/README.md](apps/api/README.md)). Test hesabı `demo@everbloom.test` / `demo1234`; demo hesabın üç bitkisi var. API'de geliştirmede doğrulama kodları gönderilmez, API logunda görünür. Tanıma, teşhis ve asistan sahte sürücülerle anahtar olmadan çalışır.
 
 Mobil uygulama yarn 1 kullanıyor (`apps/mobile/package.json` içinde `packageManager`); kökteki pnpm workspace'inin dışında.
 
@@ -38,3 +43,4 @@ Mobil uygulama yarn 1 kullanıyor (`apps/mobile/package.json` içinde `packageMa
 - [0006 Şema v1, katalog uçları ve API iskeleti](docs/adr/0006-sema-v1-ve-katalog.md)
 - [0007 Oturumlar, yetkilendirme ve mobil token saklama](docs/adr/0007-oturum-ve-yetkilendirme.md)
 - [0008 Doğrulama kodları, şifre sıfırlama, yorumlar, promosyonlar, Türkçe uyarlama](docs/adr/0008-otp-yorum-promosyon.md)
+- [0009 Ürün yönü yapay zekâlı bitki bakımı; arka uçta ilk dilim](docs/adr/0009-yapay-zekali-bakim-uygulamasi.md)

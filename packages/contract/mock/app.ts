@@ -283,7 +283,12 @@ async function readBody(req: IncomingMessage): Promise<unknown> {
   }
 }
 
-/** Endpoints the NestJS API serves: catalog (week 2), sessions, users and order history (week 3), OTP, password reset, reviews and promocodes (week 4). Only ORDER_CREATE is still mocked. */
+/**
+ * Legacy endpoints the NestJS API still serves: catalog, sessions, users,
+ * OTP and password reset. Orders, reviews and promocodes left the API with
+ * the plant store (tag v0-ticaret); the mock keeps answering them so the old
+ * Expo app still runs until the new app replaces it.
+ */
 export const API_ENDPOINTS = [
   'GET_PLANTS',
   'GET_CATEGORIES',
@@ -292,13 +297,11 @@ export const API_ENDPOINTS = [
   'GET_PLANT_TYPES',
   'GET_CAROUSEL',
   'GET_BANNERS',
-  'GET_PROMOCODES',
   'LOGIN_USER',
   'CREATE_USER',
   'GET_USER',
   'UPDATE_USER',
   'DELETE_ACCOUNT',
-  'GET_ORDERS',
   'AUTH_REFRESH',
   'AUTH_LOGOUT',
   // week 4
@@ -307,9 +310,6 @@ export const API_ENDPOINTS = [
   'SEND_PHONE_OTP',
   'VERIFY_PHONE_OTP',
   'CHANGE_PASSWORD',
-  'GET_REVIEWS',
-  'CREATE_REVIEW',
-  'GET_PROMOCODE',
 ];
 
 export interface UpstreamOptions {
