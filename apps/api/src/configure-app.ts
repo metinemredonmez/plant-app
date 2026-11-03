@@ -11,7 +11,18 @@ export function configureApp(app: NestExpressApplication) {
   app.useLogger(app.get(Logger));
   // The Expo app calls `${BASE_URL}api/...`; health stays at the root for
   // load balancers and uptime checks.
-  app.setGlobalPrefix('api', { exclude: ['health'] });
+  // So do the public web pages (ADR 0016).
+  app.setGlobalPrefix('api', {
+    exclude: [
+      'health',
+      'yasal',
+      'yasal/:slug',
+      'hesap-silme',
+      'hesap-silme/onay',
+      'kvkk-basvuru',
+      'kvkk-basvuru/onay',
+    ],
+  });
   app.enableShutdownHooks();
 
   const config = app.get(ConfigService<Env, true>);

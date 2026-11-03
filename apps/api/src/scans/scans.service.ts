@@ -29,6 +29,7 @@ import {
 } from '../safety/plant-protection.js';
 import { ImageStorage } from '../storage/image-storage.js';
 import { ACCEPTED_PHOTO_TYPES, type CleanPhoto, cleanPhoto } from './photo.js';
+import { ProviderDeletionsService } from './provider-deletions.service.js';
 import {
   type DiagnoseResult,
   type IdentifyResult,
@@ -175,6 +176,7 @@ export class ScansService {
     private readonly usage: UsageService,
     private readonly consents: ConsentsService,
     private readonly aiUsage: AiUsageService,
+    private readonly deletions: ProviderDeletionsService,
   ) {}
 
   /** Consent first; nothing is decoded, stored or sent before it. */
@@ -352,6 +354,7 @@ export class ScansService {
     try {
       identified = await this.vision.identify(photo);
       await this.recordCall(caller, 'IDENTIFY');
+      await this.deletions.forget(identified.providerRef);
     } catch (error) {
       await this.save(caller, 'IDENTIFY', photo, imageKey, undefined);
       this.failed(error);
@@ -377,6 +380,8 @@ export class ScansService {
     diagnosis: DiagnoseResult,
     link: ScanLink | null,
   ): Diagnosis {
+    // The provider's token stays out of what is stored and returned.
+    const { providerRef: _ref, ...shown } = diagnosis;
     const issues = diagnosis.issues.map((issue) => ({
       ...issue,
       probability: Math.round(issue.probability * 100) / 100,
@@ -401,7 +406,7 @@ export class ScansService {
           ? STILL_UNSURE_HINT
           : null;
     return {
-      ...diagnosis,
+      ...shown,
       issues,
       hint,
       tips: !diagnosis.isPlant
@@ -520,6 +525,7 @@ export class ScansService {
     try {
       diagnosis = await this.vision.diagnose(photo);
       await this.recordCall(caller, 'DIAGNOSE');
+      await this.deletions.forget(diagnosis.providerRef);
     } catch (error) {
       await this.save(caller, 'DIAGNOSE', photo, imageKey, undefined, {
         userPlantId,

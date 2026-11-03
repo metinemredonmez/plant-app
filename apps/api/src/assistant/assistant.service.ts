@@ -197,6 +197,21 @@ export class AssistantService {
     return rows.reverse();
   }
 
+  /**
+   * "Asistan hafızasını sil": one plant's chat, or every chat. Plants and care
+   * records stay; the cost rows hold no text.
+   */
+  async forget(caller: AuthUser, userPlantId?: number) {
+    if (userPlantId !== undefined) await this.plants.owned(caller, userPlantId);
+    const { count } = await this.prisma.chatMessage.deleteMany({
+      where: {
+        userId: caller.id,
+        ...(userPlantId !== undefined ? { userPlantId } : {}),
+      },
+    });
+    return { deleted: count };
+  }
+
   async ask(caller: AuthUser, body: AskBody) {
     const context = await this.context(caller, body.userPlantId);
     await this.consents.assertAiConsent(caller);

@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { AuthModule } from '../auth/auth.module.js';
 import type { Env } from '../config/env.js';
+import { LegalModule } from '../legal/legal.module.js';
 import { OtpModule } from '../otp/otp.module.js';
 import { AppleRevocationsService } from './apple-revocations.service.js';
 import { AppleSiwa } from './apple-siwa.js';
@@ -16,7 +17,7 @@ import { IdentityService } from './identity.service.js';
 import { SecretBox } from './secret-box.js';
 
 @Module({
-  imports: [AuthModule, OtpModule],
+  imports: [AuthModule, OtpModule, LegalModule],
   controllers: [IdentityController, AppConfigController, OnboardingController],
   providers: [
     IdentityService,

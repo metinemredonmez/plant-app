@@ -37,7 +37,16 @@ export class AdminService {
   ) {}
 
   async overview() {
-    const [drafts, openReports, users, premium, todayUsd] = await Promise.all([
+    const [
+      drafts,
+      openReports,
+      users,
+      premium,
+      todayUsd,
+      openPrivacy,
+      nextPrivacy,
+      retention,
+    ] = await Promise.all([
       this.prisma.plantSpecies.count({ where: { status: 'DRAFT' } }),
       this.prisma.chatMessage.count({
         where: { reportedAt: { not: null }, reportResolvedAt: null },
@@ -47,8 +56,18 @@ export class AdminService {
       }),
       this.prisma.entitlement.count({ where: { status: { not: 'EXPIRED' } } }),
       this.aiUsage.today(),
+      this.prisma.privacyRequest.count({ where: { status: 'OPEN' } }),
+      this.prisma.privacyRequest.findFirst({
+        where: { status: 'OPEN' },
+        orderBy: { dueAt: 'asc' },
+        select: { dueAt: true },
+      }),
+      this.prisma.jobRun.findUnique({ where: { name: 'retention' } }),
     ]);
     return {
+      openPrivacy,
+      nextPrivacyDueAt: nextPrivacy?.dueAt ?? null,
+      retentionLastRunAt: retention?.lastRunAt ?? null,
       drafts,
       openReports,
       users,

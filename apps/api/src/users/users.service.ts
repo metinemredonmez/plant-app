@@ -11,6 +11,7 @@ import { PasswordService } from '../auth/password.service.js';
 import { TokenService } from '../auth/token.service.js';
 import { Prisma } from '../generated/prisma/client.js';
 import { AppleRevocationsService } from '../identity/apple-revocations.service.js';
+import { LegalService } from '../legal/legal.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ImageStorage } from '../storage/image-storage.js';
 import { toLegacyUser } from './legacy-user.mapper.js';
@@ -30,6 +31,7 @@ export class UsersService {
     private readonly tokens: TokenService,
     private readonly images: ImageStorage,
     private readonly appleRevocations: AppleRevocationsService,
+    private readonly legal: LegalService,
   ) {}
 
   async signUp({ name, email, password }: SignUpBody) {
@@ -51,6 +53,7 @@ export class UsersService {
         }
         throw error;
       });
+    await this.legal.recordSignUp(user.id);
     return { user: toLegacyUser(user), ...(await this.tokens.issue(user)) };
   }
 

@@ -91,6 +91,11 @@ export class AppConfigController {
         phone: get('AUTH_PHONE_ENABLED'),
       },
       paywallOnboarding: get('PAYWALL_ONBOARDING'),
+      // Public pages the app opens in the browser (ADR 0016).
+      links: {
+        privacyRequest: `${get('PUBLIC_WEB_URL')}/kvkk-basvuru`,
+        deleteAccount: `${get('PUBLIC_WEB_URL')}/hesap-silme`,
+      },
     };
   }
 }

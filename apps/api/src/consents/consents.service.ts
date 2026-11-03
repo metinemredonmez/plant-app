@@ -1,16 +1,19 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { z } from 'zod';
 
 import type { AuthUser } from '../auth/auth.decorators.js';
-import type { Env } from '../config/env.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { AI_DOC, LegalService, TRAINING_DOC } from '../legal/legal.service.js';
 
 /** Photos and questions go to third-party AI providers abroad. */
 export const AI_PROCESSING = 'AI_PROCESSING';
+/** Scan photos may improve the models; separate and off by default. */
+export const MODEL_TRAINING = 'MODEL_TRAINING';
+
+const DOCS = { [AI_PROCESSING]: AI_DOC, [MODEL_TRAINING]: TRAINING_DOC };
 
 export const consentSchema = z.object({
-  kind: z.literal(AI_PROCESSING),
+  kind: z.enum([AI_PROCESSING, MODEL_TRAINING]),
   granted: z.boolean(),
   textVersion: z.string().min(1).max(40),
 });
@@ -19,30 +22,38 @@ export type ConsentBody = z.output<typeof consentSchema>;
 /**
  * Explicit, versioned consent before any photo or question is sent to an AI
  * provider (Apple 5.1.2(i), KVKK cross-border transfer). Append-only: the
- * latest row wins, so withdrawals are kept as history too.
+ * latest row wins, so withdrawals are kept as history too. A consent counts
+ * only for the current version of its text (ADR 0016).
  */
 @Injectable()
 export class ConsentsService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly config: ConfigService<Env, true>,
+    private readonly legal: LegalService,
   ) {}
 
-  private get version() {
-    return this.config.get('AI_CONSENT_VERSION', { infer: true });
-  }
-
-  async status(caller: AuthUser) {
-    const latest = await this.prisma.consent.findFirst({
-      where: { userId: caller.id, kind: AI_PROCESSING },
-      orderBy: { id: 'desc' },
-    });
+  private async statusOf(caller: AuthUser, kind: keyof typeof DOCS) {
+    const [latest, doc] = await Promise.all([
+      this.prisma.consent.findFirst({
+        where: { userId: caller.id, kind },
+        orderBy: { id: 'desc' },
+      }),
+      this.legal.current(DOCS[kind]),
+    ]);
     return {
-      kind: AI_PROCESSING,
-      currentVersion: this.version,
-      granted: !!latest?.granted && latest.textVersion === this.version,
+      kind,
+      currentVersion: doc.version,
+      granted: !!latest?.granted && latest.textVersion === doc.version,
       grantedVersion: latest?.granted ? latest.textVersion : null,
     };
+  }
+
+  status(caller: AuthUser) {
+    return this.statusOf(caller, AI_PROCESSING);
+  }
+
+  modelTraining(caller: AuthUser) {
+    return this.statusOf(caller, MODEL_TRAINING);
   }
 
   async record(caller: AuthUser, body: ConsentBody) {
@@ -54,7 +65,7 @@ export class ConsentsService {
         textVersion: body.textVersion,
       },
     });
-    return this.status(caller);
+    return this.statusOf(caller, body.kind);
   }
 
   async assertAiConsent(caller: AuthUser) {

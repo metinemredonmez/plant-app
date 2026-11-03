@@ -22,6 +22,8 @@ import { IdentityModule } from './identity/identity.module.js';
 import { CostsModule } from './costs/costs.module.js';
 import { MessagingModule } from './messaging/messaging.module.js';
 import { OtpModule } from './otp/otp.module.js';
+import { LegalModule } from './legal/legal.module.js';
+import { PrivacyModule } from './privacy/privacy.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { ScansModule } from './scans/scans.module.js';
 import { StorageModule } from './storage/storage.module.js';
@@ -87,11 +89,13 @@ const isAuthRateLimited = (context: ExecutionContext) =>
     // AI plant care app
     StorageModule,
     CareModule,
+    LegalModule,
     ConsentsModule,
     BillingModule,
     ScansModule,
     AssistantModule,
     AdminModule,
+    PrivacyModule,
   ],
   controllers: [HealthController],
   providers: [

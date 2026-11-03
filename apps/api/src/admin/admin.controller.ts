@@ -13,7 +13,17 @@ import { z } from 'zod';
 
 import { type AuthUser, CurrentUser, Roles } from '../auth/auth.decorators.js';
 import { ZodBody } from '../common/zod-body.pipe.js';
+import {
+  LegalService,
+  type PublishBody,
+  publishSchema,
+} from '../legal/legal.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import {
+  PrivacyService,
+  type RespondBody,
+  respondSchema,
+} from '../privacy/privacy.service.js';
 import { AdminService, resolveSchema } from './admin.service.js';
 import { AuditService } from './audit.service.js';
 import {
@@ -38,6 +48,8 @@ export class AdminController {
     private readonly species: SpeciesAdminService,
     private readonly audit: AuditService,
     private readonly prisma: PrismaService,
+    private readonly legal: LegalService,
+    private readonly privacy: PrivacyService,
   ) {}
 
   /** Who is signed in to the panel. */
@@ -146,6 +158,51 @@ export class AdminController {
   @Roles('ADMIN')
   costs(@Query('days') days?: string) {
     return this.admin.costs(Number(days) || 30);
+  }
+
+  // Legal texts and KVKK requests: the owner only
+  @Get('legal')
+  @Roles('ADMIN')
+  legalHistory() {
+    return this.legal.history();
+  }
+
+  /** A new version of a text; people are asked again where the text requires it. */
+  @Post('legal/:slug')
+  @Roles('ADMIN')
+  async publishLegal(
+    @CurrentUser() caller: AuthUser,
+    @Param('slug') slug: string,
+    @Body(new ZodBody(publishSchema)) body: PublishBody,
+  ) {
+    const doc = await this.legal.publish(caller.id, slug, body);
+    await this.audit.log(
+      caller,
+      'legal.publish',
+      { type: 'legal', id: slug },
+      {
+        version: doc.version,
+        draft: doc.draft,
+      },
+    );
+    return doc;
+  }
+
+  @Get('privacy-requests')
+  @Roles('ADMIN')
+  privacyRequests(@Query('state') state?: string) {
+    return this.privacy.list(state === 'closed' ? 'closed' : 'open');
+  }
+
+  @Post('privacy-requests/:id/respond')
+  @Roles('ADMIN')
+  @HttpCode(200)
+  respondPrivacy(
+    @CurrentUser() caller: AuthUser,
+    @Param('id', ParseIntPipe) id: number,
+    @Body(new ZodBody(respondSchema)) body: RespondBody,
+  ) {
+    return this.privacy.respond(caller, id, body);
   }
 
   @Get('audit')

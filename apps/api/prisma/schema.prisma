@@ -23,6 +23,7 @@ enum OtpPurpose {
   PHONE_VERIFY
   PASSWORD_RESET
   PHONE_LOGIN // target is the peppered hash of the number, never the number
+  PRIVACY_REQUEST // the public account deletion and KVKK forms
 }
 
 // How a person signs in. EMAIL is e-mail and password.
@@ -280,7 +281,7 @@ model Consent {
   id          Int       @id @default(autoincrement())
   userId      Int       @map("user_id")
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  kind        String // KVKK_AYDINLATMA | PAZARLAMA
+  kind        String // AI_PROCESSING | MODEL_TRAINING | TERMS | KVKK_NOTICE (ADR 0016)
   granted     Boolean
   textVersion String    @map("text_version")
   iysSyncedAt DateTime? @map("iys_synced_at") // marketing consent to İYS
@@ -477,7 +478,8 @@ model Scan {
   userPlant   UserPlant? @relation(fields: [userPlantId], references: [id], onDelete: SetNull)
   kind        ScanKind
   status      ScanStatus
-  imageKey    String     @map("image_key")
+  // Null once the retention job has removed the photo (ADR 0016).
+  imageKey    String?    @map("image_key")
   // SHA-256 of the cleaned photo: the same photo sent again gets the earlier
   // result without a provider call.
   imageHash   String?    @map("image_hash")
@@ -611,4 +613,86 @@ model SpendAlert {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("spend_alerts")
+}
+
+// Every published version of a legal text; the newest per slug is current
+// (ADR 0016). Rows are never edited: what someone accepted stays readable.
+model LegalDocument {
+  id            Int      @id @default(autoincrement())
+  slug          String // kvkk | kosullar | gizlilik | yapay-zeka | model-gelistirme
+  version       String
+  title         String
+  // One short paragraph for the consent screens; the full text is `sections`.
+  summary       String?
+  sections      Json // [{ heading, body }]
+  // Not yet approved by a lawyer; the app and the web say so.
+  draft         Boolean  @default(true)
+  publishedById Int?     @map("published_by_id")
+  publishedAt   DateTime @default(now()) @map("published_at")
+
+  @@unique([slug, version])
+  @@index([slug, publishedAt])
+  @@map("legal_documents")
+}
+
+enum PrivacyRequestType {
+  ACCESS // what is held about me
+  CORRECT
+  DELETE
+  OBJECT
+  OTHER
+}
+
+enum PrivacyRequestStatus {
+  OPEN
+  DONE
+  REJECTED
+}
+
+// KVKK m.11 requests from the web form, answered within 30 days (m.13), and
+// the record of verified web account deletions.
+model PrivacyRequest {
+  id             Int                  @id @default(autoincrement())
+  type           PrivacyRequestType
+  status         PrivacyRequestStatus @default(OPEN)
+  name           String?
+  // Where the answer goes. Empty for deletions, which keep only `contactHint`.
+  email          String?
+  contactHint    String               @map("contact_hint")
+  message        String?
+  // The matching account at the time; null when none was found.
+  userId         Int?                 @map("user_id")
+  dueAt          DateTime             @map("due_at")
+  reminderSentAt DateTime?            @map("reminder_sent_at")
+  response       String?
+  respondedAt    DateTime?            @map("responded_at")
+  respondedById  Int?                 @map("responded_by_id")
+  createdAt      DateTime             @default(now()) @map("created_at")
+
+  @@index([status, dueAt])
+  @@map("privacy_requests")
+}
+
+// A provider record that could not be deleted right away; retried with
+// backoff. Holds no link to a person.
+model ProviderDeletion {
+  id            Int      @id @default(autoincrement())
+  provider      String
+  ref           String
+  attempts      Int      @default(1)
+  nextAttemptAt DateTime @map("next_attempt_at")
+  lastError     String?  @map("last_error")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@index([nextAttemptAt])
+  @@map("provider_deletions")
+}
+
+// When a scheduled job last ran, and what it did; survives restarts.
+model JobRun {
+  name      String   @id
+  lastRunAt DateTime @map("last_run_at")
+  result    Json?
+
+  @@map("job_runs")
 }

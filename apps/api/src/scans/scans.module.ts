@@ -7,6 +7,7 @@ import type { Env } from '../config/env.js';
 import { ConsentsModule } from '../consents/consents.module.js';
 import { FakeVisionProvider } from './fake.vision-provider.js';
 import { KindwiseVisionProvider } from './kindwise.vision-provider.js';
+import { ProviderDeletionsService } from './provider-deletions.service.js';
 import { ScansController } from './scans.controller.js';
 import { ScansService } from './scans.service.js';
 import { VisionProvider } from './vision-provider.js';
@@ -26,6 +27,7 @@ import { VisionProvider } from './vision-provider.js';
             })
           : new FakeVisionProvider(),
     },
+    ProviderDeletionsService,
     ScansService,
   ],
   exports: [VisionProvider],

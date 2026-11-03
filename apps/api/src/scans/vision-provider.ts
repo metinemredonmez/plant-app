@@ -4,6 +4,8 @@ export interface ScanImage {
 }
 
 export interface IdentifyResult {
+  /** The provider's record of this call, deleted right after (ADR 0016). */
+  providerRef?: string;
   isPlant: boolean;
   suggestions: {
     scientificName: string;
@@ -24,6 +26,7 @@ export interface Issue {
 }
 
 export interface DiagnoseResult {
+  providerRef?: string;
   isPlant: boolean;
   isHealthy: boolean;
   healthyProbability: number;
@@ -35,6 +38,8 @@ export abstract class VisionProvider {
   abstract readonly name: 'fake' | 'kindwise';
   abstract identify(image: ScanImage): Promise<IdentifyResult>;
   abstract diagnose(image: ScanImage): Promise<DiagnoseResult>;
+  /** Deletes the provider's copy of a call; throws VisionProviderError. */
+  abstract forget(providerRef: string): Promise<void>;
 }
 
 /** The provider could not be reached or rejected the request. */

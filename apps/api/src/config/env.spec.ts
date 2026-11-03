@@ -49,6 +49,7 @@ describe('validateEnv', () => {
         R2_BUCKET: 'everbloom-scans',
         REVENUECAT_WEBHOOK_SECRET: 'x'.repeat(24),
         ADMIN_ALERT_EMAIL: 'sahip@everbloom.test',
+        PUBLIC_WEB_URL: 'https://api.everbloom.test/',
         KVKK_TRANSFER_APPROVED: 'kindwise, anthropic,Cloudflare',
         WEATHER_DRIVER: 'open-meteo',
       }),

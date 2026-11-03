@@ -86,8 +86,21 @@ const fields = z.object({
   PREMIUM_MESSAGES_PER_MONTH: z.coerce.number().int().positive().default(300),
   // RevenueCat sends `Authorization: Bearer <secret>` on every webhook.
   REVENUECAT_WEBHOOK_SECRET: z.string().min(16).optional(),
-  // Current version of the AI processing consent text (KVKK, Apple 5.1.2(i)).
-  AI_CONSENT_VERSION: z.string().min(1).default('2026-10-25'),
+  // Public pages served by this API (legal texts, account deletion, KVKK
+  // form), e.g. https://api.everbloom.app. Stores require a deletion link.
+  PUBLIC_WEB_URL: z
+    .url()
+    .default('http://localhost:4100')
+    .transform((url) => url.replace(/\/+$/, '')),
+  // Retention (ADR 0016), in days: photos, assistant chats, the person link
+  // on cost rows, closed KVKK requests, audit entries. Checked hourly, run
+  // once a day; 0 hours turns the job off.
+  RETENTION_PHOTO_DAYS: z.coerce.number().int().positive().default(180),
+  RETENTION_CHAT_DAYS: z.coerce.number().int().positive().default(365),
+  RETENTION_USAGE_DAYS: z.coerce.number().int().positive().default(365),
+  RETENTION_REQUEST_DAYS: z.coerce.number().int().positive().default(1095),
+  RETENTION_AUDIT_DAYS: z.coerce.number().int().positive().default(1095),
+  RETENTION_CHECK_HOURS: z.coerce.number().int().nonnegative().default(1),
 
   // Sign-in methods besides e-mail (docs/adr/0012). Each is off until its
   // settings exist; the app shows only what GET /v1/app-config lists.
@@ -250,6 +263,14 @@ export const envSchema = fields.superRefine((env, ctx) => {
     require('REVENUECAT_WEBHOOK_SECRET', 'NODE_ENV=production');
     // Someone has to hear about a runaway AI bill.
     require('ADMIN_ALERT_EMAIL', 'NODE_ENV=production');
+    // The stores and KVKK texts link to these pages.
+    if (env.PUBLIC_WEB_URL.includes('localhost')) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['PUBLIC_WEB_URL'],
+        message: 'set the public address in production',
+      });
+    }
   }
 });
 

@@ -21,6 +21,7 @@ import type { Env } from '../config/env.js';
 import { ConsentsService } from '../consents/consents.service.js';
 import { hasRealEmail } from '../identity/identity.service.js';
 import { maskedPhone } from '../identity/phone.js';
+import { LegalService } from '../legal/legal.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import {
   revenueCatEventSchema,
@@ -51,6 +52,7 @@ export class BillingController {
     private readonly consents: ConsentsService,
     private readonly prisma: PrismaService,
     private readonly config: ConfigService<Env, true>,
+    private readonly legal: LegalService,
   ) {}
 
   /** Configured in RevenueCat with `Authorization: Bearer <secret>`. */
@@ -81,11 +83,13 @@ export class BillingController {
         select: { hint: true },
       }),
     ]);
-    const [{ premium, entitlement, limits, used }, aiConsent] =
+    const [{ premium, entitlement, limits, used }, aiConsent, modelTraining] =
       await Promise.all([
         this.usage.summary(caller.id),
         this.consents.status(caller),
+        this.consents.modelTraining(caller),
       ]);
+    const pendingLegal = await this.legal.pendingFor(caller.id);
     return {
       id: user.id,
       publicId: user.publicId,
@@ -103,6 +107,9 @@ export class BillingController {
       limits,
       used,
       aiConsent,
+      modelTraining,
+      // Texts that changed; the "legal" step below opens the screen for them.
+      pendingLegal,
       city: user.city,
       reminderMinute: user.reminderMinute,
       signInMethod: user.lastSignInMethod,
@@ -111,6 +118,7 @@ export class BillingController {
       // Onboarding steps still open, in order. The app opens the first one
       // it knows and ignores names it does not (newer servers may add some).
       missingSteps: [
+        ...(pendingLegal.length ? ['legal'] : []),
         ...(user.careProfileAt ? [] : ['profile']),
         ...(this.config.get('PAYWALL_ONBOARDING', { infer: true }) &&
         !user.paywallOfferedAt &&

@@ -21,6 +21,7 @@ const POLICY: Record<OtpPurpose, { length: number; ttlMs: number }> = {
   PHONE_VERIFY: { length: 5, ttlMs: 10 * 60_000 },
   PASSWORD_RESET: { length: 5, ttlMs: 10 * 60_000 },
   PHONE_LOGIN: { length: 6, ttlMs: 5 * 60_000 },
+  PRIVACY_REQUEST: { length: 6, ttlMs: 10 * 60_000 },
 };
 const RESEND_AFTER_MS = 60_000;
 /** Wrong guesses allowed per code; the next attempt is refused. */

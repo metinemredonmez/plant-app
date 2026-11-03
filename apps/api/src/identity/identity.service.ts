@@ -23,6 +23,7 @@ import {
   type User,
 } from '../generated/prisma/client.js';
 import { DeliveryError, SmsSender } from '../messaging/senders.js';
+import { LegalService } from '../legal/legal.service.js';
 import { OtpService } from '../otp/otp.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { AppleSiwa } from './apple-siwa.js';
@@ -72,6 +73,7 @@ export class IdentityService {
     private readonly apple: AppleSiwa,
     @Inject(SecretBox) private readonly box: SecretBox | null,
     private readonly config: ConfigService<Env, true>,
+    private readonly legal: LegalService,
   ) {}
 
   private enabled(
@@ -276,6 +278,7 @@ export class IdentityService {
       const identity = await this.prisma.authIdentity.create({
         data: { userId: user.id, provider, subject, hint: profile.hint },
       });
+      if (isNew) await this.legal.recordSignUp(user.id);
       return { user, isNew, identityId: identity.id };
     } catch (error) {
       // A parallel sign-in with the same identity won; use its account.

@@ -22,6 +22,7 @@ interface Suggestion {
 }
 
 interface KindwiseResponse {
+  access_token?: string;
   result?: {
     is_plant?: { binary?: boolean; probability?: number };
     is_healthy?: { binary?: boolean; probability?: number };
@@ -84,6 +85,7 @@ export class KindwiseVisionProvider extends VisionProvider {
     );
     const result = body.result ?? {};
     return {
+      providerRef: body.access_token,
       isPlant: result.is_plant?.binary ?? true,
       suggestions: (result.classification?.suggestions ?? [])
         .filter((s) => typeof s.name === 'string')
@@ -130,10 +132,31 @@ export class KindwiseVisionProvider extends VisionProvider {
         };
       });
     return {
+      providerRef: body.access_token,
       isPlant: result.is_plant?.binary ?? true,
       isHealthy: result.is_healthy?.binary ?? issues.length === 0,
       healthyProbability: result.is_healthy?.probability ?? 0,
       issues,
     };
+  }
+
+  /**
+   * The provider keeps a record of each call until it is deleted. Same
+   * endpoint for identification and health assessment (official client:
+   * delete_identification, delete_health_assessment). Already gone is fine.
+   */
+  async forget(providerRef: string) {
+    const baseUrl = this.config.baseUrl ?? 'https://plant.id';
+    const url = `${baseUrl}/api/v3/identification/${encodeURIComponent(providerRef)}`;
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: { 'Api-Key': this.config.apiKey },
+      signal: AbortSignal.timeout(5_000),
+    }).catch((error: unknown) => {
+      throw new VisionProviderError(`Kindwise unreachable: ${String(error)}`);
+    });
+    if (!response.ok && response.status !== 404) {
+      throw new VisionProviderError(`Kindwise HTTP ${response.status}`);
+    }
   }
 }

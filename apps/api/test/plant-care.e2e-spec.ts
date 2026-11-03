@@ -550,7 +550,7 @@ describe('scans', () => {
       where: { id: res.body.scanId },
     });
     const stored = await sharp(
-      join(process.env.UPLOAD_DIR!, scan.imageKey),
+      join(process.env.UPLOAD_DIR!, scan.imageKey!),
     ).metadata();
     expect(stored.exif).toBeUndefined();
     expect(stored.format).toBe('jpeg');

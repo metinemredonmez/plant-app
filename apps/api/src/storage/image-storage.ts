@@ -27,6 +27,8 @@ export abstract class ImageStorage {
   ): Promise<string>;
   /** Account deletion: every photo of the user. */
   abstract removeAll(userPublicId: string): Promise<void>;
+  /** Retention: these photos, by key. Already gone is fine. */
+  abstract remove(keys: string[]): Promise<void>;
 }
 
 /** Development and tests: a local folder (gitignored). */
@@ -49,6 +51,12 @@ export class LocalImageStorage extends ImageStorage {
       recursive: true,
       force: true,
     });
+  }
+
+  async remove(keys: string[]) {
+    await Promise.all(
+      keys.map((key) => rm(resolve(join(this.dir, key)), { force: true })),
+    );
   }
 }
 
@@ -123,5 +131,20 @@ export class R2ImageStorage extends ImageStorage {
       }
       token = page.IsTruncated ? page.NextContinuationToken : undefined;
     } while (token);
+  }
+
+  /** DeleteObjects takes 1,000 keys a request. */
+  async remove(keys: string[]) {
+    for (let i = 0; i < keys.length; i += 1000) {
+      await this.client.send(
+        new DeleteObjectsCommand({
+          Bucket: this.bucket,
+          Delete: {
+            Objects: keys.slice(i, i + 1000).map((Key) => ({ Key })),
+            Quiet: true,
+          },
+        }),
+      );
+    }
   }
 }

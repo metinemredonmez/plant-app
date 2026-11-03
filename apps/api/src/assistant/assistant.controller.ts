@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -30,6 +31,15 @@ export class AssistantController {
     userPlantId?: number,
   ) {
     return this.assistant.history(caller, userPlantId);
+  }
+
+  @Delete('messages')
+  forget(
+    @CurrentUser() caller: AuthUser,
+    @Query('userPlantId', new ParseIntPipe({ optional: true }))
+    userPlantId?: number,
+  ) {
+    return this.assistant.forget(caller, userPlantId);
   }
 
   @Post('messages')

@@ -1,3 +1,5 @@
+import { randomUUID } from 'node:crypto';
+
 import sharp from 'sharp';
 
 import {
@@ -6,6 +8,8 @@ import {
   type ScanImage,
   VisionProvider,
 } from './vision-provider.js';
+
+const fakeRef = () => `fake-${randomUUID()}`;
 
 /** Share of clearly green pixels in a 32×32 thumbnail. */
 async function greenShare(image: ScanImage) {
@@ -35,10 +39,14 @@ export class FakeVisionProvider extends VisionProvider {
     return (await greenShare(image)) >= 0.05;
   }
 
+  /** No provider, so nothing to delete. */
+  async forget() {}
+
   async identify(image: ScanImage): Promise<IdentifyResult> {
     if (!(await this.isPlant(image)))
-      return { isPlant: false, suggestions: [] };
+      return { providerRef: fakeRef(), isPlant: false, suggestions: [] };
     return {
+      providerRef: fakeRef(),
       isPlant: true,
       suggestions: [
         {
@@ -63,6 +71,7 @@ export class FakeVisionProvider extends VisionProvider {
   async diagnose(image: ScanImage): Promise<DiagnoseResult> {
     if (!(await this.isPlant(image))) {
       return {
+        providerRef: fakeRef(),
         isPlant: false,
         isHealthy: false,
         healthyProbability: 0,
@@ -70,6 +79,7 @@ export class FakeVisionProvider extends VisionProvider {
       };
     }
     return {
+      providerRef: fakeRef(),
       isPlant: true,
       isHealthy: false,
       healthyProbability: 0.18,
