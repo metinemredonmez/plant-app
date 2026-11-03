@@ -2,6 +2,7 @@
 
 Türkiye için yapay zekâlı bitki bakım uygulaması: fotoğrafla tanıma, Türkçe bakım kartları, teşhis, bitkiyi bilen bakım asistanı ve hatırlatıcılar. Ürün satışı yok; gelir yalnızca abonelikten geliyor. Expo mobil uygulaması, NestJS + Prisma API ve admin paneli.
 
+- Durum, kurallar ve sıradaki iş: [HATIRLATMA.md](HATIRLATMA.md)
 - Araştırma ve 16 haftalık plan: [reports/Yapay zekâlı bitki uygulaması MVP planı.md](reports/Yapay%20zekâl%C4%B1%20bitki%20uygulamas%C4%B1%20MVP%20plan%C4%B1.md)
 - Kapsam: [docs/kapsam.md](docs/kapsam.md)
 - Haftalık durum: [docs/ilerleme.md](docs/ilerleme.md)

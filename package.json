@@ -1,7 +1,7 @@
 {
   "name": "everbloom",
   "private": true,
-  "description": "EverBloom bitki mağazası: mobil uygulama, API ve admin paneli",
+  "description": "EverBloom yapay zekâlı bitki bakım uygulaması: mobil uygulama, API ve admin paneli",
   "packageManager": "pnpm@9.12.0",
   "engines": {
     "node": ">=20.19"
