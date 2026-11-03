@@ -20,7 +20,7 @@ Repo: <https://github.com/metinemredonmez/plant-app> (dal: `main`).
 
 | Konu | Durum |
 |---|---|
-| Ana repo | `3387c20`, GitHub ile aynı; CI yeşil |
+| Ana repo | Son kod commit'i `3387c20` (8. hafta); GitHub ile aynı, CI yeşil |
 | `apps/app` | `e0f9fa2`, bekleyen değişiklik yok; uzak deposu ve bilgisayar dışı yedeği yok |
 | Testler (3 Kasım) | API birim 109, API e2e 114, uygulama Jest 80, admin 3; hepsi geçiyor, tip kontrolleri temiz |
 | Çalışan servisler | Yalnız PostgreSQL; API, panel ve Metro kapalı |
