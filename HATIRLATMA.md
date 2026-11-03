@@ -4,7 +4,11 @@ Son kontrol: 3 Kasım 2026. Yeni bir oturuma buradan başla. Bir hafta ya da bü
 
 ## Yarım kalan iş: 9. hafta (buradan devam et)
 
-Sahibin isteğiyle durduruldu. **Yazılanlar commit edilmedi;** yalnız bu bilgisayarda, `apps/api` altında çalışma kopyasında duruyor. `git status` ile gör, silme ve sıfırlama. `main` bozulmasın diye hiçbiri gönderilmedi.
+Sahibin isteğiyle durduruldu. **Yazılanlar `wip/hafta-9` dalında**, GitHub'da yedekli; `main`'de yok, çünkü dal henüz tip kontrolünden ve testlerden geçmiyor. Bu dalda çalış:
+
+```bash
+git switch wip/hafta-9
+```
 
 Son ölçüm:
 - API birim testleri: 112 geçti.
@@ -36,7 +40,7 @@ Son ölçüm:
 - **Panel (`apps/admin`):** `/metinler` (sürüm yayımlama), `/kvkk` (son gün ve yanıt), menü, özet kartları, etiketler (`legal.publish`, `privacy.respond`).
 - **Doğrulama:** Jest ve panel testleri; web sayfaları ve panel tarayıcıda.
 - **Belgeler:** ADR 0016, `ilerleme.md`, `kapsam.md`, `kvkk-saglayicilar.md`, API README (yeni ayarlar ve uçlar; `AI_CONSENT_VERSION` satırı silinecek), bu dosya.
-- **Commit:** `apps/api` ve belgeler `main`'e; `apps/app` yalnız yerel depoya.
+- **Commit:** testler geçince `wip/hafta-9` dalını `main`'e birleştir ve dalı sil; `apps/app` yalnız yerel depoya.
 
 **Verilmiş kararlar (yeniden tartışma):**
 - Web sayfaları API'den sunuluyor: tek kaynak, ayrı dağıtım yok, betik yok.
@@ -65,7 +69,7 @@ Repo: <https://github.com/metinemredonmez/plant-app> (dal: `main`).
 
 | Konu | Durum |
 |---|---|
-| Ana repo | Son kod commit'i `3387c20` (8. hafta), CI yeşil. Üstünde commit edilmemiş 9. hafta işi var |
+| Ana repo | `main`'de son kod commit'i `3387c20` (8. hafta), CI yeşil. Yarım 9. hafta işi `wip/hafta-9` dalında |
 | `apps/app` | `e0f9fa2`, bekleyen değişiklik yok; uzak deposu ve bilgisayar dışı yedeği yok |
 | Testler (3 Kasım, son commit) | API birim 109, API e2e 114, uygulama Jest 80, admin 3; hepsi geçiyor, tip kontrolleri temiz. Yarım işin durumu en üstte |
 | Çalışan servisler | Yalnız PostgreSQL; API, panel ve Metro kapalı |
@@ -84,7 +88,7 @@ Takvimde 2. haftadayız. Kod, 7. hafta hariç 8. haftaya kadar önde.
 | 6 | Asistan, "Bildir", KVKK kapısı ([ADR 0014](docs/adr/0014-asistan-baglam-bildirme-ve-model-secimi.md)) | Tamam; model değerlendirmesi çalıştırılmadı |
 | 7 | Abonelik, RevenueCat | **Bekliyor:** mağaza hesapları hazır değil, plan gereği 8 ile yer değiştirdi |
 | 8 | Admin paneli ([ADR 0015](docs/adr/0015-admin-paneli.md)) | Tamam; rol atama ve barındırma sahipte |
-| 9 | Hukuk ve KVKK akışları | **Yarım:** API tarafı yazıldı, commit edilmedi; uygulama, panel ve belgeler kaldı |
+| 9 | Hukuk ve KVKK akışları | **Yarım:** API tarafı `wip/hafta-9` dalında; uygulama, panel ve belgeler kaldı |
 | 10–16 | Hava uyarıları, sağlamlaştırma, beta, mağaza, lansman | Başlanmadı |
 
 ## 9. haftanın hedefi
