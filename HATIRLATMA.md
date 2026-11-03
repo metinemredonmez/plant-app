@@ -2,6 +2,51 @@
 
 Son kontrol: 3 Kasım 2026. Yeni bir oturuma buradan başla. Bir hafta ya da büyük bir iş bitince bu dosyayı da güncelle.
 
+## Yarım kalan iş: 9. hafta (buradan devam et)
+
+Sahibin isteğiyle durduruldu. **Yazılanlar commit edilmedi;** yalnız bu bilgisayarda, `apps/api` altında çalışma kopyasında duruyor. `git status` ile gör, silme ve sıfırlama. `main` bozulmasın diye hiçbiri gönderilmedi.
+
+Son ölçüm:
+- API birim testleri: 112 geçti.
+- `test/privacy.e2e-spec.ts`: 16 testin 15'i geçti.
+- Bütün e2e takımı bu değişikliklerle çalıştırılmadı.
+- Uygulama, panel ve tarayıcı denemesi yapılmadı.
+
+**Önce bunları düzelt:**
+1. Tip hatası: `apps/api/src/privacy/web.controller.ts` satır 49, `hidden(name, value: unknown)`. `esc` artık `unknown` almıyor; parametre tipini `string | undefined` yap.
+2. Kalan test: "KVKK form > takes a verified request with a 30-day clock, and the owner answers it" `PrismaClientKnownRequestError` veriyor. Nedenine henüz bakılmadı.
+3. Sonra `npx tsc --noEmit`, `npm run lint`, birim ve bütün e2e testlerini çalıştır.
+
+**API'de yazılanlar:**
+- Migration `20261103100000_privacy` (geliştirme veritabanına uygulandı): `legal_documents`, `privacy_requests`, `provider_deletions`, `job_runs`; `scans.image_key` boş olabiliyor.
+- `src/legal/`: sürümlü metinler ve taslakları, bekleyen metinler, kabul, yayımlama, herkese açık uçlar.
+- `src/consents/`: sürüm artık metinden okunuyor; `MODEL_TRAINING` izni eklendi; `AI_CONSENT_VERSION` ayarı kalktı.
+- `/v1/me`: `pendingLegal`, `modelTraining`, `missingSteps` içinde `legal`. `/v1/app-config`: `links`.
+- Kayıtta koşullar ve aydınlatma işleniyor. `DELETE /v1/assistant/messages` asistan hafızasını siliyor.
+- `src/scans/provider-deletions.service.ts`: Kindwise kaydı sonuçtan hemen sonra siliniyor, olmazsa yeniden deneniyor.
+- `src/privacy/`: `web.controller.ts` (`/yasal`, `/hesap-silme`, `/kvkk-basvuru`), `privacy.service.ts`, `retention.service.ts`.
+- Admin API: `legal`, `privacy-requests`, `overview` eklentileri. Yeni ayarlar: `PUBLIC_WEB_URL`, `RETENTION_*`.
+
+**Kalan işler:**
+- **Uygulama (`apps/app`):**
+  - `screens/legal.tsx`, `consent.tsx` ve `(onboarding)/gizlilik.tsx` metni API'den alsın; `AI_CONSENT_VERSION` sabiti kalksın (`lib/config.ts`, `lib/auth.tsx`, profil).
+  - `lib/root-route.ts`: `legal` adımı ve yeni bir yeniden onay ekranı.
+  - Profil: model geliştirme izni, asistan hafızasını silme, KVKK başvurusu ve yasal metin bağlantıları. Bitki sohbetinde "Sohbeti sil".
+  - Olası hata: giriş yapmış kullanıcı `/screens/legal` açınca yönlendirici onu dışarı atıyor gibi görünüyor (paywall'daki Koşullar ve Gizlilik bağlantıları). Koddan okundu, çalıştırılarak denenmedi. Doğrula; gerekirse yeni bir `legal` alanı ekleyip tablo testini yaz.
+- **Panel (`apps/admin`):** `/metinler` (sürüm yayımlama), `/kvkk` (son gün ve yanıt), menü, özet kartları, etiketler (`legal.publish`, `privacy.respond`).
+- **Doğrulama:** Jest ve panel testleri; web sayfaları ve panel tarayıcıda.
+- **Belgeler:** ADR 0016, `ilerleme.md`, `kapsam.md`, `kvkk-saglayicilar.md`, API README (yeni ayarlar ve uçlar; `AI_CONSENT_VERSION` satırı silinecek), bu dosya.
+- **Commit:** `apps/api` ve belgeler `main`'e; `apps/app` yalnız yerel depoya.
+
+**Verilmiş kararlar (yeniden tartışma):**
+- Web sayfaları API'den sunuluyor: tek kaynak, ayrı dağıtım yok, betik yok.
+- Taslak metinleri `LegalService` açılışta ekliyor; yalnız o metnin hiç sürümü yoksa.
+- Aydınlatma onay değil, "görüldü". Koşullar kabul ister. Rızalar yalnız daha önce vermiş olana yeniden sorulur.
+- `yapay-zeka` metni `2026-10-25` sürümünde kaldı; verilmiş onaylar geçerli. Testler bu sürüme bağlı, e2e'de bu metne yeni sürüm yayımlama.
+- Web'den silme, kod doğrulanınca hemen çalışır. Yanıtlar hesabın var olup olmadığını söylemez. Ekip hesapları elle işlenir.
+- KVKK formu yalnız e-postayla; yanıt süresi 30 gün (m.13).
+- Saklama: fotoğraf 180 gün, sohbet 1 yıl, kapanan başvuru ve denetim kaydı 3 yıl. Taslak süreler; avukat teyit etmeli.
+
 ## Proje
 
 Türkiye için yapay zekâlı bitki bakım uygulaması: fotoğrafla tanıma, Türkçe bakım kartları, teşhis ve iyileşme takibi, bitkiyi bilen asistan, sulama hatırlatıcıları. Ürün ya da bitki satışı, reklam ve satış bağlantısı yok; gelir yalnız aylık ve yıllık mağaza aboneliğinden geliyor.
@@ -20,9 +65,9 @@ Repo: <https://github.com/metinemredonmez/plant-app> (dal: `main`).
 
 | Konu | Durum |
 |---|---|
-| Ana repo | Son kod commit'i `3387c20` (8. hafta); GitHub ile aynı, CI yeşil |
+| Ana repo | Son kod commit'i `3387c20` (8. hafta), CI yeşil. Üstünde commit edilmemiş 9. hafta işi var |
 | `apps/app` | `e0f9fa2`, bekleyen değişiklik yok; uzak deposu ve bilgisayar dışı yedeği yok |
-| Testler (3 Kasım) | API birim 109, API e2e 114, uygulama Jest 80, admin 3; hepsi geçiyor, tip kontrolleri temiz |
+| Testler (3 Kasım, son commit) | API birim 109, API e2e 114, uygulama Jest 80, admin 3; hepsi geçiyor, tip kontrolleri temiz. Yarım işin durumu en üstte |
 | Çalışan servisler | Yalnız PostgreSQL; API, panel ve Metro kapalı |
 | Açık PR'lar | 6 Dependabot PR'ı: 5'i kullanılmayan `apps/mobile` için, 6. PR API'deki `sharp` için (0.34.5 → 0.35.5). Hiçbiri birleştirilmedi |
 
@@ -39,10 +84,10 @@ Takvimde 2. haftadayız. Kod, 7. hafta hariç 8. haftaya kadar önde.
 | 6 | Asistan, "Bildir", KVKK kapısı ([ADR 0014](docs/adr/0014-asistan-baglam-bildirme-ve-model-secimi.md)) | Tamam; model değerlendirmesi çalıştırılmadı |
 | 7 | Abonelik, RevenueCat | **Bekliyor:** mağaza hesapları hazır değil, plan gereği 8 ile yer değiştirdi |
 | 8 | Admin paneli ([ADR 0015](docs/adr/0015-admin-paneli.md)) | Tamam; rol atama ve barındırma sahipte |
-| 9 | Hukuk ve KVKK akışları | **Sıradaki** |
+| 9 | Hukuk ve KVKK akışları | **Yarım:** API tarafı yazıldı, commit edilmedi; uygulama, panel ve belgeler kaldı |
 | 10–16 | Hava uyarıları, sağlamlaştırma, beta, mağaza, lansman | Başlanmadı |
 
-## Sıradaki iş: 9. hafta
+## 9. haftanın hedefi
 
 Teslimatlar:
 - Sürümlü metinler ve onay kayıtları; metin değişince yeniden onay.
